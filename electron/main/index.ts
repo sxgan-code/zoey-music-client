@@ -88,7 +88,7 @@ async function createChildWindow(win: BrowserWindow, param: any) {
         icon: join(process.env.VITE_PUBLIC, 'favicon.ico'),
         width: param.width,
         height: param.height,
-        // modal: true,
+        modal: true,
         webPreferences: {
             preload,
             // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
