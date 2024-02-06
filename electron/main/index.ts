@@ -66,6 +66,10 @@ async function createWindow() {
         win.webContents.openDevTools()
     } else {
         win.loadFile(indexHtml)
+        // read more on https://www.gznotes.com/how-to-protect-electron-app-source-code/
+        win.webContents.on('devtools-opened', () => {
+            win.webContents.closeDevTools();
+        });
     }
 
     // Test actively push message to the Electron-Renderer
@@ -106,6 +110,9 @@ async function createChildWindow(win: BrowserWindow, param: any) {
         justChildWin.webContents.openDevTools()
     } else {
         justChildWin.loadFile(indexHtml, {hash: param.url})
+        justChildWin.webContents.on('devtools-opened', () => {
+            justChildWin.webContents.closeDevTools();
+        });
     }
 
     // Test actively push message to the Electron-Renderer
@@ -178,3 +185,5 @@ ipcMain.handle('open-win', (_, arg) => {
         childWindow.loadFile(indexHtml, {hash: arg.url})
     }
 })
+
+

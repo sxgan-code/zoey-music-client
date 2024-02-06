@@ -1,5 +1,12 @@
 <script setup lang="ts">
 
+// 生产环境禁止使用ctrl+shift+i打开DevTools
+// document.addEventListener('keydown', evt => {
+//   if (evt.ctrlKey && evt.shiftKey && 73 === evt.keyCode) {
+//     evt.preventDefault();
+//     return false;
+//   }
+// });
 </script>
 
 <template>
