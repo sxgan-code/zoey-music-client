@@ -19,7 +19,11 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+.main-root{
+  width: 100vw;
+  height: 100vh;
+}
 .flex-center {
   display: flex;
   align-items: center;

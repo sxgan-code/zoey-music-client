@@ -48,7 +48,13 @@ const indexHtml = join(process.env.DIST, 'index.html')
 async function createWindow() {
     win = new BrowserWindow({
         title: 'Main window',
-        icon: join(process.env.VITE_PUBLIC, 'favicon.ico'),
+        width: 1200,
+        height: 800,
+        minWidth: 1200,
+        minHeight: 800,
+        frame:false,
+        transparent: true, // 窗口是否支持透明，如果想做高级效果最好为true,此项必须设置frame为false，且关闭DevTools，这两项会影响效果
+        icon: join(process.env.VITE_PUBLIC, 'logo/logo-music-wangyiyun-red.ico'),
         webPreferences: {
             preload,
             // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -63,7 +69,7 @@ async function createWindow() {
     if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
         win.loadURL(url)
         // Open devTool if the app is not packaged
-        win.webContents.openDevTools()
+        win.webContents.openDevTools({mode:'detach'})
     } else {
         win.loadFile(indexHtml)
         // read more on https://www.gznotes.com/how-to-protect-electron-app-source-code/
@@ -89,7 +95,7 @@ async function createChildWindow(win: BrowserWindow, param: any) {
     justChildWin = new BrowserWindow({
         title: 'child window',
         parent: win,
-        icon: join(process.env.VITE_PUBLIC, 'favicon.ico'),
+        icon: join(process.env.VITE_PUBLIC, 'logo/logo-music-wangyiyun-red.ico'),
         width: param.width,
         height: param.height,
         modal: true,

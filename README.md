@@ -93,6 +93,8 @@ npm install -g yarn --registry=https://registry.npmmirror.com
 ```
 
 ## 构建问题
+注意：使用`win+x`中的`终端管理员`窗口执行，防止权限原因下载失败
+
 使用`npm run build` 时无法下载github必要构建包，此时我们需要使用yarn来构建下载，下载后的包
 一般会在c盘，构建一次即可永久使用，所以再使用npm构建是就不会再去下载了
 ```shell 

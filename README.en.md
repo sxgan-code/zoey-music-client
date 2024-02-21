@@ -92,6 +92,8 @@ npm install -g yarn --registry=https://registry.npmmirror.com
 ```
 
 ## build the issue
+Note: Use the 'Terminal Administrator' window in 'Win+X' to prevent the download from failing due to permissions
+
 When using `npm run build`, we can't download the GitHub necessary build package, in this case we need to use yarn to build the downloaded package
 Generally, it will be on the C drive, and it can be used permanently after building it once, so if you use npm to build it, you won't download it again
 ```shell 
