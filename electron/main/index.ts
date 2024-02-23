@@ -2,6 +2,7 @@ import {app, BrowserWindow, ipcMain, shell} from 'electron'
 import {release} from 'node:os'
 import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
+import {initMainWinIpc} from "../ipc/main-ipc.ts";
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -65,7 +66,7 @@ async function createWindow() {
             // contextIsolation: false,
         },
     })
-
+    initMainWinIpc(win)
     if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
         win.loadURL(url)
         // Open devTool if the app is not packaged

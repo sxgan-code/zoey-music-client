@@ -1,9 +1,9 @@
 import {createApp} from 'vue'
-import App from './App.vue'
-import router from "./router";
-import './assets/css/common.scss'
+import App from '@/App.vue'
+import router from "@/router/index.ts";
+import '@/assets/css/common.scss'
 
-import './demos/ipc'
+import '@/ipc/ipc.ts'
 // If you want use Node.js, the`nodeIntegration` needs to be enabled in the Main process.
 // import './demos/node'
 const app = createApp(App);
