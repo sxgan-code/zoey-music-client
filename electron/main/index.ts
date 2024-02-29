@@ -2,7 +2,7 @@ import {app, BrowserWindow, ipcMain, shell} from 'electron'
 import {release} from 'node:os'
 import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
-import {initMainWinIpc} from "../ipc/main-ipc.ts";
+import {initMainWinIpc} from "../ipc/main-ipc";
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -75,7 +75,7 @@ async function createWindow() {
         win.loadFile(indexHtml)
         // read more on https://www.gznotes.com/how-to-protect-electron-app-source-code/
         win.webContents.on('devtools-opened', () => {
-            win.webContents.closeDevTools();
+            win?.webContents.closeDevTools();
         });
     }
 
@@ -118,7 +118,7 @@ async function createChildWindow(win: BrowserWindow, param: any) {
     } else {
         justChildWin.loadFile(indexHtml, {hash: param.url})
         justChildWin.webContents.on('devtools-opened', () => {
-            justChildWin.webContents.closeDevTools();
+            justChildWin?.webContents.closeDevTools();
         });
     }
 
