@@ -16,8 +16,13 @@ export default function useIPC() {
         }
         window.ipcRenderer.send('win-controller', sendController)
     }
+    /* 向主进程发送窗口控制消息，共有四种类型：min | max | unmax | close */
+    const sendChildWinController = (controllerStr: string) => {
+        window.ipcRenderer.send('child-win-controller', controllerStr)
+    }
     return {
         fromMainMsg,
         sendWinController,
+        sendChildWinController
     };
 }

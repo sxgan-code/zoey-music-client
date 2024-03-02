@@ -53,7 +53,7 @@ async function createWindow() {
         height: 800,
         minWidth: 1200,
         minHeight: 800,
-        frame:false,
+        frame: false,
         transparent: true, // 窗口是否支持透明，如果想做高级效果最好为true,此项必须设置frame为false，且关闭DevTools，这两项会影响效果
         icon: join(process.env.VITE_PUBLIC, 'logo/logo-music-wangyiyun-red.ico'),
         webPreferences: {
@@ -70,7 +70,7 @@ async function createWindow() {
     if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
         win.loadURL(url)
         // Open devTool if the app is not packaged
-        win.webContents.openDevTools({mode:'detach'})
+        win.webContents.openDevTools({mode: 'detach'})
     } else {
         win.loadFile(indexHtml)
         // read more on https://www.gznotes.com/how-to-protect-electron-app-source-code/
@@ -100,6 +100,8 @@ async function createChildWindow(win: BrowserWindow, param: any) {
         width: param.width,
         height: param.height,
         modal: true,
+        frame: false,
+        maximizable: false,
         webPreferences: {
             preload,
             // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -114,14 +116,25 @@ async function createChildWindow(win: BrowserWindow, param: any) {
     if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
         justChildWin.loadURL(url + '#' + param.url)
         // Open devTool if the app is not packaged
-        justChildWin.webContents.openDevTools()
+        justChildWin.webContents.openDevTools({mode: 'detach'})
     } else {
         justChildWin.loadFile(indexHtml, {hash: param.url})
         justChildWin.webContents.on('devtools-opened', () => {
             justChildWin?.webContents.closeDevTools();
         });
     }
-
+    // 窗口控制
+    ipcMain.on('child-win-controller', (event, data) => {
+        if (data == 'max') {
+            justChildWin?.maximize()
+        } else if (data == 'unmax') {
+            justChildWin?.unmaximize()
+        } else if (data == 'min') {
+            justChildWin?.minimize()
+        } else if (data == 'close') {
+            justChildWin?.close()
+        }
+    })
     // Test actively push message to the Electron-Renderer
     justChildWin.webContents.on('did-finish-load', () => {
         justChildWin?.webContents.send('main-process-message', new Date().toLocaleString())
@@ -134,6 +147,8 @@ async function createChildWindow(win: BrowserWindow, param: any) {
     })
     // justChildWin.webContents.on('will-navigate', (event, url) => { }) #344
     justChildWin.on('closed', () => {
+        // 在窗口对象被关闭时，取消订阅所有与该窗口相关的事件
+        justChildWin?.removeAllListeners();
         justChildWin = null
     })
 }
@@ -148,6 +163,7 @@ ipcMain.handle('child-win-controller', (event, data) => {
 ipcMain.handle("renderer-open-win", (e, param: string) => {
     console.log(param)
     if (win != null && justChildWin === null) {
+        console.log('创建子窗口')
         createChildWindow(win, param);
     }
 });

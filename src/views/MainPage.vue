@@ -5,8 +5,8 @@ const {sendWinController} = useIPC()
 /* 打开一个子窗口*/
 const openChildWin = (path: string) => {
   let data = {
-    width: 500,
-    height: 600,
+    width: 600,
+    height: 520,
     url: path
   }
   console.log(path)
