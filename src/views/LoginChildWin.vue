@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useIpc from '@/ipc/use-ipc.ts'
 import {ref} from "vue";
+import {verifyCheckStr, VerifyTypeEnum} from "@/utils/verify-utils.ts";
 
 const {sendChildWinController} = useIpc();
 
@@ -9,20 +10,49 @@ function sendMsgByChildWin() {
 }
 
 const isLogin = ref(true)
+const errMsg = ref('')
 
 function selectCurr(curr: string) {
+  registerData.value = {
+    email: '',
+    password: '',
+    rePassword: '',
+    verifyCode: ''
+  }
+  errMsg.value = ''
   if (curr === 'login') {
     isLogin.value = true
   } else {
     isLogin.value = false
   }
 }
+// 表单校验
+const registerData = ref({
+  email: '',
+  password: '',
+  rePassword: '',
+  verifyCode: ''
+})
+
+function verifyFormData() {
+  console.log('regData' + registerData.value.email)
+  console.log(VerifyTypeEnum.EMAIL)
+  if (!verifyCheckStr(registerData.value.email, VerifyTypeEnum.EMAIL)) {
+    errMsg.value = '邮箱格式错误'
+    return;
+  } else {
+    errMsg.value = ''
+  }
+}
+
 </script>
 
 <template>
   <div class="login-root-box">
     <div class="head-controller-close">
-      <span class="icon-box-close" @click="sendChildWinController('close')"><i class="icon iconfont">&#xe68d</i></span>
+      <span class="icon-box-close" @click="sendChildWinController('close')">
+        <i class="icon iconfont">&#xe68d</i>
+      </span>
     </div>
     <div class="select-win-box">
       <div :class="isLogin?'login-box bg-color':'login-box'" @click="selectCurr('login')">登录账号</div>
@@ -35,11 +65,13 @@ function selectCurr(curr: string) {
       <div class="box-form">
         <form>
           <div>
-            <input class="input-box" type="text" name="" id="" placeholder="请输入邮箱">
+            <input class="input-box" type="text" @input="verifyFormData()" name="" v-model="registerData.email" id=""
+                   placeholder="请输入邮箱">
           </div>
           <div>
             <input class="input-box" type="password" name="" id="" placeholder="请输入密码">
           </div>
+          <div class="error-tip"><span>{{ errMsg }}</span></div>
           <button class="but-box but-submit">登录</button>
         </form>
       </div>
@@ -51,7 +83,8 @@ function selectCurr(curr: string) {
       <div class="box-form">
         <form>
           <div>
-            <input class="input-box" type="text" name="" id="" placeholder="请输入邮箱">
+            <input class="input-box" type="text" @input="verifyFormData()" name="" v-model="registerData.email" id=""
+                   placeholder="请输入邮箱">
           </div>
           <div>
             <input class="input-box" type="password" name="" id="" placeholder="请输入密码">
@@ -60,10 +93,11 @@ function selectCurr(curr: string) {
             <input class="input-box" type="password" name="" id="" placeholder="请再次输入确认密码">
           </div>
           <div class="verify-box">
-            <input class="input-box input-verify" type="password" name="" id="" placeholder="请输入密码">
-            <button class="but-box but-verify">发送验证码</button>
+            <input class="input-box input-verify" type="password" name="" id="" placeholder="请输入验证码">
+            <input type="button" class="but-box but-verify" value="发送验证码"/>
           </div>
-          <button class="but-box but-submit">注册</button>
+          <div class="error-tip"><span>{{ errMsg }}</span></div>
+          <input type="button" class="but-box but-submit" value="注册"/>
         </form>
       </div>
     </div>
@@ -103,7 +137,7 @@ function selectCurr(curr: string) {
     width: 70vw;
     height: 4rem;
     background: #F4F4F4;
-    margin: 2rem auto 4rem;
+    margin: 2rem auto 3rem;
     border-radius: 2.5rem;
     border: 0.2rem solid #F4F4F4;
     display: flex;
@@ -137,10 +171,12 @@ function selectCurr(curr: string) {
       font-weight: inherit;
       font-family: "HarmonyOS Sans";
     }
-    .box-form{
+
+    .box-form {
       width: 80vw;
       height: 30vh;
-      .input-box{
+
+      .input-box {
         width: 30rem;
         height: 3.5rem;
         margin: 0.5rem;
@@ -151,13 +187,15 @@ function selectCurr(curr: string) {
         padding-left: 1.5rem;
         color: #333;
       }
-      input::-webkit-input-placeholder{
+
+      input::-webkit-input-placeholder {
         /* placeholder颜色 */
-        color:#cccccc;
+        color: #cccccc;
         /* placeholder字体大小 */
-        font-size:12px
+        font-size: 12px
       }
-      .but-box{
+
+      .but-box {
         width: 32rem;
         height: 3.5rem;
         background: #0099FF;
@@ -166,15 +204,33 @@ function selectCurr(curr: string) {
         color: #fff;
         font-family: "HarmonyOS Sans Bold";
       }
-      .input-verify{
+
+      .but-box:hover {
+        background: rgba(#0099FF, 0.7);
+      }
+
+      .input-verify {
         width: 12rem;
       }
-      .but-verify{
+
+      .but-verify {
         width: 14rem;
         margin-right: 4rem;
       }
-      .but-submit{
-        margin: 2rem 0;
+
+      .but-submit {
+        //margin: 2rem 0;
+      }
+
+      .error-tip {
+        height: 3rem;
+        width: 31.5rem;
+        line-height: 3rem;
+        font-family: "HarmonyOS Sans Bold";
+        font-size: 1.2rem;
+        color: red;
+        text-align: left;
+        margin: 0 auto;
       }
     }
   }
