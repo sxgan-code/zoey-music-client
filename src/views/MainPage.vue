@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import useIPC from "@/ipc/use-ipc.ts";
 
 const {sendWinController} = useIPC()
