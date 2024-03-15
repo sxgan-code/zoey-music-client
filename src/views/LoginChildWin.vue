@@ -2,6 +2,9 @@
 import useIpc from '@/ipc/use-ipc.ts'
 import {ref} from "vue";
 import {verifyCheckStr, VerifyTypeEnum} from "@/utils/verify-utils.ts";
+// 登录注册相关逻辑
+import {getCaptchaApi, loginApi} from "@/api/auth/index"
+import {LoginData} from "@/api/auth/types.ts";
 
 const {sendChildWinController} = useIpc();
 
@@ -12,22 +15,20 @@ function sendMsgByChildWin() {
 const isLogin = ref(true)
 const errMsg = ref('')
 
-function selectCurr(curr: string) {
+function selectCurr(curr: boolean) {
   registerData.value = {
-    email: '',
-    password: '',
+    email: 'sxgan@foxmail.com',
+    password: '99999999',
     rePassword: '',
     verifyCode: ''
   }
   errMsg.value = ''
-  if (curr === 'login') {
-    isLogin.value = true
-  } else {
-    isLogin.value = false
-  }
+  isLogin.value = curr
+
 }
+
 // 表单校验
-const registerData = ref({
+const registerData = ref<LoginData>({
   email: '',
   password: '',
   rePassword: '',
@@ -39,10 +40,62 @@ function verifyFormData() {
   console.log(VerifyTypeEnum.EMAIL)
   if (!verifyCheckStr(registerData.value.email, VerifyTypeEnum.EMAIL)) {
     errMsg.value = '邮箱格式错误'
-    return;
+    return false
   } else {
     errMsg.value = ''
+    return true
   }
+}
+
+
+// 获取form表单引用
+const verifyCode = ref(null)
+
+// 当点击登录按钮时的函数
+
+const signinSys = () => {
+  if (verifyFormData()) {
+    // 表单所有元素验证通过，可以提交了
+    // loading.value = true
+    console.log("登录==============")
+    loginApi(registerData.value).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+
+    })
+  }
+}
+
+const sendVerify = async () => {
+
+  if (verifyFormData()) {
+    getCaptchaApi(registerData.value).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  } else {
+    console.log('formError表单填写有误，请核对！')
+    return false
+  }
+
+}
+
+const signupSys = async () => {
+  if (verifyFormData()) {
+    console.log('注册');
+    // 表单所有元素验证通过，可以提交了
+    // loading.value = true
+    // signup(registerData.value).then(res => {
+    //   console.log(res)
+    //   // loading.value = false
+    // }).catch(err => {
+    //   console.log(err)
+    // })
+  } else {
+  }
+
 }
 
 </script>
@@ -55,25 +108,24 @@ function verifyFormData() {
       </span>
     </div>
     <div class="select-win-box">
-      <div :class="isLogin?'login-box bg-color':'login-box'" @click="selectCurr('login')">登录账号</div>
-      <div :class="isLogin?'reg-box':'reg-box bg-color'" @click="selectCurr('reg')">注册账号</div>
+      <div :class="isLogin?'login-box bg-color':'login-box'" @click="selectCurr(true)">登录账号</div>
+      <div :class="isLogin?'reg-box':'reg-box bg-color'" @click="selectCurr(false)">注册账号</div>
     </div>
     <div v-if="isLogin" class="content-box login-content">
       <div class="box-title">
         <h4>账号登录</h4>
       </div>
       <div class="box-form">
-        <form>
-          <div>
-            <input class="input-box" type="text" @input="verifyFormData()" name="" v-model="registerData.email" id=""
-                   placeholder="请输入邮箱">
-          </div>
-          <div>
-            <input class="input-box" type="password" name="" id="" placeholder="请输入密码">
-          </div>
-          <div class="error-tip"><span>{{ errMsg }}</span></div>
-          <button class="but-box but-submit">登录</button>
-        </form>
+        <div>
+          <input class="input-box" type="text" @input="verifyFormData()" name="" v-model="registerData.email" id=""
+                 placeholder="请输入邮箱">
+        </div>
+        <div>
+          <input class="input-box" type="password" name="" id="" v-model="registerData.password" data="passworedtype"
+                 placeholder="请输入密码">
+        </div>
+        <div class="error-tip"><span>{{ errMsg }}</span></div>
+        <button class="but-box but-submit" @click="signinSys()">登录</button>
       </div>
     </div>
     <div v-if="!isLogin" class="content-box reg-content">
@@ -81,24 +133,25 @@ function verifyFormData() {
         <h4>账号注册</h4>
       </div>
       <div class="box-form">
-        <form>
-          <div>
-            <input class="input-box" type="text" @input="verifyFormData()" name="" v-model="registerData.email" id=""
-                   placeholder="请输入邮箱">
-          </div>
-          <div>
-            <input class="input-box" type="password" name="" id="" placeholder="请输入密码">
-          </div>
-          <div>
-            <input class="input-box" type="password" name="" id="" placeholder="请再次输入确认密码">
-          </div>
-          <div class="verify-box">
-            <input class="input-box input-verify" type="password" name="" id="" placeholder="请输入验证码">
-            <input type="button" class="but-box but-verify" value="发送验证码"/>
-          </div>
-          <div class="error-tip"><span>{{ errMsg }}</span></div>
-          <input type="button" class="but-box but-submit" value="注册"/>
-        </form>
+        <div>
+          <input class="input-box" type="text" @input="verifyFormData()" name="" v-model="registerData.email" id=""
+                 placeholder="请输入邮箱">
+        </div>
+        <div>
+          <input class="input-box" type="password" name="" id="" v-model="registerData.password"
+                 placeholder="请输入密码">
+        </div>
+        <div>
+          <input class="input-box" type="password" name="" id="" v-model="registerData.rePassword"
+                 placeholder="请再次输入确认密码">
+        </div>
+        <div class="verify-box">
+          <input class="input-box input-verify" type="password" name="" id="" v-model="registerData.verifyCode"
+                 placeholder="请输入验证码">
+          <input type="button" class="but-box but-verify" @click="sendVerify" value="发送验证码"/>
+        </div>
+        <div class="error-tip"><span>{{ errMsg }}</span></div>
+        <input type="button" class="but-box but-submit" value="注册"/>
       </div>
     </div>
   </div>

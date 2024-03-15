@@ -9,13 +9,14 @@ import Components from 'unplugin-vue-components/vite'
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   fs.rmSync('dist-electron', { recursive: true, force: true })
-
+  const ENV_DIR = path.resolve(__dirname, "./env")
   const isServe = command === 'serve'
   const isBuild = command === 'build'
   const sourcemap = isServe || !!process.env.VSCODE_DEBUG
 
   return {
     base:'./',
+    envDir: ENV_DIR,
     plugins: [
       vue(),
       electron({
