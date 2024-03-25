@@ -66,10 +66,33 @@ const signinSys = () => {
     })
   }
 }
-
+const verMsg = ref<string>('发送验证码')
+const isDisabled = ref<boolean>(false)
+let verifyClass = ref<string>('but-box but-verify')
 const sendVerify = async () => {
-
   if (verifyFormData()) {
+    // 设置倒计时
+    isDisabled.value = true
+    verifyClass.value = 'but-box but-verify but-box-click'
+    // 生成一个时间
+    let time = 60;
+    // 生成一个自动计时的函数
+    let t = setInterval(() => {
+      // time 自减
+      if (time > 0) {
+        // 先减少，在做其他的事情，不然，等待一秒，加上网络延迟，效果不好
+        --time;
+        verMsg.value = `${time}秒后再获取`;
+      } else {
+        // 清除函数
+        clearInterval(t);
+        isDisabled.value = false
+        verifyClass.value = 'but-box but-verify'
+        verMsg.value = '获取验证码';
+      }
+    }, 1000)
+
+    // 发送请求
     getCaptchaApi(registerData.value).then(res => {
       console.log(res)
     }).catch(err => {
@@ -148,7 +171,7 @@ const signupSys = async () => {
         <div class="verify-box">
           <input class="input-box input-verify" type="password" name="" id="" v-model="registerData.verifyCode"
                  placeholder="请输入验证码">
-          <input type="button" class="but-box but-verify" @click="sendVerify" value="发送验证码"/>
+          <input :disabled="isDisabled" type="button" :class="verifyClass" @click="sendVerify" :value="verMsg"/>
         </div>
         <div class="error-tip"><span>{{ errMsg }}</span></div>
         <input type="button" class="but-box but-submit" value="注册"/>
@@ -256,6 +279,10 @@ const signupSys = async () => {
         border-radius: 0.5rem;
         color: #fff;
         font-family: "HarmonyOS Sans Bold";
+      }
+
+      .but-box-click {
+        background: rgba(#0099FF, 0.7);
       }
 
       .but-box:hover {
