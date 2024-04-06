@@ -2,8 +2,7 @@
 import useIpc from '@/ipc/use-ipc.ts'
 import {ref} from "vue";
 import {verifyCheckStr, VerifyTypeEnum} from "@/utils/verify-utils.ts";
-// 登录注册相关逻辑
-import {getCaptchaApi, loginApi} from "@/api/auth/index"
+import {getCaptchaApi, signinApi, signupApi} from "@/api/auth/index"
 import {LoginData} from "@/api/auth/types.ts";
 
 const {sendChildWinController} = useIpc();
@@ -13,18 +12,17 @@ function sendMsgByChildWin() {
 }
 
 const isLogin = ref(true)
-const errMsg = ref('')
+const errMsg = ref<string>('')
 
 function selectCurr(curr: boolean) {
   registerData.value = {
     email: 'sxgan@foxmail.com',
-    password: '99999999',
+    password: 'aaa123',
     rePassword: '',
     verifyCode: ''
   }
   errMsg.value = ''
   isLogin.value = curr
-
 }
 
 // 表单校验
@@ -35,30 +33,19 @@ const registerData = ref<LoginData>({
   verifyCode: ''
 })
 
-function verifyFormData() {
-  console.log('regData' + registerData.value.email)
-  console.log(VerifyTypeEnum.EMAIL)
-  if (!verifyCheckStr(registerData.value.email, VerifyTypeEnum.EMAIL)) {
-    errMsg.value = '邮箱格式错误'
-    return false
-  } else {
-    errMsg.value = ''
-    return true
-  }
-}
-
-
-// 获取form表单引用
-const verifyCode = ref(null)
-
-// 当点击登录按钮时的函数
-
+/**
+ * 登录
+ */
 const signinSys = () => {
-  if (verifyFormData()) {
+  if (verifyFormData(VerifySignEnum.SIGNIN)) {
     // 表单所有元素验证通过，可以提交了
     // loading.value = true
-    console.log("登录==============")
-    loginApi(registerData.value).then(res => {
+    signinApi(registerData.value).then(res => {
+      if (res.status != 200) {
+        errMsg.value = res.message
+      } else {
+        alert("跳转主页面")
+      }
       console.log(res)
     }).catch(err => {
       console.log(err)
@@ -66,11 +53,14 @@ const signinSys = () => {
     })
   }
 }
+/**
+ * 发送验证码
+ */
 const verMsg = ref<string>('发送验证码')
 const isDisabled = ref<boolean>(false)
 let verifyClass = ref<string>('but-box but-verify')
 const sendVerify = async () => {
-  if (verifyFormData()) {
+  if (verifyFormData(VerifySignEnum.OTHER)) {
     // 设置倒计时
     isDisabled.value = true
     verifyClass.value = 'but-box but-verify but-box-click'
@@ -94,33 +84,65 @@ const sendVerify = async () => {
 
     // 发送请求
     getCaptchaApi(registerData.value).then(res => {
-      console.log(res)
+      if (res.status != 200) {
+        errMsg.value = res.message
+      } else {
+        alert("发送成功")
+      }
     }).catch(err => {
       console.log(err)
     })
   } else {
-    console.log('formError表单填写有误，请核对！')
     return false
   }
 
 }
-
+/**
+ * 注册
+ */
 const signupSys = async () => {
-  if (verifyFormData()) {
+  if (verifyFormData(VerifySignEnum.SIGNUP)) {
     console.log('注册');
     // 表单所有元素验证通过，可以提交了
     // loading.value = true
-    // signup(registerData.value).then(res => {
-    //   console.log(res)
-    //   // loading.value = false
-    // }).catch(err => {
-    //   console.log(err)
-    // })
+    signupApi(registerData.value).then(res => {
+      if (res.status != 200) {
+        errMsg.value = res.message
+      } else {
+        alert("跳转登录页面")
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   } else {
   }
 
 }
 
+enum VerifySignEnum {
+  SIGNIN = 'signin', SIGNUP = 'signup', OTHER = 'other',
+}
+
+/**
+ * 校验表单，
+ * @param sign 校验标志
+ */
+function verifyFormData(sign: VerifySignEnum) {
+  if (!verifyCheckStr(registerData.value.email, VerifyTypeEnum.EMAIL)) {
+    errMsg.value = '邮箱格式错误'
+    return false
+  } else if ((sign === VerifySignEnum.SIGNIN || sign === VerifySignEnum.SIGNUP)
+      && !verifyCheckStr(registerData.value.password, VerifyTypeEnum.PWD)) {
+    errMsg.value = '密码必须以字母开头长度6-18位，可含数字、下划线'
+    return false
+  } else if (sign === VerifySignEnum.SIGNUP && registerData.value.rePassword !== registerData.value.password) {
+    errMsg.value = '确认密码必须和密码相同'
+    return false
+  } else {
+    errMsg.value = ''
+    return true
+  }
+}
 </script>
 
 <template>
@@ -140,7 +162,8 @@ const signupSys = async () => {
       </div>
       <div class="box-form">
         <div>
-          <input class="input-box" type="text" @input="verifyFormData()" name="" v-model="registerData.email" id=""
+          <input class="input-box" type="text" @input="verifyFormData(VerifySignEnum.OTHER)" name=""
+                 v-model="registerData.email" id=""
                  placeholder="请输入邮箱">
         </div>
         <div>
@@ -157,7 +180,8 @@ const signupSys = async () => {
       </div>
       <div class="box-form">
         <div>
-          <input class="input-box" type="text" @input="verifyFormData()" name="" v-model="registerData.email" id=""
+          <input class="input-box" type="text" @input="verifyFormData(VerifySignEnum.OTHER)" name=""
+                 v-model="registerData.email" id=""
                  placeholder="请输入邮箱">
         </div>
         <div>
@@ -174,7 +198,7 @@ const signupSys = async () => {
           <input :disabled="isDisabled" type="button" :class="verifyClass" @click="sendVerify" :value="verMsg"/>
         </div>
         <div class="error-tip"><span>{{ errMsg }}</span></div>
-        <input type="button" class="but-box but-submit" value="注册"/>
+        <input type="button" class="but-box but-submit" @click="signupSys" value="注册"/>
       </div>
     </div>
   </div>

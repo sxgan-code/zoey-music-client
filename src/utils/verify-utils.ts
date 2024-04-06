@@ -68,7 +68,7 @@ export const isCardID = (sId: any) => {
         return false
     }
     //身份证城市
-    var aCity: any = {
+    let aCity: any = {
         11: "北京",
         12: "天津",
         13: "河北",
@@ -111,21 +111,21 @@ export const isCardID = (sId: any) => {
     }
 
     // 出生日期验证
-    var sBirthday = (sId.substr(6, 4) + "-" + Number(sId.substr(10, 2)) + "-" + Number(sId.substr(12, 2))).replace(/-/g, "/"),
-        d = new Date(sBirthday)
+    let sBirthday = (sId.substr(6, 4) + "-" + Number(sId.substr(10, 2)) + "-" + Number(sId.substr(12, 2))).replace(/-/g, "/"),
+        d = new Date(sBirthday);
     if (sBirthday != (d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate())) {
         console.log('身份证上的出生日期非法')
         return false
     }
 
     // 身份证号码校验
-    var sum = 0,
+    let sum = 0,
         weights = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2],
-        codes = "10X98765432"
-    for (var i = 0; i < sId.length - 1; i++) {
+        codes = "10X98765432";
+    for (let i = 0; i < sId.length - 1; i++) {
         sum += sId[i] * weights[i];
     }
-    var last = codes[sum % 11]; //计算出来的最后一位身份证号码
+    let last = codes[sum % 11]; //计算出来的最后一位身份证号码
     if (sId[sId.length - 1] != last) {
         console.log('你输入的身份证号非法')
         return false
@@ -283,7 +283,7 @@ export const isSpider = () => {
  * VUE判断是否ios
  */
 export const isIos = () => {
-    var u = navigator.userAgent;
+    let u = navigator.userAgent;
     if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {  //安卓手机
         return false
     } else if (u.indexOf('iPhone') > -1) {//苹果手机
@@ -300,12 +300,12 @@ export const isIos = () => {
  * VUE判断是否为PC端
  */
 export const isPC = () => {
-    var userAgentInfo = navigator.userAgent;
-    var Agents = ["Android", "iPhone",
+    let userAgentInfo = navigator.userAgent;
+    let Agents = ["Android", "iPhone",
         "SymbianOS", "Windows Phone",
         "iPad", "iPod"];
-    var flag = true;
-    for (var v = 0; v < Agents.length; v++) {
+    let flag = true;
+    for (let v = 0; v < Agents.length; v++) {
         if (userAgentInfo.indexOf(Agents[v]) > 0) {
             flag = false;
             break;

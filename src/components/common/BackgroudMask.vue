@@ -4,7 +4,7 @@
 
 <template>
   <div  class="bg-mask">
-    <img src="@/assets/images/cat001.jpg" alt="">
+    <img src="@/assets/images/20240004.jpg" alt="">
   </div>
 </template>
 
@@ -22,7 +22,7 @@
     object-fit:cover;
     object-position: center;
     //background-size: cover;
-    opacity: 0.85;
+    opacity: 0.94;
   }
 }
 </style>

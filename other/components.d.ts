@@ -10,5 +10,6 @@ declare module 'vue' {
     BackgroudMask: typeof import('./../src/components/common/BackgroudMask.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ZoeyMassage: typeof import('./../src/components/common/ZoeyMassage.vue')['default']
   }
 }

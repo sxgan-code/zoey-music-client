@@ -9,7 +9,7 @@ const service = axios.create({
     // 这里使用在线mock数据,根据实际情况配置
     baseURL: import.meta.env.VITE_APP_ENV === 'development' ? import.meta.env.VITE_BASE_URL : import.meta.env.VITE_BASE_URL,
     timeout: 50000,
-    headers: {'Content-Type': 'application/json;charset=utf-8'}
+    // headers: {'Content-Type': 'application/json;charset=utf-8'}
 });
 
 // 请求拦截器
@@ -20,8 +20,8 @@ service.interceptors.request.use(
         // if (userStore.token) {
         //     config.headers.Authorization = userStore.token;
         // }
-        console.log(import.meta.env.VITE_APP_ENV)
-        console.log(import.meta.env.VITE_BASE_URL)
+        // console.log(import.meta.env.VITE_APP_ENV)
+        // console.log(import.meta.env.VITE_BASE_URL)
         return config;
     },
     (error: any) => {
@@ -32,9 +32,10 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
     (response: AxiosResponse) => {
-        console.log("http.ts response", response)
+        // console.log("http.ts response", response)
         const {status, msg} = response.data;
-        if (status === 200) {
+        // 700以上为业务错误
+        if (status === 200 || status >= 700) {
             return response.data;
         }
         // 响应数据为二进制流处理(Excel导出)
@@ -47,18 +48,11 @@ service.interceptors.response.use(
     },
     (error: any) => {
         if (error.response.data) {
-            const {status, msg} = error.response.data;
+            const {status} = error.response.data;
             // token 过期,重新登录
             if (status === 401) {
-                // ElMessageBox.confirm('当前页面已失效，请重新登录', '提示', {
-                //     confirmButtonText: '确定',
-                //     type: 'warning'
-                // }).then(() => {
                 localStorage.clear();
                 window.location.href = '/';
-                // });
-            } else {
-                // ElMessage.error(msg || '系统出错');
             }
         }
         return Promise.reject(error.message);
