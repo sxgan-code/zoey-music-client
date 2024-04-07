@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, shell} from 'electron'
+import {app, BrowserWindow, ipcMain, MessageChannelMain, shell} from 'electron'
 import {release} from 'node:os'
 import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
@@ -46,6 +46,9 @@ const preload = join(__dirname, '../preload/index.mjs')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
 
+// 建立通道
+const {port1, port2} = new MessageChannelMain()
+
 async function createWindow() {
     win = new BrowserWindow({
         title: 'Main window',
@@ -83,7 +86,6 @@ async function createWindow() {
     win.webContents.on('did-finish-load', () => {
         win?.webContents.send('main-process-message', new Date().toLocaleString())
     })
-
     // Make all links open with the browser, not with the application
     win.webContents.setWindowOpenHandler(({url}) => {
         if (url.startsWith('https:')) shell.openExternal(url)
@@ -123,23 +125,11 @@ async function createChildWindow(win: BrowserWindow, param: any) {
             justChildWin?.webContents.closeDevTools();
         });
     }
-    // 窗口控制
-    ipcMain.on('child-win-controller', (event, data) => {
-        if (data == 'max') {
-            justChildWin?.maximize()
-        } else if (data == 'unmax') {
-            justChildWin?.unmaximize()
-        } else if (data == 'min') {
-            justChildWin?.minimize()
-        } else if (data == 'close') {
-            justChildWin?.close()
-        }
-    })
+
     // Test actively push message to the Electron-Renderer
     justChildWin.webContents.on('did-finish-load', () => {
         justChildWin?.webContents.send('main-process-message', new Date().toLocaleString())
     })
-
     // Make all links open with the browser, not with the application
     justChildWin.webContents.setWindowOpenHandler(({url}) => {
         if (url.startsWith('https:')) shell.openExternal(url)
@@ -154,10 +144,21 @@ async function createChildWindow(win: BrowserWindow, param: any) {
 }
 
 // 子窗口控制
-ipcMain.handle('child-win-controller', (event, data) => {
-    console.log(event.processId);
+ipcMain.on('child-win-controller', (event, data) => {
+    if (data == 'max') {
+        justChildWin?.maximize()
+    } else if (data == 'unmax') {
+        justChildWin?.unmaximize()
+    } else if (data == 'min') {
+        justChildWin?.minimize()
+    } else if (data == 'close') {
+        justChildWin?.close()
+    }
+})
+// 子窗口需要发送到主窗口的消息
+ipcMain.on('child-main-msg', (event, data) => {
     console.log(data)
-    win?.webContents.send('main-process-message', new Date().toLocaleString())
+    win?.webContents.send('user-token', data)
 })
 // 异步打开窗口
 ipcMain.handle("renderer-open-win", (e, param: string) => {

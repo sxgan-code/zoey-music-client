@@ -4,12 +4,12 @@ import {ref} from "vue";
 import {verifyCheckStr, VerifyTypeEnum} from "@/utils/verify-utils.ts";
 import {getCaptchaApi, signinApi, signupApi} from "@/api/auth/index"
 import {LoginData} from "@/api/auth/types.ts";
+import {useUserStore} from "@/store/user-store.ts";
 
-const {sendChildWinController} = useIpc();
+const {sendChildWinController, sendChildMsgToMain} = useIpc();
 
-function sendMsgByChildWin() {
-  window.ipcRenderer.invoke('child-win-controller', '哈哈哈哈哈哈哈')
-}
+var userStore = useUserStore();
+
 
 const isLogin = ref(true)
 const errMsg = ref<string>('')
@@ -40,17 +40,22 @@ const signinSys = () => {
   if (verifyFormData(VerifySignEnum.SIGNIN)) {
     // 表单所有元素验证通过，可以提交了
     // loading.value = true
+    userStore.isMask = true
     signinApi(registerData.value).then(res => {
       if (res.status != 200) {
         errMsg.value = res.message
       } else {
-        alert("跳转主页面")
+        sendChildMsgToMain(res.data.token)
+        // console.log("跳转主页面,token: " + res.data.token)
+        sendChildWinController('close')
       }
-      console.log(res)
     }).catch(err => {
-      console.log(err)
 
-    })
+    }).finally(() => {
+          userStore.isMask = false
+        }
+    )
+
   }
 }
 /**
@@ -104,12 +109,11 @@ const signupSys = async () => {
   if (verifyFormData(VerifySignEnum.SIGNUP)) {
     console.log('注册');
     // 表单所有元素验证通过，可以提交了
-    // loading.value = true
     signupApi(registerData.value).then(res => {
       if (res.status != 200) {
         errMsg.value = res.message
       } else {
-        alert("跳转登录页面")
+        isLogin.value = true
       }
     }).catch(err => {
       console.log(err)
@@ -138,15 +142,25 @@ function verifyFormData(sign: VerifySignEnum) {
   } else if (sign === VerifySignEnum.SIGNUP && registerData.value.rePassword !== registerData.value.password) {
     errMsg.value = '确认密码必须和密码相同'
     return false
+  } else if (sign === VerifySignEnum.SIGNUP && registerData.value.verifyCode.length == 0) {
+    errMsg.value = '验证码不能为空'
+    return false
   } else {
     errMsg.value = ''
     return true
   }
 }
+
 </script>
 
 <template>
   <div class="login-root-box">
+    <div class="globe-mask" v-if="userStore.isMask">
+      <div class="globe-rotating-element icon-box">
+        <i class="icon myiconfont my-spinner9 "><span
+            class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+      </div>
+    </div>
     <div class="head-controller-close">
       <span class="icon-box-close" @click="sendChildWinController('close')">
         <i class="icon iconfont">&#xe68d</i>

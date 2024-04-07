@@ -1,4 +1,4 @@
-import mainRouters from "@/router/mainRouters.ts";
+import mainRouters from "@/router/main-routers.ts";
 import {createRouter, createWebHashHistory, Router} from "vue-router";
 
 const router: Router = createRouter({

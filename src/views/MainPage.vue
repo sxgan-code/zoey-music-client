@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import useIPC from "@/ipc/use-ipc.ts";
+import {useUserStore} from "@/store/user-store.ts";
 
 const {sendWinController} = useIPC()
 /* 打开一个子窗口*/
@@ -13,17 +14,24 @@ const openChildWin = (path: string) => {
   window.ipcRenderer.invoke('renderer-open-win', data);
 }
 
+var userStore = useUserStore();
 </script>
 
 <template>
   <div class="main-box-root">
     <backgroud-mask/>
+    <div class="globe-mask" v-if="userStore.isMask">
+      <div class="globe-rotating-element icon-box">
+        <i class="icon myiconfont my-spinner9 "><span
+            class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+      </div>
+    </div>
     <div class="head-box">
       <div class="head-logo">
         <i class="icon myiconfont my-music-qqmusic-logo"><span class="path1"></span><span class="path2"></span><span
             class="path3"></span></i>
       </div>
-      <div class="head-poreson"></div>
+      <div class="head-person"></div>
       <div class="head-sys-click">
         <span class="icon-box-min" @click="sendWinController('min')"><i class="icon iconfont">&#xe972</i></span>
         <span class="icon-box-max" @click="sendWinController('max-unmax')"><i class="icon iconfont">&#xe751</i></span>
