@@ -8,8 +8,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BackgroudMask: typeof import('./../src/components/common/BackgroudMask.vue')['default']
+    MainLeftMenu: typeof import('./../src/components/MainLeftMenu.vue')['default']
+    MainRightContent: typeof import('./../src/components/MainRightContent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    ZoeyMassage: typeof import('./../src/components/common/ZoeyMassage.vue')['default']
+    ZoeyMessage: typeof import('./../src/components/common/ZoeyMessage.vue')['default']
   }
 }

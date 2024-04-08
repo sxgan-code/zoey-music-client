@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import useIPC from "@/ipc/use-ipc.ts";
 import {useUserStore} from "@/store/user-store.ts";
+import MainLeftMenu from "@/components/MainLeftMenu.vue";
+import MainRightContent from "@/components/MainRightContent.vue";
 
 const {sendWinController} = useIPC()
 /* 打开一个子窗口*/
@@ -31,7 +33,9 @@ var userStore = useUserStore();
         <i class="icon myiconfont my-music-qqmusic-logo"><span class="path1"></span><span class="path2"></span><span
             class="path3"></span></i>
       </div>
-      <div class="head-person"></div>
+      <div class="head-person">
+        <button class="login-btn" type="button" @click="openChildWin('/login')">请登录</button>
+      </div>
       <div class="head-sys-click">
         <span class="icon-box-min" @click="sendWinController('min')"><i class="icon iconfont">&#xe972</i></span>
         <span class="icon-box-max" @click="sendWinController('max-unmax')"><i class="icon iconfont">&#xe751</i></span>
@@ -39,9 +43,11 @@ var userStore = useUserStore();
       </div>
     </div>
     <div class="content-box">
-      <div class="left-menu"></div>
+      <div class="left-menu">
+        <main-left-menu/>
+      </div>
       <div class="right-box">
-        <button type="button" @click="openChildWin('/login')">打开一个窗口</button>
+        <main-right-content/>
       </div>
     </div>
   </div>
@@ -65,10 +71,17 @@ var userStore = useUserStore();
       width: 25rem;
       //border: 0.1rem solid red;
       text-align: center;
+
       i {
         line-height: 8rem;
         font-size: 5rem;
         //margin: 0 3rem;
+      }
+    }
+
+    .head-person {
+      .login-btn {
+        -webkit-app-region: no-drag; // 点击元素去除拖拽，不然后面无法实现点击事件
       }
     }
 
@@ -115,6 +128,7 @@ var userStore = useUserStore();
     .left-menu {
       width: 24rem;
       height: 100%;
+      overflow-y: auto;
     }
 
     .right-box {

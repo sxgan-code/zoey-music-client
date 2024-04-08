@@ -109,6 +109,7 @@ const signupSys = async () => {
   if (verifyFormData(VerifySignEnum.SIGNUP)) {
     console.log('注册');
     // 表单所有元素验证通过，可以提交了
+    userStore.isMask = true
     signupApi(registerData.value).then(res => {
       if (res.status != 200) {
         errMsg.value = res.message
@@ -117,7 +118,10 @@ const signupSys = async () => {
       }
     }).catch(err => {
       console.log(err)
-    })
+    }).finally(() => {
+          userStore.isMask = false
+        }
+    )
   } else {
   }
 

@@ -10,7 +10,14 @@ export const useUserStore = defineStore('user', {
             // 所有这些属性都将自动推断其类型
             isMask: false,
             /*自增函数*/
-            counter: 0
+            counter: 0,
+            /* 用户信息 */
+            userInfo: {
+                name: '天外来物',
+                avatar: '@/assets/images/avatar.png',
+                token: '',
+                email: ''
+            }
         }
     },
     actions: {
