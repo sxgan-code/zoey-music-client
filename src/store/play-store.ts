@@ -19,7 +19,7 @@ export const usePlayStore = defineStore('play', {
                 count: 0
             },
             songInfo: {
-                songId: '8',
+                songId: '0005',
                 name: '天外来物',
                 pic: 'http://localhost:9090/music/api/pic/Resource/image/songImg/下一站，茶山刘.png',
                 singer: '薛之谦',

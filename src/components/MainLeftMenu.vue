@@ -1,111 +1,13 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {usePlayStore} from '@/store/play-store.ts'
+import songlistMockData from "@/assets/mock/songlist-mock-data.ts";
 
 const playStore = usePlayStore()
-const creates = ref([
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA3A",
-    songlistName: "只此一生",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  }
-])
-const collects = ref([
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-  {
-    songlistId: "LIST-188F3265-75A9-0308-1082-BE570358BA2A",
-    songlistName: "何必从众",
-    songlistInfo: "信仰到底是什么呢，就是纵身一跃，就是我们跟神之间一个永远的约定，是舍弃旧的去开始新的生活;信仰就是从今以后，再也不要放开你的手",
-    songlistStyle: "",
-    songlistPic: "/Resource/image/songListImg/002_1642492685853.jfif",
-    userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-    block: "create@love@collect"
-  },
-])
+
+const creates = ref(songlistMockData.creates)
+const collects = ref(songlistMockData.collects)
+
 
 /*打开歌单对应页面*/
 function openSysPage(sysFlag: string) {
@@ -130,22 +32,37 @@ function openPage(songlistId: string) {
   <div class="menu-block">
     <div class="my-music-title">在线音乐</div>
     <div class="my-music-list">
-      <div class="like-music" @click="openSysPage('mylove')"><i class="iconfont">&#xe70c;</i> 我喜欢</div>
-      <div class="local-down" @click="openSysPage('down')"><i class="iconfont">&#xe9f7;</i> 本地和下载</div>
-      <div class="recent-play" @click="openSysPage('recentplay')"><i class="iconfont">&#xe6c1;</i> 最近播放</div>
-      <div class="audition-list" @click="openSysPage('auditionlist')"><i class="iconfont">&#xe82a;</i> 试听列表</div>
-      <div class="purchased-music" @click="openSysPage('purchasedmusic')"><i class="iconfont">&#xe70c;</i> 已购音乐
+      <div class="like-music" @click="openSysPage('mylove')">
+        <i class="icon huaweiicon icon-ic_public_home"></i> <span>推荐</span>
+      </div>
+      <div class="local-down" @click="openSysPage('down')">
+        <i class="icon huaweiicon icon-ic_device_earphone_roc"></i> <span>乐馆</span>
+      </div>
+      <div class="recent-play" @click="openSysPage('recentplay')">
+        <i class="icon huaweiicon icon-e8067f9-fa0c-4dc2-a249-ffde979e3a5f"></i> <span>视频</span>
+      </div>
+      <div class="audition-list" @click="openSysPage('auditionlist')">
+        <i class="icon huaweiicon icon-a11-6e8d-4075-a5fb-773f53432fb8"></i> <span>雷达</span>
       </div>
     </div>
   </div>
   <div class="menu-block">
     <div class="my-music-title">我的音乐</div>
     <div class="my-music-list">
-      <div class="like-music" @click="openSysPage('mylove')"><i class="iconfont">&#xe70c;</i> 我喜欢</div>
-      <div class="local-down" @click="openSysPage('down')"><i class="iconfont">&#xe9f7;</i> 本地和下载</div>
-      <div class="recent-play" @click="openSysPage('recentplay')"><i class="iconfont">&#xe6c1;</i> 最近播放</div>
-      <div class="audition-list" @click="openSysPage('auditionlist')"><i class="iconfont">&#xe82a;</i> 试听列表</div>
-      <div class="purchased-music" @click="openSysPage('purchasedmusic')"><i class="iconfont">&#xe70c;</i> 已购音乐
+      <div class="like-music" @click="openSysPage('mylove')">
+        <i class="icon huaweiicon icon-ic_public_favor"></i> <span>我喜欢</span>
+      </div>
+      <div class="local-down" @click="openSysPage('down')">
+        <i class="icon huaweiicon icon-ic_gallery_move_out"></i> <span>本地和下载</span>
+      </div>
+      <div class="recent-play" @click="openSysPage('recentplay')">
+        <i class="icon huaweiicon icon-ic_public_time"></i> <span>最近播放</span>
+      </div>
+      <div class="audition-list" @click="openSysPage('auditionlist')">
+        <i class="icon huaweiicon icon-ic_device_earphone"></i> <span>试听列表</span>
+      </div>
+      <div class="purchased-music" @click="openSysPage('purchasedmusic')">
+        <i class="icon huaweiicon icon-ic_public_appstore"></i> <span>已购音乐</span>
       </div>
     </div>
   </div>
@@ -180,7 +97,6 @@ function openPage(songlistId: string) {
   width: 16rem;
   margin: 0 2rem;
   color: var(--text--light);
-  //font-weight: bold;
   .my-music-title {
     font-family: 'HarmonyOS Sans';
     font-size: 1.2rem;
@@ -195,20 +111,24 @@ function openPage(songlistId: string) {
     font-size: 1.4rem;
 
     > div {
-      height: 3rem;
-      line-height: 3rem;
+      //height: 3rem;
+      //line-height: 3rem;
       width: 16rem;
       margin: 0.5rem 0;
       border-radius: 0.5rem;
-      //background: lawngreen;
       i {
+        line-height: 3rem;
+        font-size: 1.8rem;
         font-weight: lighter;
         margin: 0 1rem;
+      }
+
+      > span {
+        margin: auto 0;
       }
     }
 
     .love-collect {
-
       height: 3rem;
       line-height: 3rem;
       width: 16rem;

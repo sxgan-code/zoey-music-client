@@ -98,22 +98,23 @@ function playMusic(id: string) {
         <div class="item-list" v-for="item in songs">
           <div class="song-clo-1">
             <div class="song-name">
-              <i :class="item.isLike=='1'?'iconfont song-like':'iconfont'" :id="'item-'+index"
-                 @click="isLikeSong(item.songId)">{{ item.isLike == '1' ? '&#xeaab;' : '&#xe8fe;' }}</i>
+              <i :id="'item-'+index" @click="isLikeSong(item.songId)"
+                 :class="item.isLike=='1'?
+                 'icon huaweiicon icon-ic_public_favor_filled':'icon huaweiicon icon-ic_public_favor'"></i>
               <span>{{ item.songName.length > 12 ? item.songName.substring(0, 12) + '...' : item.songName }}</span>
             </div>
             <div class="song-control">
-              <i class="iconfont"
-                 @click="playMusic(item.songId)">{{
-                  item.songId == playStore.songInfo.songId && playStore.songPlayingInfo.isPlay ? '&#xeb99;' : '&#xeb98;'
-                }}</i>
-              <i class="iconfont">&#xebaa;</i>
-              <i class="iconfont">&#xe77b;</i>
-              <i class="iconfont">&#xe760;</i>
+              <i :class="item.songId == playStore.songInfo.songId && playStore.songPlayingInfo.isPlay ?
+               'icon huaweiicon icon-ic_public_pause_norm' : 'icon huaweiicon icon-ic_public_play_norm'"
+                 @click="playMusic(item.songId)"></i>
+              <i class="icon huaweiicon icon-ic_public_add_norm"></i>
+              <i class="icon huaweiicon icon-ic_public_download"></i>
+              <i class="icon huaweiicon icon-ic_public_fail"></i>
             </div>
           </div>
           <div class="song-clo-2"><span>{{
-              item.singer.singerName.length > 8 ? item.singer.singerName.substring(0, 8) + '...' : item.singer.singerName
+              item.singer.singerName.length > 8 ?
+                  item.singer.singerName.substring(0, 8) + '...' : item.singer.singerName
             }}</span></div>
           <div class="song-clo-3">
             <span>{{
