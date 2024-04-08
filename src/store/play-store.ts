@@ -9,7 +9,7 @@ export const usePlayStore = defineStore('play', {
         return {
             songList: {
                 songlistId: "LIST-0D44A50E-97F5-4CC0-55C2-6F16A69A546F",
-                songlistName: "夏末沉沦",
+                songlistName: "只此一生",
                 songlistInfo: "多年后，再回想年少时的迷茫和执着，或许原因都不记得了。青春就是让你张扬地笑，也给你莫名的痛。",
                 songlistStyle: "",
                 songlistPic: "/Resource/image/songListImg/109951163443093546.jpg",
