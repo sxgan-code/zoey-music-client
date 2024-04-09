@@ -312,11 +312,11 @@ function playMusic(id: string) {
       }
 
       span:hover {
-        color: var(--my-dark-light-1);
+        color: var(--text-active--color);
       }
 
       .sel-title-span {
-        color: var(--my-dark-light-1);
+        color: var(--text-active--color);
       }
 
       .sel-title-span::after {
@@ -324,7 +324,7 @@ function playMusic(id: string) {
         content: '';
         width: 2.5rem;
         margin: 0 auto;
-        border-bottom: 3px solid var(--my-dark-light-1);
+        border-bottom: 3px solid var(--text-active--color);
       }
     }
 
@@ -413,7 +413,7 @@ function playMusic(id: string) {
             line-height: 4rem;
 
             span {
-              color: var(--el-color-white);
+              color: var(--text--color);
               font-size: 1.4rem;
             }
 
@@ -424,7 +424,7 @@ function playMusic(id: string) {
             i {
               cursor: pointer;
               margin: 0 1rem;
-              color: var(--el-color-white);
+              color: var(--text--color);
               font-size: 1.6rem;
             }
           }
@@ -437,12 +437,12 @@ function playMusic(id: string) {
 
             i {
               display: none;
-              color: var(--el-color-white);
+              color: var(--text--color);
               font-size: 1.8rem;
             }
 
             i:hover {
-              color: var(--my-dark-light-1);
+              color: var(--text-active--color);
             }
           }
         }
@@ -459,7 +459,7 @@ function playMusic(id: string) {
           span {
             font-size: 1.4rem;
             margin-left: 1rem;
-            color: var(--el-color-white);
+            color: var(--text--color);
           }
         }
       }

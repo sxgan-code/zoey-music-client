@@ -6,17 +6,18 @@
 :root {
   /*文字颜色*/
   --text--light: rgb(212, 218, 232);
-  --text--light-rgba: rgba(#FCFCFC, 0.6);
+  --text--light-rgba: rgba(245, 245, 245, 0.6);
   --text--deep: #333333;
-  --text--color: rgba(255, 255, 255, 0.9);
+  --text--color: rgb(255, 255, 255);
+  --text-active--color: rgb(226, 171, 144);
   --text-color-light-red: #FF6A6A;
 
-  --text-grey-light: #999;
-  --text-grey-light-1: rgba(#999, 0.1);
-  --text-grey-light-2: rgba(#999, 0.2);
-  --text-grey-light-3: rgba(#999, 0.3);
-  --text-grey-light-4: rgba(#999, 0.4);
-  --text-grey-light-5: rgba(#999, 0.5);
+  --text-grey-light: rgb(153, 153, 153);
+  --text-grey-light-1: rgba(153, 153, 153, 0.1);
+  --text-grey-light-2: rgba(153, 153, 153, 0.2);
+  --text-grey-light-3: rgba(153, 153, 153, 0.3);
+  --text-grey-light-4: rgba(153, 153, 153, 0.4);
+  --text-grey-light-5: rgba(153, 153, 153, 0.5);
   /*提示色*/
   --text--tip: #3EAF7C;
   --bg--rgba: rgba(0, 0, 0, 0.1);

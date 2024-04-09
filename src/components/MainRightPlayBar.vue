@@ -138,7 +138,7 @@ function clickVolume() {
     display: block;
     width: 0vw;
     height: 0.25rem;
-    background: var(--my-dark-light-1);
+    background: var(--text-active--color);
   }
 
   .current-position-point {
@@ -148,7 +148,7 @@ function clickVolume() {
     height: 1rem;
     width: 1rem;
     border-radius: 0.5rem;
-    background: var(--my-dark-light-1);
+    background: var(--text-active--color);
     display: none;
   }
 }
@@ -254,7 +254,7 @@ function clickVolume() {
 
         i:nth-child(n+2):hover {
           cursor: pointer;
-          color: var(--my-dark-light-1)
+          color: var(--text-active--color)
         }
       }
     }
@@ -279,7 +279,7 @@ function clickVolume() {
 
       span i:hover {
         cursor: pointer;
-        color: var(--my-dark-light-1)
+        color: var(--text-active--color)
       }
 
       span .i-max {
@@ -291,7 +291,7 @@ function clickVolume() {
         display: block;
         font-size: 3rem;
         padding-right: 1rem;
-        color: var(--my-dark-light-1)
+        color: var(--text-active--color)
       }
 
       .tip-volume {

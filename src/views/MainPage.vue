@@ -6,8 +6,8 @@ import MainRightContent from "@/components/MainRightContent.vue";
 import MainHead from "@/components/MainHead.vue";
 import MainRightPlayBar from "@/components/MainRightPlayBar.vue";
 
-
 var userStore = useUserStore();
+
 </script>
 
 <template>
