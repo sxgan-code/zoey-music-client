@@ -50,7 +50,7 @@ const signinSys = () => {
         sendChildWinController('close')
       }
     }).catch(err => {
-
+      errMsg.value = '服务器端异常，请稍后再试'
     }).finally(() => {
           userStore.isMask = false
         }
@@ -95,6 +95,7 @@ const sendVerify = async () => {
         alert("发送成功")
       }
     }).catch(err => {
+      errMsg.value = '服务器端异常，请稍后再试'
       console.log(err)
     })
   } else {
@@ -117,6 +118,7 @@ const signupSys = async () => {
         isLogin.value = true
       }
     }).catch(err => {
+      errMsg.value = '服务器端异常，请稍后再试'
       console.log(err)
     }).finally(() => {
           userStore.isMask = false
