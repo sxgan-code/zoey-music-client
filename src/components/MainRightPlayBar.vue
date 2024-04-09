@@ -80,19 +80,17 @@ function clickVolume() {
     </div>
     <div class="song-play-control">
       <div class="control-box">
-        <span><i class="icon huaweiicon icon-ic_public_drawer_filled"></i></span>
+        <span><i class="icon huaweiicon icon-ic_public_drawer_filled i-max"></i></span>
         <span><i class="icon huaweiicon icon-ic_public_play_last" @click="previousAudio()"></i></span>
         <span>
-          <i class="icon huaweiicon icon-ic_public_pause_norm" @click="changePlay()"
-             v-if="playStore.songPlayingInfo.isPlay"></i>
-          <i class="icon huaweiicon icon-ic_public_play_norm" @click="changePlay()"
-             v-if="!playStore.songPlayingInfo.isPlay"></i>
+          <i :class="playStore.songPlayingInfo.isPlay?'icon huaweiicon icon-ic_public_pause_norm':'icon huaweiicon icon-ic_public_play_norm'"
+             @click="changePlay()"></i>
         </span>
         <span>
           <i class="icon huaweiicon icon-ic_public_play_next" @click="nextAudio()"></i>
         </span>
         <span>
-          <i class="icon huaweiicon icon-ic_public_sound_filled" @click="clickVolume()"></i>
+          <i class="icon huaweiicon icon-ic_public_sound_filled i-max" @click="clickVolume()"></i>
         </span>
       </div>
     </div>
@@ -170,7 +168,7 @@ function clickVolume() {
 
   .song-info {
     flex: 2;
-    height: 5rem;
+    height: 6rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -213,7 +211,7 @@ function clickVolume() {
 
 
       .info-right {
-        border: 1px solid lawngreen;
+        //border: 1px solid lawngreen;
         height: 4rem;
         width: 20rem;
         margin-left: 1rem;
@@ -228,10 +226,14 @@ function clickVolume() {
           span {
             display: block;
             font-size: 1.2rem;
+            margin: 0 1rem;
             color: var(--el-color-white);
           }
         }
 
+        i {
+          margin: 0 0.7rem;
+        }
         .song-like {
           font-size: 1.8rem;
           color: var(--el-color-white);
@@ -241,12 +243,12 @@ function clickVolume() {
           }
         }
 
-        .song-like:hover {
+        .song-like i:hover {
           cursor: pointer;
         }
 
         i:nth-child(n+2) {
-          margin: 0 0.5rem;
+          //margin: 0 0.5rem;
           color: var(--bg--active--rgba)
         }
 
@@ -281,7 +283,7 @@ function clickVolume() {
       }
 
       span .i-max {
-        display: block;
+        //display: block;
         font-size: 2rem;
       }
 

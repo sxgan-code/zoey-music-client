@@ -12,9 +12,7 @@ declare module 'vue' {
     MainLeftMenu: typeof import('./../src/components/MainLeftMenu.vue')['default']
     MainRightContent: typeof import('./../src/components/MainRightContent.vue')['default']
     MainRightPlayBar: typeof import('./../src/components/MainRightPlayBar.vue')['default']
-    PlayBar: typeof import('./../src/components/PlayBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    ZoeyMessage: typeof import('./../src/components/common/ZoeyMessage.vue')['default']
   }
 }

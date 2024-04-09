@@ -235,7 +235,7 @@ function playMusic(id: string) {
         align-items: center;
 
         span {
-          font-family: '微软雅黑';
+          font-family: 'HarmonyOS Sans';
           font-size: 1.4rem;
           margin-left: 2rem;
           color: var(--text--color);
@@ -250,7 +250,7 @@ function playMusic(id: string) {
       align-items: center;
 
       span {
-        font-family: '微软雅黑';
+        font-family: 'HarmonyOS Sans';
         font-size: 1.4rem;
         color: var(--text--color);
       }

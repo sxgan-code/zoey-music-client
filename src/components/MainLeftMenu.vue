@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import {usePlayStore} from '@/store/play-store.ts'
 import songlistMockData from "@/assets/mock/songlist-mock-data.ts";
+import msg from "@/components/message";
 
 const playStore = usePlayStore()
 
@@ -11,6 +12,9 @@ const collects = ref(songlistMockData.collects)
 
 /*打开歌单对应页面*/
 function openSysPage(sysFlag: string) {
+  msg.success('开发中。。。', 2, () => {
+    console.log('2秒之后调用此函数')
+  })
   // ElMessageBox.confirm(
   //     '功能暂未实现!!!',
   //     '提示',
