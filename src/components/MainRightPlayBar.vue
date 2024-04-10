@@ -3,7 +3,7 @@ import {ref} from 'vue'
 import {usePlayStore} from "@/store/play-store.ts";
 
 const playStore = usePlayStore();
-const isLike = ref('1')
+const isLike = ref(true)
 
 function stopClickBar(event: Event) {
 
@@ -63,34 +63,43 @@ function clickVolume() {
     <div class="song-info">
       <div class="info-box">
         <div class="info-left">
-          <i class="iconfont posit-index">&#xeba6;</i>
-          <img src="@/assets/images/avatar.png" alt="">
+          <!--<i class="iconfont posit-index">&#xeba6;</i>-->
+          <img src="@/assets/images/avatar.png" v-tooltip="{text:'展开歌曲详情页'}" alt="">
         </div>
         <div class="info-right">
           <div class="song-name">
             <span>{{ playStore.songInfo.name }} - {{ playStore.songInfo.singer }}</span>
           </div>
           <div class="song-like">
-            <i :class="isLike=='1'?'icon huaweiicon icon-ic_public_favor_filled':'icon huaweiicon icon-ic_public_favor'"></i>
-            <i class="icon huaweiicon icon-ic_public_download"></i>
-            <i class="icon huaweiicon icon-ic_public_comments"></i>
+            <i :class="isLike?'icon huaweiicon icon-ic_public_favor_filled':'icon huaweiicon icon-ic_public_favor'"
+               v-tooltip="{text:isLike?'取消喜欢':'我喜欢'}"/>
+            <i class="icon huaweiicon icon-ic_public_download" v-tooltip="{text:'下载'}"></i>
+            <i class="icon huaweiicon icon-ic_public_comments" v-tooltip="{text:'评论'}"></i>
           </div>
         </div>
       </div>
     </div>
     <div class="song-play-control">
       <div class="control-box">
-        <span><i class="icon huaweiicon icon-ic_public_drawer_filled i-max"></i></span>
-        <span><i class="icon huaweiicon icon-ic_public_play_last" @click="previousAudio()"></i></span>
+        <span><i class="icon huaweiicon icon-ic_public_drawer_filled i-max"
+                 v-tooltip="{text:'顺序播放'}"></i></span>
+        <span><i class="icon huaweiicon icon-ic_public_play_last" @click="previousAudio()"
+                 v-tooltip="{text:'上一曲'}"></i>
+        </span>
         <span>
           <i :class="playStore.songPlayingInfo.isPlay?'icon huaweiicon icon-ic_public_pause_norm':'icon huaweiicon icon-ic_public_play_norm'"
-             @click="changePlay()"></i>
+             @click="changePlay()"
+             v-tooltip="{text:playStore.songPlayingInfo.isPlay?'暂停':'播放'}"></i>
         </span>
         <span>
-          <i class="icon huaweiicon icon-ic_public_play_next" @click="nextAudio()"></i>
+          <i class="icon huaweiicon icon-ic_public_play_next"
+             @click="nextAudio()"
+             v-tooltip="{text:'下一曲'}"></i>
         </span>
         <span>
-          <i class="icon huaweiicon icon-ic_public_sound_filled i-max" @click="clickVolume()"></i>
+          <i class="icon huaweiicon icon-ic_public_sound_filled i-max"
+             v-tooltip="{text:'音量大小'}"
+             @click="clickVolume()"></i>
         </span>
       </div>
     </div>
@@ -99,7 +108,7 @@ function clickVolume() {
           playStore.songPlayingInfo.durationTime
         }}
       </div>
-      <div class="play-list"><i class="iconfont">&#xebbe;</i></div>
+      <div class="play-list"><i class="iconfont" v-tooltip="{text:'播放队列'}">&#xebbe;</i></div>
     </div>
   </div>
 </template>

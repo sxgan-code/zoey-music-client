@@ -98,9 +98,10 @@ function openPage(songlistId: string) {
 
 <style scoped lang="scss">
 .menu-block {
-  width: 16rem;
+  width: 15rem;
   margin: 0 2rem;
   color: var(--text--light);
+  overflow: hidden;
   .my-music-title {
     font-family: 'HarmonyOS Sans';
     font-size: 1.2rem;
@@ -117,7 +118,7 @@ function openPage(songlistId: string) {
     > div {
       //height: 3rem;
       //line-height: 3rem;
-      width: 16rem;
+      width: 15rem;
       margin: 0.5rem 0;
       border-radius: 0.5rem;
       i {
@@ -135,7 +136,7 @@ function openPage(songlistId: string) {
     .love-collect {
       height: 3rem;
       line-height: 3rem;
-      width: 16rem;
+      width: 15rem;
       margin-left: 0.5rem;
       border-radius: 0.5rem;
       display: flex;
@@ -151,7 +152,7 @@ function openPage(songlistId: string) {
 
       .play-img {
         display: block;
-        width: 1.6rem;
+        width: 1.5rem;
         height: 0.9rem;
         line-height: 3rem;
         background: url("@/assets/images/wave.gif") repeat;

@@ -1,19 +1,20 @@
 import {ref, Ref} from "vue";
+import {useUserStore} from "@/store/user-store.ts";
 
 export default function useIPC() {
     const fromMainMsg: Ref<string> = ref<string>('默认消息')
-    const maxOrUnMaxStart = ref<boolean>(true)
+    const userStore = useUserStore()
 
     /* 向主进程发送窗口控制消息，共有四种类型：min | max | unmax | close */
     const sendWinController = (controllerStr: string) => {
         console.log(localStorage.getItem('token'))
         let sendController = controllerStr
-        if (controllerStr === 'max-unmax' && maxOrUnMaxStart.value) {
+        if (controllerStr === 'max-unmax' && userStore.maxOrUnMaxStart) {
             sendController = 'max'
-            maxOrUnMaxStart.value = false
+            userStore.maxOrUnMaxStart = false
         } else if (controllerStr === 'max-unmax') {
             sendController = 'unmax'
-            maxOrUnMaxStart.value = true
+            userStore.maxOrUnMaxStart = true
         }
         window.ipcRenderer.send('win-controller', sendController)
     }

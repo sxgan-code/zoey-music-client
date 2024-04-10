@@ -1,8 +1,9 @@
 // src\utils\http.ts 参考于https://gitee.com/youlaiorg/vue3-element-admin/blob/master/src/utils/request.ts
 import axios, {AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 // useUserStore用于用户权限验证的全局token状态管理
-// import { useUserStoreHook } from '@/store/userStore.ts';
+import {useUserStore} from "@/store/user-store.ts";
 
+const userStore = useUserStore();
 // 创建 axios 实例
 const service = axios.create({
     // baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -16,12 +17,11 @@ const service = axios.create({
 service.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
         // 通过配置每次请求头添加token来自动权限校验
-        // const userStore = useUserStoreHook();
-        // if (userStore.token) {
-        //     config.headers.Authorization = userStore.token;
-        // }
-        // console.log(import.meta.env.VITE_APP_ENV)
-        // console.log(import.meta.env.VITE_BASE_URL)
+        if (userStore.userInfo.token) {
+            config.headers.Authorization = userStore.userInfo.token;
+        }
+        console.log(import.meta.env.VITE_APP_ENV)
+        console.log(import.meta.env.VITE_BASE_URL)
         return config;
     },
     (error: any) => {

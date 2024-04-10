@@ -9,6 +9,7 @@ export const useUserStore = defineStore('user', {
         return {
             // 所有这些属性都将自动推断其类型
             isMask: false,
+            maxOrUnMaxStart: true,
             /*自增函数*/
             counter: 0,
             /* 用户信息 */

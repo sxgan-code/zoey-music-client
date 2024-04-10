@@ -6,6 +6,7 @@ import msg from "@/components/message";
 
 const userStore = useUserStore();
 const {sendWinController} = useIPC()
+let sa = userStore.maxOrUnMaxStart ? '最大化' : '最小化'
 /* 打开一个子窗口*/
 const openChildWin = (path: string) => {
   let data = {
@@ -37,18 +38,37 @@ onMounted(() => {
     </div>
     <div class="head-sys-click">
       <div class="head-user-avatar">
-        <img @click="openChildWin('/login')" v-if="!userStore.userInfo.isLogin" src="@/assets/images/not_login.png">
-        <img v-if="userStore.userInfo.isLogin" src="@/assets/images/avatar.png">
+        <img @click="openChildWin('/login')"
+             v-tooltip="{text:'请登录'}"
+             v-if="!userStore.userInfo.isLogin"
+             src="@/assets/images/not_login.png">
+        <img v-if="userStore.userInfo.isLogin"
+             src="@/assets/images/avatar.png">
       </div>
       <div v-if="userStore.userInfo.isLogin" class="head-user-name">{{ userStore.userInfo.name }}</div>
       <div class="head-icon-box">
-        <span class="icon-box-btn icon-box-user"><i class="icon iconfont">&#xe705</i></span>
-        <span class="icon-box-btn icon-btn-skins"><i class="icon iconfont">&#xe78d</i></span>
-        <span class="icon-box-btn icon-btn-options"><i class="icon iconfont">&#xebcf</i></span>
-        <span class="icon-box-btn icon-btn-simple"><i class="icon iconfont">&#xea58</i></span>
-        <span class="icon-box-min" @click="sendWinController('min')"><i class="icon iconfont">&#xe972</i></span>
-        <span class="icon-box-max" @click="sendWinController('max-unmax')"><i class="icon iconfont">&#xe751</i></span>
-        <span class="icon-box-close" @click="sendWinController('close')"><i class="icon iconfont">&#xe68d</i></span>
+        <span class="icon-box-btn icon-box-user">
+          <i class="icon iconfont" v-tooltip="{text:'用户信息'}">&#xe705</i>
+        </span>
+        <span class="icon-box-btn icon-btn-skins">
+          <i class="icon iconfont" v-tooltip="{text:'换肤'}">&#xe78d</i>
+        </span>
+        <span class="icon-box-btn icon-btn-options">
+          <i class="icon iconfont" v-tooltip="{text:'主菜单'}">&#xebcf</i>
+        </span>
+        <span class="icon-box-btn icon-btn-simple">
+          <i class="icon iconfont" v-tooltip="{text:'开启精简模式'}">&#xea58</i>
+        </span>
+        <span class="icon-box-min" @click="sendWinController('min')">
+          <i class="icon iconfont" v-tooltip="{text:'最小化'}">&#xe972</i>
+        </span>
+        <span class="icon-box-max" @click="sendWinController('max-unmax')">
+          <i class="icon iconfont" v-if="userStore.maxOrUnMaxStart" v-tooltip="{text:'最大化'}">&#xe751</i>
+          <i class="icon iconfont" v-if="!userStore.maxOrUnMaxStart" v-tooltip="{text:'最小化'}">&#xeb21</i>
+        </span>
+        <span class="icon-box-close" @click="sendWinController('close')">
+          <i class="icon iconfont" v-tooltip="{text:'关闭'}">&#xe68d</i>
+        </span>
       </div>
 
     </div>
@@ -74,7 +94,6 @@ onMounted(() => {
 
   .head-person {
     width: 5rem;
-    border: 0.1rem solid red;
   }
 
   .head-sys-click {
@@ -85,7 +104,7 @@ onMounted(() => {
       display: flex;
       width: 4rem;
       height: 4rem;
-      margin: 1rem;
+      margin: 1.2rem;
 
       img {
         -webkit-app-region: no-drag;
@@ -130,6 +149,10 @@ onMounted(() => {
       .icon-box-close i {
         font-weight: bold;
         font-size: 2.2rem;
+      }
+
+      .icon-box-close {
+        margin-right: 1rem;
       }
     }
   }

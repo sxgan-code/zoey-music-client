@@ -16,7 +16,7 @@ export const usePlayStore = defineStore('play', {
                 userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
                 block: "create@@",
                 songs: null,
-                count: 0
+                count: 21
             },
             songInfo: {
                 songId: '0005',

@@ -1,13 +1,17 @@
 <script setup lang="ts">
+import {onMounted} from "vue";
 
-// 生产环境禁止使用ctrl+shift+i打开DevTools
-// document.addEventListener('keydown', evt => {
-//   if (evt.ctrlKey && evt.shiftKey && 73 === evt.keyCode) {
-//     evt.preventDefault();
-//     return false;
-//   }
-// });
-
+onMounted(() => {
+  if (import.meta.env.VITE_APP_ENV !== "development") {
+    // 仅仅开发可使用ctrl+shift+i打开DevTools
+    document.addEventListener('keydown', evt => {
+      if (evt.ctrlKey && evt.shiftKey && 73 === evt.keyCode) {
+        evt.preventDefault();
+        return false;
+      }
+    });
+  }
+})
 
 </script>
 
@@ -22,10 +26,11 @@
 </template>
 
 <style lang="scss">
-.main-root{
+.main-root {
   width: 100vw;
   height: 100vh;
 }
+
 .flex-center {
   display: flex;
   align-items: center;
