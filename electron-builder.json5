@@ -3,9 +3,9 @@
  */
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "YourAppID",
+  "appId": "20240401",
   "asar": true,
-  "productName": "YourAppName",
+  "productName": "ZoeyMusic",
   "directories": {
     "output": "release/${version}"
   },

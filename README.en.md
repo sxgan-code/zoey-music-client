@@ -1,3 +1,21 @@
+[中文](README.md) | [English](README.en.md)
+<p align="center">
+	<img width="200px" height="200px" alt="logo" src="https://gitee.com/sxgan/zoey-open-images/raw/master/common/png/logo-music-wangyiyun-red.png">
+</p>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Zoey Music v1.0.0</h1>
+<h4 align="center">A music client based on Electron 28+vite 5+Type Script 5+vue 3+pinia and other technologies</h4>
+<p align="center">
+	<a href="https://gitee.com/sxgan/zoey-music-boot"><img src="https://img.shields.io/badge/Zoey Music-v1.0.0-brightgreen.svg"></a>
+	<a href="https://gitee.com/sxgan/zoey-music-boot/raw/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-Apache License-red.svg"></a>
+</p>
+Continuously updating... @sxgan
+
+All resources are from public resources on the Internet and are for learning only
+
+## Introduction to the platform
+
+## Illustration
+
 continuously updating... @sxgan
 
 All resources are from public resources on the Internet and are for learning only
