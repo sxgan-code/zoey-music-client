@@ -2,7 +2,7 @@
 import {ref} from "vue";
 import {usePlayStore} from '@/store/play-store.ts'
 import songlistMockData from "@/assets/mock/songlist-mock-data.ts";
-import msg from "@/components/message";
+import msg, {PositionTypeEnum} from "@/components/message";
 
 const playStore = usePlayStore()
 
@@ -12,18 +12,9 @@ const collects = ref(songlistMockData.collects)
 
 /*打开歌单对应页面*/
 function openSysPage(sysFlag: string) {
-  msg.success('开发中。。。', 2, () => {
+  msg.warning('开发中。。。', PositionTypeEnum.TOP, 2, () => {
     console.log('2秒之后调用此函数')
   })
-  // ElMessageBox.confirm(
-  //     '功能暂未实现!!!',
-  //     '提示',
-  //     {
-  //       confirmButtonText: '确认',
-  //       type: 'warning',
-  //       center: true,
-  //     }
-  // )
 }
 
 function openPage(songlistId: string) {
@@ -102,6 +93,7 @@ function openPage(songlistId: string) {
   margin: 0 2rem;
   color: var(--text--light);
   overflow: hidden;
+
   .my-music-title {
     font-family: 'HarmonyOS Sans';
     font-size: 1.2rem;
@@ -116,11 +108,10 @@ function openPage(songlistId: string) {
     font-size: 1.4rem;
 
     > div {
-      //height: 3rem;
-      //line-height: 3rem;
       width: 15rem;
       margin: 0.5rem 0;
       border-radius: 0.5rem;
+
       i {
         line-height: 3rem;
         font-size: 1.8rem;

@@ -1,6 +1,15 @@
-const init = () => {
+/**
+ * 定位类型枚举
+ * @param str
+ * @param type
+ */
+export enum PositionTypeEnum {
+    RIGHT_BOTTOM = 'right_bottom', TOP = 'top',
+}
+
+const init = (position: PositionTypeEnum) => {
     const msgEl = document.createElement('div')
-    msgEl.setAttribute('class', 'global-msg')
+    msgEl.setAttribute('class', 'global-msg-' + position)
     msgEl.setAttribute('id', 'zoey-message')
     msgEl.innerHTML = `
     <div class="">
@@ -27,34 +36,37 @@ const imgWarning = 'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScw
 const imgError = 'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMTAyNCAxMDI0JyB2ZXJzaW9uPScxLjEnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZycgeG1sbnM6eGxpbms9J2h0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsnIHdpZHRoPScyMDAnIGhlaWdodD0nMjAwJz48cGF0aCBkPSdNNTEyIDk4MS4zMzMzMzNDMjUyLjggOTgxLjMzMzMzMyA0Mi42NjY2NjcgNzcxLjIgNDIuNjY2NjY3IDUxMlMyNTIuOCA0Mi42NjY2NjcgNTEyIDQyLjY2NjY2N3M0NjkuMzMzMzMzIDIxMC4xMzMzMzMgNDY5LjMzMzMzMyA0NjkuMzMzMzMzLTIxMC4xMzMzMzMgNDY5LjMzMzMzMy00NjkuMzMzMzMzIDQ2OS4zMzMzMzN6IG00NC4yNDUzMzMtNDY5LjMzMzMzM2wxNTkuOTE0NjY3LTE1OS45MTQ2NjdhMzEuMjc0NjY3IDMxLjI3NDY2NyAwIDEgMC00NC4yNDUzMzMtNDQuMjQ1MzMzTDUxMiA0NjcuNzU0NjY3IDM1Mi4wODUzMzMgMzA3Ljg0YTMxLjI3NDY2NyAzMS4yNzQ2NjcgMCAxIDAtNDQuMjQ1MzMzIDQ0LjI0NTMzM0w0NjcuNzU0NjY3IDUxMmwtMTU5LjkxNDY2NyAxNTkuOTE0NjY3YTMxLjI3NDY2NyAzMS4yNzQ2NjcgMCAxIDAgNDQuMjQ1MzMzIDQ0LjI0NTMzM0w1MTIgNTU2LjI0NTMzM2wxNTkuOTE0NjY3IDE1OS45MTQ2NjdhMzEuMjc0NjY3IDMxLjI3NDY2NyAwIDEgMCA0NC4yNDUzMzMtNDQuMjQ1MzMzTDU1Ni4yNDUzMzMgNTEyeicgZmlsbD0nI0Y1MjIyRCc+PC9wYXRoPjwvc3ZnPg=='
 
 const message = {
-    success: (msg = '成功', time = 2, callback = () => {
-        return
-    }) => {
+    success: (msg = '成功', position: PositionTypeEnum = PositionTypeEnum.RIGHT_BOTTOM,
+              time = 2, callback = () => {
+            return
+        }) => {
         onlineImg = imgSuccess
         text = msg
-        init()
+        init(position)
         setTimeout(() => {
             destory()
             callback()
         }, time * 1000);
     },
-    warning: (msg = '警告', time = 2, callback = () => {
-        return
-    }) => {
+    warning: (msg = '警告', position: PositionTypeEnum = PositionTypeEnum.RIGHT_BOTTOM,
+              time = 2, callback = () => {
+            return
+        }) => {
         onlineImg = imgWarning
         text = msg
-        init()
+        init(position)
         setTimeout(() => {
             destory()
             callback()
         }, time * 1000);
     },
-    error: (msg = '错误', time = 2, callback = () => {
-        return
-    }) => {
+    error: (msg = '错误', position: PositionTypeEnum = PositionTypeEnum.RIGHT_BOTTOM,
+            time = 2, callback = () => {
+            return
+        }) => {
         onlineImg = imgError
         text = msg
-        init()
+        init(position)
         setTimeout(() => {
             destory()
             callback()

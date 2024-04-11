@@ -8,7 +8,7 @@ const userStore = useUserStore();
 const service = axios.create({
     // baseURL: import.meta.env.VITE_APP_BASE_API,
     // 这里使用在线mock数据,根据实际情况配置
-    baseURL: import.meta.env.VITE_APP_ENV === 'development' ? import.meta.env.VITE_BASE_URL : import.meta.env.VITE_BASE_URL,
+    baseURL: import.meta.env.VITE_BASE_URL,
     timeout: 50000,
     // headers: {'Content-Type': 'application/json;charset=utf-8'}
 });
@@ -20,7 +20,6 @@ service.interceptors.request.use(
         if (userStore.userInfo.token) {
             config.headers.Authorization = userStore.userInfo.token;
         }
-        console.log(import.meta.env.VITE_APP_ENV)
         console.log(import.meta.env.VITE_BASE_URL)
         return config;
     },

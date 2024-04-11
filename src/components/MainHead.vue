@@ -24,6 +24,8 @@ onMounted(() => {
     msg.success('登录成功')
     userStore.userInfo.isLogin = true
   })
+
+
 })
 </script>
 

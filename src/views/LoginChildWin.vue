@@ -5,6 +5,7 @@ import {verifyCheckStr, VerifyTypeEnum} from "@/utils/verify-utils.ts";
 import {getCaptchaApi, signinApi, signupApi} from "@/api/auth/index"
 import {LoginData} from "@/api/auth/types.ts";
 import {useUserStore} from "@/store/user-store.ts";
+import msg, {PositionTypeEnum} from '@/components/message'
 
 const {sendChildWinController, sendChildMsgToMain} = useIpc();
 
@@ -50,7 +51,9 @@ const signinSys = () => {
         sendChildWinController('close')
       }
     }).catch(err => {
-      errMsg.value = '服务器端异常，请稍后再试'
+      msg.error('服务器端异常，请稍后再试', PositionTypeEnum.TOP, 2, () => {
+        isLogin.value = true
+      })
     }).finally(() => {
           userStore.isMask = false
         }
@@ -92,11 +95,12 @@ const sendVerify = async () => {
       if (res.status != 200) {
         errMsg.value = res.message
       } else {
-        alert("发送成功")
+        msg.success('发送成功', PositionTypeEnum.TOP)
       }
     }).catch(err => {
-      errMsg.value = '服务器端异常，请稍后再试'
-      console.log(err)
+      msg.error('服务器端异常，请稍后再试', PositionTypeEnum.TOP, 2, () => {
+        isLogin.value = true
+      })
     })
   } else {
     return false
@@ -108,22 +112,24 @@ const sendVerify = async () => {
  */
 const signupSys = async () => {
   if (verifyFormData(VerifySignEnum.SIGNUP)) {
-    console.log('注册');
     // 表单所有元素验证通过，可以提交了
     userStore.isMask = true
     signupApi(registerData.value).then(res => {
       if (res.status != 200) {
+        msg.error('注册失败！', PositionTypeEnum.TOP, 2, () => {
+        })
         errMsg.value = res.message
       } else {
-        isLogin.value = true
+        msg.success('注册成功，请登录。。', PositionTypeEnum.TOP, 2, () => {
+          isLogin.value = true
+        })
       }
     }).catch(err => {
-      errMsg.value = '服务器端异常，请稍后再试'
-      console.log(err)
+      msg.error('服务器端异常，请稍后再试', PositionTypeEnum.TOP, 2, () => {
+      })
     }).finally(() => {
-          userStore.isMask = false
-        }
-    )
+      userStore.isMask = false
+    })
   } else {
   }
 

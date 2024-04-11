@@ -5,7 +5,8 @@ import '@/assets/css/common.scss'
 import '@/components/message/style.scss'
 import {createPinia} from 'pinia'
 import '@/ipc/ipc.ts'
-//注册浮动提示
+
+//注册移入小浮框提示
 import tooltip from '@/components/tips/tooltip.ts'
 // If you want use Node.js, the`nodeIntegration` needs to be enabled in the Main process.
 // import './demos/node'
