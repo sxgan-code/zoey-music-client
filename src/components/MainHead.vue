@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import useIPC from "@/ipc/use-ipc.ts";
 import {useUserStore} from "@/store/user-store.ts";
-import {onMounted} from "vue";
+import {onBeforeMount} from "vue";
 import msg, {PositionTypeEnum} from "@/components/message";
+import {getUserInfo} from "@/api/auth";
 
 const userStore = useUserStore();
 const {sendWinController} = useIPC()
@@ -23,13 +24,40 @@ const changeSkins = () => {
   document.documentElement.style.setProperty('--text-color-rgba', 'rgba(246, 190, 200,0.7)');
   document.documentElement.style.setProperty('--text-active-color', 'rgb(232, 211, 252)');
 }
-onMounted(() => {
+/* 自动登录配置参数 */
+const autoLogin = () => {
+  /* 每次启动判断是否登录 */
+  msg.warning('正在登录中。。。。', PositionTypeEnum.TOP, 2, () => {
+    getUserInfo().then(res => {
+      if (res.status === 200) {
+        userStore.setUserInfo(res.data, true)
+        msg.success('登录成功')
+      } else {
+        msg.warning('账户登录已过期，请重新登录。。。', PositionTypeEnum.TOP, 2, () => {
+          openChildWin('/login')
+        })
+      }
+    }).catch(err => {
+      msg.error('服务器端异常，请稍后再试', PositionTypeEnum.TOP, 2, () => {
+      })
+    });
+  })
+}
+
+/*每次启动调用*/
+onBeforeMount(() => {
+  /* 先自动登录 */
+  autoLogin()
+  /* 手动登录触发 */
   window.ipcRenderer.on('user-token', (_event, args) => {
     localStorage.setItem("token", args)
-    msg.success('登录成功')
-    userStore.userInfo.isLogin = true
+    getUserInfo().then(res => {
+      if (res.status === 200) {
+        userStore.setUserInfo(res.data, true)
+        msg.success('登录成功')
+      }
+    })
   })
-
 
 })
 </script>

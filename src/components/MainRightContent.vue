@@ -63,7 +63,7 @@ function playMusic(id: string) {
           <img src="@/assets/images/avatar.png" alt="">
           <span class="info-style-name"
                 @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
-            {{ userStore.userInfo.name }}
+            {{ userStore.userInfo.email }}
           </span>
         </div>
         <div>

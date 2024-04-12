@@ -17,8 +17,9 @@ const service = axios.create({
 service.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
         // 通过配置每次请求头添加token来自动权限校验
-        if (userStore.userInfo.token) {
-            config.headers.Authorization = userStore.userInfo.token;
+        var token = localStorage.getItem('token');
+        if (token != null && token != '') {
+            config.headers.Authorization = token;
         }
         console.log(import.meta.env.VITE_BASE_URL)
         return config;

@@ -1,5 +1,5 @@
 import request from "@/utils/http";
-import {LoginData, LoginResult, VerifyCodeResult} from "./types";
+import {LoginData, LoginResult, SysUserVO, VerifyCodeResult} from "./types";
 import {ResponseResult} from "@/api/common-types.ts";
 
 /**
@@ -63,3 +63,18 @@ export function getCaptchaApi(data: LoginData): Promise<ResponseResult<VerifyCod
         },
     });
 }
+
+/**
+ * 根据token获取用户信息
+ */
+export function getUserInfo(): Promise<ResponseResult<SysUserVO>> {
+    return request({
+        url: "/card/auth/getSysUserInfo",
+        method: "get",
+        data: new Date().getTime(),
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+    });
+}
+

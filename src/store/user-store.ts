@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia'
+import {SysUserVO} from "@/api/auth/types.ts";
 
 // useStore 可以是 useUser、useCart 之类的任何东西
 // 第一个参数是应用程序中 store 的唯一 id
@@ -30,6 +31,12 @@ export const useUserStore = defineStore('user', {
         /* 设置遮罩状态 */
         changeMaskState() {
             this.isMask = !this.isMask
+        },
+        /* 设置用户信息 */
+        setUserInfo(state: SysUserVO, isLoad: boolean = false) {
+            this.userInfo.email = state.email
+            this.userInfo.name = state.userName
+            this.userInfo.isLogin = isLoad
         }
     },
     getters: {
