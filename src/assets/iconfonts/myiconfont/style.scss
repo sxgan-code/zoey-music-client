@@ -47,7 +47,7 @@
 }
 .my-music-qqmusic-logo .path1:before {
   content: "\e908";
-  color: rgb(0, 0, 0);
+  color: var(--text-color);
 }
 .my-music-qqmusic-logo .path2:before {
   content: "\e909";

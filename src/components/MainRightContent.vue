@@ -3,6 +3,7 @@ import {ref} from "vue";
 import {usePlayStore} from '@/store/play-store.ts'
 import {useUserStore} from '@/store/user-store.ts'
 import songsData from '@/assets/mock/songs-mock-data.ts'
+import msg, {PositionTypeEnum} from "@/components/message";
 
 const songs = ref(songsData)
 const playStore = usePlayStore()
@@ -12,6 +13,7 @@ const index = ref(1)
 
 /*点击更改列表标题文字样式*/
 function changeStyle(val: number) {
+  msg.warning('开发中。。。', PositionTypeEnum.TOP)
   index.value = val;
 }
 
@@ -52,14 +54,17 @@ function playMusic(id: string) {
           <span>{{ playStore.songList.songlistName }}</span>
         </div>
         <div>
-          <span><i class="iconfont">&#xe7e9;</i>编辑</span>
-          <span><i class="iconfont">&#xeb9e;</i>投稿</span>
+          <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe7e9;</i>编辑</span>
+          <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xeb9e;</i>投稿</span>
         </div>
       </div>
       <div class="info-style">
         <div>
           <img src="@/assets/images/avatar.png" alt="">
-          <span>{{ userStore.userInfo.name }}</span>
+          <span class="info-style-name"
+                @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
+            {{ userStore.userInfo.name }}
+          </span>
         </div>
         <div>
           <span v-for="item in playStore.songList.songlistStyle">{{ item }}</span>
@@ -69,10 +74,10 @@ function playMusic(id: string) {
         <span>{{ playStore.songList.songlistInfo }}</span>
       </div>
       <div class="info-btn">
-        <div><i class="iconfont">&#xe922;</i>播放全部</div>
-        <div><i class="iconfont">&#xebda;</i>下载</div>
-        <div><i class="iconfont">&#xeb91;</i>批量操作</div>
-        <div><i class="iconfont">&#xe8bf;</i>播放全部</div>
+        <div @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe922;</i>播放全部</div>
+        <div @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xebda;</i>下载</div>
+        <div @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xeb91;</i>批量操作</div>
+        <div @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe8bf;</i>播放全部</div>
       </div>
     </div>
   </div>
@@ -84,8 +89,8 @@ function playMusic(id: string) {
         <span :class="index==3?'sel-title-span':''" @click="changeStyle(3)">评论</span>
       </div>
       <div>
-        <span><i class="iconfont">&#xe8bb;</i>搜索</span>
-        <span><i class="iconfont">&#xe69e;</i>排序</span>
+        <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe8bb;</i>搜索</span>
+        <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe69e;</i>排序</span>
       </div>
     </div>
     <div class="list-content">
@@ -163,7 +168,7 @@ function playMusic(id: string) {
         height: 10vh;
 
         span {
-          color: var(--el-color-white);
+          color: var(--text-color);
           font-weight: bold;
           line-height: 10vh;
           font-size: 3.5rem;
@@ -179,12 +184,12 @@ function playMusic(id: string) {
 
         span {
           i {
-            color: var(--text--light);
+            color: var(--text-color);
             font-size: 1.2rem;
             margin-right: 0.4rem;
           }
 
-          color: var(--el-color-white);
+          color: var(--text-color);
           width: 5rem;
           margin: 0 0.8rem;
           border-radius: 0.3rem;
@@ -219,13 +224,13 @@ function playMusic(id: string) {
         }
 
         span {
-          color: var(--text--color);
+          color: var(--text-color);
           font-size: 1.4rem;
         }
 
         span:hover {
           cursor: pointer;
-          color: var(--el-color-primary)
+          color: var(--text-active-color)
         }
       }
 
@@ -238,7 +243,7 @@ function playMusic(id: string) {
           font-family: 'HarmonyOS Sans';
           font-size: 1.4rem;
           margin-left: 2rem;
-          color: var(--text--color);
+          color: var(--text-color);
         }
       }
     }
@@ -252,7 +257,7 @@ function playMusic(id: string) {
       span {
         font-family: 'HarmonyOS Sans';
         font-size: 1.4rem;
-        color: var(--text--color);
+        color: var(--text-color);
       }
     }
 
@@ -265,7 +270,7 @@ function playMusic(id: string) {
 
       div {
         font-size: 1.4rem;
-        color: var(--text--color);;
+        color: var(--text-color);;
         line-height: 3.6rem;
         width: 12rem;
         text-align: center;
@@ -274,11 +279,11 @@ function playMusic(id: string) {
       }
 
       div:first-child {
-        background: var(--el-color-primary);
+        background: var(--bg--rgba-2);
       }
 
       div:hover {
-        background: var(--el-color-primary);
+        background: var(--bg--rgba-2);
       }
     }
   }
@@ -303,7 +308,7 @@ function playMusic(id: string) {
       span {
         display: inline-block;
         width: 8rem;
-        color: var(--el-color-white);
+        color: var(--text-color);
         text-align: center;
         font-size: 1.4rem;
         line-height: 3rem;
@@ -312,11 +317,11 @@ function playMusic(id: string) {
       }
 
       span:hover {
-        color: var(--text-active--color);
+        color: var(--text-active-color);
       }
 
       .sel-title-span {
-        color: var(--text-active--color);
+        color: var(--text-active-color);
       }
 
       .sel-title-span::after {
@@ -324,7 +329,7 @@ function playMusic(id: string) {
         content: '';
         width: 2.5rem;
         margin: 0 auto;
-        border-bottom: 3px solid var(--text-active--color);
+        border-bottom: 3px solid var(--text-active-color);
       }
     }
 
@@ -340,7 +345,7 @@ function playMusic(id: string) {
 
         display: inline-block;
         width: 5rem;
-        color: var(--el-color-white);
+        color: var(--text-color);
         text-align: center;
         font-size: 1.2rem;
         line-height: 2.5rem;
@@ -369,7 +374,7 @@ function playMusic(id: string) {
       align-items: center;
 
       span {
-        color: var(--text--light-rgba);
+        color: var(--text-color-rgba);
         font-size: 1.2rem;
       }
 
@@ -413,7 +418,7 @@ function playMusic(id: string) {
             line-height: 4rem;
 
             span {
-              color: var(--text--color);
+              color: var(--text-color);
               font-size: 1.4rem;
             }
 
@@ -424,7 +429,7 @@ function playMusic(id: string) {
             i {
               cursor: pointer;
               margin: 0 1rem;
-              color: var(--text--color);
+              color: var(--text-color);
               font-size: 1.6rem;
             }
           }
@@ -437,12 +442,12 @@ function playMusic(id: string) {
 
             i {
               display: none;
-              color: var(--text--color);
+              color: var(--text-color);
               font-size: 1.8rem;
             }
 
             i:hover {
-              color: var(--text-active--color);
+              color: var(--text-active-color);
             }
           }
         }
@@ -459,7 +464,7 @@ function playMusic(id: string) {
           span {
             font-size: 1.4rem;
             margin-left: 1rem;
-            color: var(--text--color);
+            color: var(--text-color);
           }
         }
       }

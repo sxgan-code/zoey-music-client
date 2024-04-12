@@ -11,7 +11,7 @@ export const usePlayStore = defineStore('play', {
                 songlistId: "LIST-0D44A50E-97F5-4CC0-55C2-6F16A69A546F",
                 songlistName: "只此一生",
                 songlistInfo: "多年后，再回想年少时的迷茫和执着，或许原因都不记得了。青春就是让你张扬地笑，也给你莫名的痛。",
-                songlistStyle: "",
+                songlistStyle: ["#治愈", "#情歌", "#流行"],
                 songlistPic: "/Resource/image/songListImg/109951163443093546.jpg",
                 userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
                 block: "create@@",
@@ -20,7 +20,8 @@ export const usePlayStore = defineStore('play', {
             },
             songInfo: {
                 songId: '0005',
-                name: '天外来物',
+                // name: '我好想在哪儿见过你-纯享版',
+                name: '天外来物-纯享版',
                 pic: 'http://localhost:9090/music/api/pic/Resource/image/songImg/下一站，茶山刘.png',
                 singer: '薛之谦',
                 album: '天外来物',

@@ -2,7 +2,7 @@
 import useIPC from "@/ipc/use-ipc.ts";
 import {useUserStore} from "@/store/user-store.ts";
 import {onMounted} from "vue";
-import msg from "@/components/message";
+import msg, {PositionTypeEnum} from "@/components/message";
 
 const userStore = useUserStore();
 const {sendWinController} = useIPC()
@@ -17,7 +17,12 @@ const openChildWin = (path: string) => {
   console.log(path)
   window.ipcRenderer.invoke('renderer-open-win', data);
 }
-
+/* 换肤 */
+const changeSkins = () => {
+  document.documentElement.style.setProperty('--text-color', 'rgb(246, 190, 200)');
+  document.documentElement.style.setProperty('--text-color-rgba', 'rgba(246, 190, 200,0.7)');
+  document.documentElement.style.setProperty('--text-active-color', 'rgb(232, 211, 252)');
+}
 onMounted(() => {
   window.ipcRenderer.on('user-token', (_event, args) => {
     localStorage.setItem("token", args)
@@ -50,16 +55,24 @@ onMounted(() => {
       <div v-if="userStore.userInfo.isLogin" class="head-user-name">{{ userStore.userInfo.name }}</div>
       <div class="head-icon-box">
         <span class="icon-box-btn icon-box-user">
-          <i class="icon iconfont" v-tooltip="{text:'用户信息'}">&#xe705</i>
+          <i class="icon iconfont"
+             @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"
+             v-tooltip="{text:'用户信息'}">&#xe705</i>
         </span>
         <span class="icon-box-btn icon-btn-skins">
-          <i class="icon iconfont" v-tooltip="{text:'换肤'}">&#xe78d</i>
+          <i class="icon iconfont"
+             @click="changeSkins()"
+             v-tooltip="{text:'换肤'}">&#xe78d</i>
         </span>
         <span class="icon-box-btn icon-btn-options">
-          <i class="icon iconfont" v-tooltip="{text:'主菜单'}">&#xebcf</i>
+          <i class="icon iconfont"
+             @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"
+             v-tooltip="{text:'主菜单'}">&#xebcf</i>
         </span>
         <span class="icon-box-btn icon-btn-simple">
-          <i class="icon iconfont" v-tooltip="{text:'开启精简模式'}">&#xea58</i>
+          <i class="icon iconfont"
+             @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"
+             v-tooltip="{text:'开启精简模式'}">&#xea58</i>
         </span>
         <span class="icon-box-min" @click="sendWinController('min')">
           <i class="icon iconfont" v-tooltip="{text:'最小化'}">&#xe972</i>
@@ -123,7 +136,7 @@ onMounted(() => {
       line-height: 6rem;
       font-size: 1.4rem;
       font-family: "HarmonyOS Sans", "sans-serif";
-      color: var(--text--color);
+      color: var(--text-color);
     }
 
     .head-icon-box {
@@ -134,7 +147,7 @@ onMounted(() => {
       span i {
         margin: 0 1rem;
         -webkit-app-region: no-drag; // li点击元素去除拖拽，不然后面无法实现点击事件
-        color: #fff;
+        color: var(--text-color);
         font-size: 1.8rem;
         line-height: 6rem;
       }
@@ -161,7 +174,7 @@ onMounted(() => {
 
   div:hover {
     i:hover {
-      color: #8ec5fc;
+      color: var(--text-active-color);
     }
   }
 }

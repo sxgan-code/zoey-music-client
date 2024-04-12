@@ -9,15 +9,8 @@ const playStore = usePlayStore()
 const creates = ref(songlistMockData.creates)
 const collects = ref(songlistMockData.collects)
 
-
-/*打开歌单对应页面*/
-function openSysPage(sysFlag: string) {
-  msg.warning('开发中。。。', PositionTypeEnum.TOP, 2, () => {
-    console.log('2秒之后调用此函数')
-  })
-}
-
 function openPage(songlistId: string) {
+  msg.warning('开发中。。。', PositionTypeEnum.TOP)
   // songListId.value = songlistId
   // router.push("/efairy/main/MusicPavilion/" + songlistId)
 }
@@ -27,16 +20,16 @@ function openPage(songlistId: string) {
   <div class="menu-block">
     <div class="my-music-title">在线音乐</div>
     <div class="my-music-list">
-      <div class="like-music" @click="openSysPage('mylove')">
+      <div class="like-music" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_public_home"></i> <span>推荐</span>
       </div>
-      <div class="local-down" @click="openSysPage('down')">
+      <div class="local-down" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_device_earphone_roc"></i> <span>乐馆</span>
       </div>
-      <div class="recent-play" @click="openSysPage('recentplay')">
+      <div class="recent-play" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-e8067f9-fa0c-4dc2-a249-ffde979e3a5f"></i> <span>视频</span>
       </div>
-      <div class="audition-list" @click="openSysPage('auditionlist')">
+      <div class="audition-list" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-a11-6e8d-4075-a5fb-773f53432fb8"></i> <span>雷达</span>
       </div>
     </div>
@@ -44,19 +37,19 @@ function openPage(songlistId: string) {
   <div class="menu-block">
     <div class="my-music-title">我的音乐</div>
     <div class="my-music-list">
-      <div class="like-music" @click="openSysPage('mylove')">
+      <div class="like-music" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_public_favor"></i> <span>我喜欢</span>
       </div>
-      <div class="local-down" @click="openSysPage('down')">
+      <div class="local-down" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_gallery_move_out"></i> <span>本地和下载</span>
       </div>
-      <div class="recent-play" @click="openSysPage('recentplay')">
+      <div class="recent-play" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_public_time"></i> <span>最近播放</span>
       </div>
-      <div class="audition-list" @click="openSysPage('auditionlist')">
+      <div class="audition-list" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_device_earphone"></i> <span>试听列表</span>
       </div>
-      <div class="purchased-music" @click="openSysPage('purchasedmusic')">
+      <div class="purchased-music" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_public_appstore"></i> <span>已购音乐</span>
       </div>
     </div>
@@ -91,13 +84,13 @@ function openPage(songlistId: string) {
 .menu-block {
   width: 15rem;
   margin: 0 2rem;
-  color: var(--text--light);
+  color: var(--text-color-rgba);
   overflow: hidden;
 
   .my-music-title {
     font-family: 'HarmonyOS Sans';
     font-size: 1.2rem;
-    width: 16rem;
+    width: 14rem;
     margin: 1rem 0 0.5rem 0;
     line-height: 2rem;
   }
@@ -108,7 +101,7 @@ function openPage(songlistId: string) {
     font-size: 1.4rem;
 
     > div {
-      width: 15rem;
+      width: 14rem;
       margin: 0.5rem 0;
       border-radius: 0.5rem;
 
@@ -127,7 +120,7 @@ function openPage(songlistId: string) {
     .love-collect {
       height: 3rem;
       line-height: 3rem;
-      width: 15rem;
+      width: 14rem;
       margin-left: 0.5rem;
       border-radius: 0.5rem;
       display: flex;
@@ -156,7 +149,7 @@ function openPage(songlistId: string) {
     }
 
     .selectNode {
-      color: var(--el-color-white);
+      color: var(--text-color);
       background: var(--bg--active-rgba);
     }
   }

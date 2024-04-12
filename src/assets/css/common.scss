@@ -5,11 +5,13 @@
 
 :root {
   /*文字颜色*/
-  --text--light: rgb(212, 218, 232);
-  --text--light-rgba: rgba(245, 245, 245, 0.6);
-  --text--deep: #333333;
-  --text--color: rgb(255, 255, 255);
-  --text-active--color: rgb(226, 171, 144);
+
+  --text-light-rgba: rgba(245, 245, 245, 0.6);
+  --text-deep: rgb(51, 51, 51);
+  --text-deep-rgba: rgba(51, 51, 51, 0.7);
+  --text-color: rgb(255, 255, 255);
+  --text-color-rgba: rgba(255, 255, 255, 0.7);
+  --text-active-color: rgb(226, 171, 144);
   --text-color-light-red: #FF6A6A;
 
   --text-grey-light: rgb(153, 153, 153);
@@ -21,7 +23,7 @@
   /*提示色*/
   --text--tip: #3EAF7C;
   --bg--rgba: rgba(0, 0, 0, 0.1);
-  --bg--rgba-1: rgba(0, 0, 0, 0.1);
+  --bg--rgba-1: rgba(255, 255, 255, 0.1);
   --bg--rgba-2: rgba(255, 255, 255, 0.2);
   --bg--rgba-3: rgba(255, 255, 255, 0.3);
   --bg--rgba-4: rgba(255, 255, 255, 0.4);

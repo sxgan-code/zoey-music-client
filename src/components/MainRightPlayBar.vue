@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import {usePlayStore} from "@/store/play-store.ts";
+import msg, {PositionTypeEnum} from "@/components/message";
 
 const playStore = usePlayStore();
 const isLike = ref(true)
@@ -43,6 +44,14 @@ function nextAudio() {
 
 }
 
+const getClassSongName = () => {
+  let textLength: number = playStore.songInfo.name.length + playStore.songInfo.singer.length
+  if (textLength >= 12) {
+    return 'song-name scroll-x'
+  }
+  return 'song-name'
+}
+
 function clickVolume() {
 
 }
@@ -67,7 +76,7 @@ function clickVolume() {
           <img src="@/assets/images/avatar.png" v-tooltip="{text:'展开歌曲详情页'}" alt="">
         </div>
         <div class="info-right">
-          <div class="song-name">
+          <div :class="getClassSongName()">
             <span>{{ playStore.songInfo.name }} - {{ playStore.songInfo.singer }}</span>
           </div>
           <div class="song-like">
@@ -108,7 +117,11 @@ function clickVolume() {
           playStore.songPlayingInfo.durationTime
         }}
       </div>
-      <div class="play-list"><i class="iconfont" v-tooltip="{text:'播放队列'}">&#xebbe;</i></div>
+      <div class="play-list">
+        <i class="iconfont"
+           @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"
+           v-tooltip="{text:'播放队列'}">&#xebbe;</i>
+      </div>
     </div>
   </div>
 </template>
@@ -147,7 +160,7 @@ function clickVolume() {
     display: block;
     width: 0vw;
     height: 0.25rem;
-    background: var(--text-active--color);
+    background: var(--text-active-color);
   }
 
   .current-position-point {
@@ -157,7 +170,7 @@ function clickVolume() {
     height: 1rem;
     width: 1rem;
     border-radius: 0.5rem;
-    background: var(--text-active--color);
+    background: var(--text-active-color);
     display: none;
   }
 }
@@ -201,7 +214,7 @@ function clickVolume() {
           z-index: 1;
           bottom: 3rem;
           font-weight: bold;
-          color: var(--bg--rgba-5);
+          color: var(--text-color);
           font-size: 4rem;
         }
 
@@ -235,17 +248,17 @@ function clickVolume() {
           span {
             display: block;
             font-size: 1.2rem;
-            margin: 0 1rem;
-            color: var(--el-color-white);
+            color: var(--text-color);
           }
         }
 
         i {
           margin: 0 0.7rem;
         }
+
         .song-like {
           font-size: 1.8rem;
-          color: var(--el-color-white);
+          color: var(--text-color-rgba);
 
           .is-like {
             color: var(--text-color-light-red);
@@ -263,7 +276,7 @@ function clickVolume() {
 
         i:nth-child(n+2):hover {
           cursor: pointer;
-          color: var(--text-active--color)
+          color: var(--text-active-color)
         }
       }
     }
@@ -283,12 +296,12 @@ function clickVolume() {
         line-height: 5rem;
         font-size: 3rem;
         margin: 0 1rem;
-        color: var(--text--color);
+        color: var(--text-color);
       }
 
       span i:hover {
         cursor: pointer;
-        color: var(--text-active--color)
+        color: var(--text-active-color)
       }
 
       span .i-max {
@@ -300,7 +313,7 @@ function clickVolume() {
         display: block;
         font-size: 3rem;
         padding-right: 1rem;
-        color: var(--text-active--color)
+        color: var(--text-active-color)
       }
 
       .tip-volume {
@@ -324,14 +337,13 @@ function clickVolume() {
 
     .play-time {
       font-size: 1.4rem;
-      color: var(--text-grey-light);
+      color: var(--text-color-rgba);
     }
 
     .play-list {
       margin: 0 2rem 0 0.5rem;
-
       i {
-        color: var(--text-grey-light);
+        color: var(--text-color);
         font-size: 2.8rem;
       }
 
