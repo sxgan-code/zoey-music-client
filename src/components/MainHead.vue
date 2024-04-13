@@ -1,30 +1,44 @@
 <script setup lang="ts">
+import {onMounted, onUnmounted, ref} from "vue";
 import useIPC from "@/ipc/use-ipc.ts";
 import {useUserStore} from "@/store/user-store.ts";
-import {onMounted} from "vue";
 import msg, {PositionTypeEnum} from "@/components/message";
 import {getUserInfo} from "@/api/auth";
 
-const userStore = useUserStore();
+// 窗口控制方法
 const {sendWinController} = useIPC()
-let sa = userStore.maxOrUnMaxStart ? '最大化' : '最小化'
-/* 打开一个子窗口*/
+/**
+ * @Description: 打开系统窗口
+ * @Author: sxgan
+ * @Date: 2024/4/13 23:35
+ **/
 const openChildWin = (path: string) => {
   let data = {
     width: 600,
     height: 520,
     url: path
   }
-  console.log(path)
   window.ipcRenderer.invoke('renderer-open-win', data);
 }
-/* 换肤 */
+
+/**
+ * @Description: 换肤
+ * @Author: sxgan
+ * @Date: 2024/4/13 23:34
+ **/
 const changeSkins = () => {
   document.documentElement.style.setProperty('--text-color', 'rgb(246, 190, 200)');
   document.documentElement.style.setProperty('--text-color-rgba', 'rgba(246, 190, 200,0.7)');
   document.documentElement.style.setProperty('--text-active-color', 'rgb(232, 211, 252)');
 }
-/* 自动登录配置参数 */
+
+/**
+ * @Description: 账户相关
+ * @Author: sxgan
+ * @Date: 2024/4/13 23:32
+ **/
+const userStore = useUserStore();
+// 自动登录配置参数
 const autoLogin = () => {
   /* 每次启动判断是否登录 */
   msg.warning('正在登录中。。。。', PositionTypeEnum.TOP, 2, () => {
@@ -43,14 +57,13 @@ const autoLogin = () => {
     });
   })
 }
-
-/*每次启动调用*/
+// 每次启动调用
 onMounted(() => {
-  /*如果检测未登录，则自动登录*/
+  // 如果检测未登录，则自动登录
   if (!userStore.userInfo.isLogin) {
     autoLogin()
   }
-  /* 手动登录触发 */
+  // 手动登录触发
   window.ipcRenderer.on('user-token', (_event, args) => {
     localStorage.setItem("token", args)
     getUserInfo().then(res => {
@@ -60,8 +73,44 @@ onMounted(() => {
       }
     })
   })
-
 })
+// 退出当前账号
+const exitCurrentAccount = () => {
+  if (!userStore.userInfo.isLogin) {
+    msg.warning('账号未登录', PositionTypeEnum.TOP)
+    return
+  } else {
+    userStore.userInfo.isLogin = false
+    localStorage.removeItem('token')
+    msg.success('账号退出成功')
+  }
+}
+/**
+ * @Description:用户信息浮动框
+ * @Author: sxgan
+ * @Date: 2024/4/13 23:31
+ **/
+const userInfoBox = ref()
+const openUserInfoBox = (event: any) => {
+  userInfoBox.value.style.display = 'block'
+}
+
+// 点击事件，用于隐藏div
+function hideBox(event: any) {
+  // 检查事件是否来自i-user-info和div-user-info元素,且userInfoBox.value不为空
+  if (event.target.id !== 'i-user-info' && event.target.id !== 'div-user-info' && userInfoBox.value != null) {
+    userInfoBox.value.style.display = 'none';
+  }
+}
+
+// 绑定到window，确保即使点击框内也能监听外部点击
+document.body.addEventListener('click', hideBox);
+// 在onUnmounted生命周期钩子中移除事件监听，避免内存泄露
+onUnmounted(() => {
+  window.removeEventListener('click', hideBox);
+});
+
+
 </script>
 
 <template>
@@ -85,10 +134,17 @@ onMounted(() => {
       <div v-if="userStore.userInfo.isLogin" class="head-user-name">{{ userStore.userInfo.name }}</div>
       <div class="head-icon-box">
         <span class="icon-box-btn icon-box-user">
-          <i class="icon iconfont"
-             @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"
+          <i id="i-user-info" class="icon iconfont"
+             @click="openUserInfoBox($event)"
              v-tooltip="{text:'用户信息'}">&#xe705</i>
         </span>
+        <div id="div-user-info" ref="userInfoBox" class="user-info-float-box">
+          <div @click="msg.warning('开发中。。。',PositionTypeEnum.TOP)">我的歌单</div>
+          <div @click="msg.warning('开发中。。。',PositionTypeEnum.TOP)">我的关注</div>
+          <div @click="msg.warning('开发中。。。',PositionTypeEnum.TOP)">我的粉丝</div>
+          <div @click="msg.warning('开发中。。。',PositionTypeEnum.TOP)">个人账号</div>
+          <div @click="exitCurrentAccount()">退出账号</div>
+        </div>
         <span class="icon-box-btn icon-btn-skins">
           <i class="icon iconfont"
              @click="changeSkins()"
@@ -174,6 +230,36 @@ onMounted(() => {
         margin-right: 2rem;
       }
 
+      /*用户信息浮动框*/
+      .user-info-float-box {
+        display: none;
+        position: absolute;
+        top: 6rem;
+        //left: 5rem;
+        z-index: 999;
+        transform: translateX(-35%);
+        width: 12rem;
+        border-radius: 1rem;
+        background: var(--text-deep-rgba-9);
+        padding: 2rem 0;
+
+        div {
+          width: 10rem;
+          height: 3rem;
+          margin: 1rem 1rem;
+          line-height: 3rem;
+          font-family: "HarmonyOS Sans", sans-serif;
+          font-size: 1.4rem;
+          text-align: center;
+          color: var(--text-color);
+        }
+
+        div:hover {
+          cursor: pointer;
+          color: var(--text-active-color);
+        }
+      }
+
       span i {
         margin: 0 1rem;
         -webkit-app-region: no-drag; // li点击元素去除拖拽，不然后面无法实现点击事件
@@ -204,6 +290,7 @@ onMounted(() => {
 
   div:hover {
     i:hover {
+      cursor: pointer;
       color: var(--text-active-color);
     }
   }

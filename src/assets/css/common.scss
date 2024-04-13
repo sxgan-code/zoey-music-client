@@ -5,33 +5,47 @@
 
 :root {
   /*文字颜色*/
-
-  --text-light-rgba: rgba(245, 245, 245, 0.6);
-  --text-deep: rgb(51, 51, 51);
-  --text-deep-rgba: rgba(51, 51, 51, 0.7);
   --text-color: rgb(255, 255, 255);
-  --text-color-rgba: rgba(255, 255, 255, 0.7);
+  --text-color-rgba: var(--bg-light-rgba-7);
   --text-active-color: rgb(226, 171, 144);
+  /*部分配色*/
   --text-color-light-red: #FF6A6A;
-
+  /*灰色*/
   --text-grey-light: rgb(153, 153, 153);
   --text-grey-light-1: rgba(153, 153, 153, 0.1);
   --text-grey-light-2: rgba(153, 153, 153, 0.2);
   --text-grey-light-3: rgba(153, 153, 153, 0.3);
   --text-grey-light-4: rgba(153, 153, 153, 0.4);
   --text-grey-light-5: rgba(153, 153, 153, 0.5);
-  /*提示色*/
-  --text--tip: #3EAF7C;
-  --bg--rgba: rgba(0, 0, 0, 0.1);
-  --bg--rgba-1: rgba(255, 255, 255, 0.1);
-  --bg--rgba-2: rgba(255, 255, 255, 0.2);
-  --bg--rgba-3: rgba(255, 255, 255, 0.3);
-  --bg--rgba-4: rgba(255, 255, 255, 0.4);
-  --bg--rgba-5: rgba(255, 255, 255, 0.5);
-  --bg--active-rgba: rgba(255, 255, 255, 0.1);
+  --text-grey-light-6: rgba(153, 153, 153, 0.6);
+  --text-grey-light-7: rgba(153, 153, 153, 0.7);
+  --text-grey-light-8: rgba(153, 153, 153, 0.8);
+  --text-grey-light-9: rgba(153, 153, 153, 0.9);
+  /*高亮色*/
+  --bg-light-rgba: rgb(255, 255, 255);
+  --bg-light-rgba-1: rgba(255, 255, 255, 0.1);
+  --bg-light-rgba-2: rgba(255, 255, 255, 0.2);
+  --bg-light-rgba-3: rgba(255, 255, 255, 0.3);
+  --bg-light-rgba-4: rgba(255, 255, 255, 0.4);
+  --bg-light-rgba-5: rgba(255, 255, 255, 0.5);
+  --bg-light-rgba-6: rgba(255, 255, 255, 0.6);
+  --bg-light-rgba-7: rgba(255, 255, 255, 0.7);
+  --bg-light-rgba-8: rgba(255, 255, 255, 0.8);
+  --bg-light-rgba-9: rgba(255, 255, 255, 0.9);
+  /*暗色*/
+  --text-deep: rgb(0, 0, 0);
+  --text-deep-rgba-1: rgba(0, 0, 0, 0.1);
+  --text-deep-rgba-2: rgba(0, 0, 0, 0.2);
+  --text-deep-rgba-3: rgba(0, 0, 0, 0.3);
+  --text-deep-rgba-4: rgba(0, 0, 0, 0.4);
+  --text-deep-rgba-5: rgba(0, 0, 0, 0.5);
+  --text-deep-rgba-6: rgba(0, 0, 0, 0.6);
+  --text-deep-rgba-7: rgba(0, 0, 0, 0.7);
+  --text-deep-rgba-8: rgba(0, 0, 0, 0.8);
+  --text-deep-rgba-9: rgba(0, 0, 0, 0.9);
   /*其他配色方案*/
+  --text--tip: #3EAF7C;
   --my-dark-light-1: #805398;
-
   --el-active-color: #cccccc;
   --el-color-white: #ffffff;
   --el-color-black: #000000;

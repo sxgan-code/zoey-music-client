@@ -16,7 +16,7 @@ export const useUserStore = defineStore('user', {
             /* 用户信息 */
             userInfo: {
                 isLogin: false,
-                name: '天外来物',
+                name: '未登录',
                 avatar: '@/assets/images/avatar.png',
                 token: '',
                 email: ''
