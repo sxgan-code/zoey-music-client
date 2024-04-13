@@ -69,7 +69,7 @@ const route = useRoute()
 
       .right-box-content {
         width: calc(100vw - 20rem);
-        height: calc(100vh - 16rem);;
+        height: calc(100vh - 16rem);
       }
 
       .right-box-bar {

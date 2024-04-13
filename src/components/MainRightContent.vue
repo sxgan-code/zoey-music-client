@@ -136,7 +136,7 @@ function playMusic(id: string) {
 
 <style scoped lang="scss">
 .content-top {
-  height: 28vh;
+  height: 20rem;
   width: 80vw;
   display: flex;
   flex-direction: row;
@@ -156,23 +156,23 @@ function playMusic(id: string) {
 
   .song-list-info {
     flex: 1;
-    height: 28vh;
+    height: 20rem;
     display: flex;
     flex-direction: column;
 
     .info-title {
-      height: 10vh;
+      height: 8rem;
       display: flex;
       flex-direction: row;
 
       div:first-child {
         flex: 1;
-        height: 10vh;
+        height: 8rem;
 
         span {
           color: var(--text-color);
           font-weight: bold;
-          line-height: 10vh;
+          line-height: 8rem;
           font-size: 3.5rem;
           font-family: "HarmonyOS Sans";
         }
@@ -180,7 +180,7 @@ function playMusic(id: string) {
 
       div:last-child {
         width: 16rem;
-        height: 10vh;
+        height: 8rem;
         display: flex;
         align-items: center;
 
@@ -292,8 +292,8 @@ function playMusic(id: string) {
 }
 
 .content-list {
-  height: 52vh;
-  width: 80vw;
+  height: calc(100vh - 36rem);
+  width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -362,13 +362,13 @@ function playMusic(id: string) {
   }
 
   .list-content {
-    height: 46vh;
+    height: calc(100vh - 36rem);
     width: 100%;
     display: flex;
     flex-direction: column;
 
     .list-title {
-      height: 4vh;
+      height: 4rem;
       width: 90%;
       margin: 0 auto;
       display: flex;
@@ -396,7 +396,7 @@ function playMusic(id: string) {
     }
 
     .song-list {
-      height: 42vh;
+      height: calc(100vh - 44rem);
       width: 100%;
       display: flex;
       flex-direction: column;
