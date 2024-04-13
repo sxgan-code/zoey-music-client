@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useIPC from "@/ipc/use-ipc.ts";
 import {useUserStore} from "@/store/user-store.ts";
-import {onBeforeMount} from "vue";
+import {onMounted} from "vue";
 import msg, {PositionTypeEnum} from "@/components/message";
 import {getUserInfo} from "@/api/auth";
 
@@ -45,9 +45,11 @@ const autoLogin = () => {
 }
 
 /*每次启动调用*/
-onBeforeMount(() => {
-  /* 先自动登录 */
-  autoLogin()
+onMounted(() => {
+  /*如果检测未登录，则自动登录*/
+  if (!userStore.userInfo.isLogin) {
+    autoLogin()
+  }
   /* 手动登录触发 */
   window.ipcRenderer.on('user-token', (_event, args) => {
     localStorage.setItem("token", args)

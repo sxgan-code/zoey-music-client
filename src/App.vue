@@ -17,11 +17,7 @@ onMounted(() => {
 
 <template>
   <div class="main-root">
-    <router-view v-slot="{ Component,route }">
-      <transition>
-        <component :is="Component" :key="route.path"/>
-      </transition>
-    </router-view>
+    <router-view/>
   </div>
 </template>
 

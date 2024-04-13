@@ -2,12 +2,12 @@
 
 import {useUserStore} from "@/store/user-store.ts";
 import MainLeftMenu from "@/components/MainLeftMenu.vue";
-import MainRightContent from "@/components/MainRightContent.vue";
 import MainHead from "@/components/MainHead.vue";
 import MainRightPlayBar from "@/components/MainRightPlayBar.vue";
+import {useRoute} from "vue-router";
 
 var userStore = useUserStore();
-
+const route = useRoute()
 </script>
 
 <template>
@@ -28,7 +28,7 @@ var userStore = useUserStore();
       </div>
       <div class="right-box">
         <div class="right-box-content">
-          <main-right-content/>
+          <router-view :key="route.fullPath"/>
         </div>
         <div class="right-box-bar">
           <main-right-play-bar/>

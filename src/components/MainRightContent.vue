@@ -4,12 +4,15 @@ import {usePlayStore} from '@/store/play-store.ts'
 import {useUserStore} from '@/store/user-store.ts'
 import songsData from '@/assets/mock/songs-mock-data.ts'
 import msg, {PositionTypeEnum} from "@/components/message";
+import {useRoute} from "vue-router";
 
 const songs = ref(songsData)
 const playStore = usePlayStore()
 const userStore = useUserStore()
 const index = ref(1)
-
+const route = useRoute();
+let listId = ref();
+listId.value = route.params.listId
 
 /*点击更改列表标题文字样式*/
 function changeStyle(val: number) {
@@ -40,7 +43,6 @@ function isLikeSong(songId: string) {
 function playMusic(id: string) {
   console.log('播放歌曲')
 }
-
 </script>
 
 <template>
@@ -51,7 +53,7 @@ function playMusic(id: string) {
     <div class="song-list-info">
       <div class="info-title">
         <div>
-          <span>{{ playStore.songList.songlistName }}</span>
+          <span>{{ playStore.songList.songlistName }}  TEST- {{ listId.substring(29, listId.length) }}</span>
         </div>
         <div>
           <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe7e9;</i>编辑</span>

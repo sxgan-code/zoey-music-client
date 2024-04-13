@@ -3,16 +3,19 @@ import {ref} from "vue";
 import {usePlayStore} from '@/store/play-store.ts'
 import songlistMockData from "@/assets/mock/songlist-mock-data.ts";
 import msg, {PositionTypeEnum} from "@/components/message";
+import router from "@/router";
 
 const playStore = usePlayStore()
 
 const creates = ref(songlistMockData.creates)
 const collects = ref(songlistMockData.collects)
 
-function openPage(songlistId: string) {
-  msg.warning('开发中。。。', PositionTypeEnum.TOP)
+function openPage(songlistId: string = '1') {
+  // msg.warning('开发中。。。', PositionTypeEnum.TOP)
   // songListId.value = songlistId
-  // router.push("/efairy/main/MusicPavilion/" + songlistId)
+  let pathStr: string = '/main/list/' + songlistId;
+  console.log(pathStr)
+  router.push(pathStr)
 }
 </script>
 
