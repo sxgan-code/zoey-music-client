@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 import {SysUserVO} from "@/api/auth/types.ts";
+import {isEmptyReturnOldData} from "@/utils/common-utils.ts";
 
 // useStore 可以是 useUser、useCart 之类的任何东西
 // 第一个参数是应用程序中 store 的唯一 id
@@ -16,11 +17,19 @@ export const useUserStore = defineStore('user', {
             /* 用户信息 */
             userInfo: {
                 isLogin: false,
-                name: '未登录',
+                userId: '',
+                userName: '未登录',
+                sex: '',
+                email: '',
                 avatar: '@/assets/images/avatar.png',
-                token: '',
-                email: ''
-            }
+                personalSign: '',
+                status: '',
+                delFlag: '',
+                deptId: null,
+                phoneNumber: '',
+                remark: '',
+                userType: '',
+            } as SysUserVO,
         }
     },
     actions: {
@@ -33,15 +42,27 @@ export const useUserStore = defineStore('user', {
             this.isMask = !this.isMask
         },
         /* 设置用户信息 */
-        setUserInfo(state: SysUserVO, isLoad: boolean = false) {
-            this.userInfo.email = state.email
-            this.userInfo.name = state.userName
+        setUserInfo(data: SysUserVO, isLoad: boolean = false) {
             this.userInfo.isLogin = isLoad
+            this.userInfo.email = isEmptyReturnOldData(data.email, this.userInfo.email)
+            this.userInfo.avatar = isEmptyReturnOldData(data.avatar, this.userInfo.avatar)
+            this.userInfo.personalSign = isEmptyReturnOldData(data.personalSign, this.userInfo.personalSign)
+            this.userInfo.delFlag = isEmptyReturnOldData(data.delFlag, this.userInfo.delFlag)
+            this.userInfo.deptId = isEmptyReturnOldData(data.deptId, this.userInfo.deptId)
+            this.userInfo.phoneNumber = isEmptyReturnOldData(data.phoneNumber, this.userInfo.phoneNumber)
+            this.userInfo.remark = isEmptyReturnOldData(data.remark, this.userInfo.remark)
+            this.userInfo.sex = isEmptyReturnOldData(data.sex, this.userInfo.sex)
+            this.userInfo.status = isEmptyReturnOldData(data.status, this.userInfo.status)
+            this.userInfo.userId = isEmptyReturnOldData(data.userId, this.userInfo.userId)
+            this.userInfo.userName = isEmptyReturnOldData(data.userName, this.userInfo.userName)
+            this.userInfo.userType = isEmptyReturnOldData(data.userType, this.userInfo.userType)
         }
     },
     getters: {
         // 返回全局遮罩状态
         getIsMask: (state) => state.isMask,
+        // getUserInfo
+        getUserInfo: (state) => state.userInfo,
     }
 
 })

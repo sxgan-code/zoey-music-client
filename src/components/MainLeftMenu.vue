@@ -4,6 +4,9 @@ import {usePlayStore} from '@/store/play-store.ts'
 import songlistMockData from "@/assets/mock/songlist-mock-data.ts";
 import msg, {PositionTypeEnum} from "@/components/message";
 import router from "@/router";
+import {useUserStore} from "@/store/user-store.ts";
+
+const userStore = useUserStore()
 
 const playStore = usePlayStore()
 
@@ -23,7 +26,7 @@ function openPage(songlistId: string = '1') {
   <div class="menu-block">
     <div class="my-music-title">在线音乐</div>
     <div class="my-music-list">
-      <div class="like-music" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
+      <div class="like-music" @click="router.push('/main/recommend')">
         <i class="icon huaweiicon icon-ic_public_home"></i> <span>推荐</span>
       </div>
       <div class="local-down" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
@@ -40,7 +43,7 @@ function openPage(songlistId: string = '1') {
   <div class="menu-block">
     <div class="my-music-title">我的音乐</div>
     <div class="my-music-list">
-      <div class="like-music" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
+      <div v-if="userStore.userInfo.isLogin" class="like-music" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_public_favor"></i> <span>我喜欢</span>
       </div>
       <div class="local-down" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
@@ -52,12 +55,13 @@ function openPage(songlistId: string = '1') {
       <div class="audition-list" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_device_earphone"></i> <span>试听列表</span>
       </div>
-      <div class="purchased-music" @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
+      <div v-if="userStore.userInfo.isLogin" class="purchased-music"
+           @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)">
         <i class="icon huaweiicon icon-ic_public_appstore"></i> <span>已购音乐</span>
       </div>
     </div>
   </div>
-  <div class="menu-block">
+  <div v-if="userStore.userInfo.isLogin" class="menu-block">
     <div class="my-music-title">创建的歌单</div>
     <div class="my-music-list">
       <div :class="playStore.songInfo.songListId==item.songlistId?'love-collect selectNode':'love-collect'"
@@ -69,7 +73,7 @@ function openPage(songlistId: string = '1') {
       </div>
     </div>
   </div>
-  <div class="menu-block">
+  <div v-if="userStore.userInfo.isLogin" class="menu-block">
     <div class="my-music-title">收藏的歌单</div>
     <div class="my-music-list">
       <div :class="playStore.songInfo.songListId==item.songlistId?'love-collect selectNode':'love-collect'"
@@ -89,7 +93,7 @@ function openPage(songlistId: string = '1') {
   margin: 0 2rem;
   color: var(--text-color-rgba);
   overflow: hidden;
-
+  
   .my-music-title {
     font-family: 'HarmonyOS Sans';
     font-size: 1.2rem;
@@ -97,29 +101,29 @@ function openPage(songlistId: string = '1') {
     margin: 1rem 0 0.5rem 0;
     line-height: 2rem;
   }
-
+  
   .my-music-list {
     display: flex;
     flex-direction: column;
     font-size: 1.4rem;
-
+    
     > div {
       width: 14rem;
       margin: 0.5rem 0;
       border-radius: 0.5rem;
-
+      
       i {
         line-height: 3rem;
         font-size: 1.8rem;
         font-weight: lighter;
         margin: 0 1rem;
       }
-
+      
       > span {
         margin: auto 0;
       }
     }
-
+    
     .love-collect {
       height: 3rem;
       line-height: 3rem;
@@ -129,14 +133,14 @@ function openPage(songlistId: string = '1') {
       display: flex;
       flex-direction: row;
       align-items: center;
-
+      
       span {
         width: 12rem;
         display: block;
         line-height: 3rem;
         margin-left: 1rem;
       }
-
+      
       .play-img {
         display: block;
         width: 1.5rem;
@@ -146,11 +150,11 @@ function openPage(songlistId: string = '1') {
         background-size: 60%;
       }
     }
-
+    
     div:hover {
       background: var(--bg--active-rgba);
     }
-
+    
     .selectNode {
       color: var(--text-color);
       background: var(--bg--active-rgba);

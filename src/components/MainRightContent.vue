@@ -41,7 +41,7 @@ function isLikeSong(songId: string) {
 
 /*点击控件播放音乐*/
 function playMusic(id: string) {
-  console.log('播放歌曲')
+  console.log('播放歌曲' + id)
 }
 </script>
 
@@ -136,15 +136,15 @@ function playMusic(id: string) {
 
 <style scoped lang="scss">
 .content-top {
-  height: 20rem;
+  height: 22rem;
   width: 80vw;
   display: flex;
   flex-direction: row;
   align-items: center;
-
+  
   .song-list-pic {
     width: 20rem;
-
+    
     img {
       display: block;
       margin: 0 auto;
@@ -153,44 +153,44 @@ function playMusic(id: string) {
       border-radius: 1rem;
     }
   }
-
+  
   .song-list-info {
     flex: 1;
     height: 20rem;
     display: flex;
     flex-direction: column;
-
+    
     .info-title {
       height: 8rem;
       display: flex;
       flex-direction: row;
-
+      
       div:first-child {
         flex: 1;
         height: 8rem;
-
+        
         span {
           color: var(--text-color);
           font-weight: bold;
           line-height: 8rem;
           font-size: 3.5rem;
-          font-family: "HarmonyOS Sans";
+          font-family: "HarmonyOS Sans", sans-serif;
         }
       }
-
+      
       div:last-child {
         width: 16rem;
         height: 8rem;
         display: flex;
         align-items: center;
-
+        
         span {
           i {
             color: var(--text-color);
             font-size: 1.2rem;
             margin-right: 0.4rem;
           }
-
+          
           color: var(--text-color);
           width: 5rem;
           margin: 0 0.8rem;
@@ -199,24 +199,24 @@ function playMusic(id: string) {
           text-align: center;
           line-height: 2.5rem;
         }
-
+        
         span:hover {
-          background: var(--bg--rgba);
+          background: var(--text-deep-rgba-1);
         }
       }
     }
-
+    
     .info-style {
       width: 100%;
       flex: 2;
       display: flex;
       flex-direction: row;
-
+      
       div:first-child {
         display: flex;
         flex-direction: row;
         align-items: center;
-
+        
         img {
           display: inline-block;
           width: 3rem;
@@ -224,52 +224,52 @@ function playMusic(id: string) {
           border-radius: 1.5rem;
           margin-right: 1rem;
         }
-
+        
         span {
           color: var(--text-color);
           font-size: 1.4rem;
         }
-
+        
         span:hover {
           cursor: pointer;
           color: var(--text-active-color)
         }
       }
-
+      
       div:last-child {
         display: flex;
         flex-direction: row;
         align-items: center;
-
+        
         span {
-          font-family: 'HarmonyOS Sans';
+          font-family: 'HarmonyOS Sans', sans-serif;
           font-size: 1.4rem;
           margin-left: 2rem;
           color: var(--text-color);
         }
       }
     }
-
+    
     .info-introduction {
       flex: 2;
       display: flex;
       flex-direction: row;
       align-items: center;
-
+      
       span {
-        font-family: 'HarmonyOS Sans';
+        font-family: 'HarmonyOS Sans', sans-serif;
         font-size: 1.4rem;
         color: var(--text-color);
       }
     }
-
+    
     .info-btn {
       flex: 3;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-around;
-
+      
       div {
         font-size: 1.4rem;
         color: var(--text-color);;
@@ -277,15 +277,15 @@ function playMusic(id: string) {
         width: 12rem;
         text-align: center;
         border-radius: 1.8rem;
-        background: var(--bg--rgba);
+        background: var(--text-deep-rgba-1);
       }
-
+      
       div:first-child {
-        background: var(--bg--rgba-2);
+        background: var(--text-deep-rgba-2);
       }
-
+      
       div:hover {
-        background: var(--bg--rgba-2);
+        background: var(--text-deep-rgba-2);
       }
     }
   }
@@ -296,17 +296,17 @@ function playMusic(id: string) {
   width: 100%;
   display: flex;
   flex-direction: column;
-
+  
   .list-top {
     height: 6vh;
     width: 100%;
     display: flex;
     flex-direction: row;
-
+    
     div:first-child {
       flex: 8;
       display: flex;
-
+      
       span {
         display: inline-block;
         width: 8rem;
@@ -315,17 +315,17 @@ function playMusic(id: string) {
         font-size: 1.4rem;
         line-height: 3rem;
         margin: 0 1.5rem;
-
+        
       }
-
+      
       span:hover {
         color: var(--text-active-color);
       }
-
+      
       .sel-title-span {
         color: var(--text-active-color);
       }
-
+      
       .sel-title-span::after {
         display: block;
         content: '';
@@ -334,17 +334,17 @@ function playMusic(id: string) {
         border-bottom: 3px solid var(--text-active-color);
       }
     }
-
+    
     div:last-child {
       margin-top: 0.5rem;
       flex: 2;
-
+      
       span {
         i {
           font-size: 1.2rem;
           margin-right: 0.5rem;
         }
-
+        
         display: inline-block;
         width: 5rem;
         color: var(--text-color);
@@ -354,19 +354,19 @@ function playMusic(id: string) {
         border-radius: 0.3rem;
         margin: 0 1rem;
       }
-
+      
       span:hover {
-        background: var(--bg--rgba);
+        background: var(--text-deep-rgba-1);
       }
     }
   }
-
+  
   .list-content {
     height: calc(100vh - 36rem);
     width: 100%;
     display: flex;
     flex-direction: column;
-
+    
     .list-title {
       height: 4rem;
       width: 90%;
@@ -374,60 +374,60 @@ function playMusic(id: string) {
       display: flex;
       flex-direction: row;
       align-items: center;
-
+      
       span {
         color: var(--text-color-rgba);
         font-size: 1.2rem;
       }
-
+      
       div:first-child {
         flex: 5;
         padding-left: 1rem;
       }
-
+      
       div:nth-child(2) {
         flex: 3;
       }
-
+      
       div:last-child {
         flex: 4;
       }
-
+      
     }
-
+    
     .song-list {
       height: calc(100vh - 44rem);
       width: 100%;
       display: flex;
       flex-direction: column;
       overflow: auto;
-
+      
       .item-list {
         display: flex;
         flex-direction: row;
         line-height: 4rem;
         width: 90%;
         margin: 0 auto;
-
+        
         .song-clo-1 {
           flex: 5;
           line-height: 4rem;
           display: flex;
           flex-direction: row;
-
+          
           .song-name {
             flex: 12;
             line-height: 4rem;
-
+            
             span {
               color: var(--text-color);
               font-size: 1.4rem;
             }
-
+            
             .song-like {
               color: var(--text-color-light-red);
             }
-
+            
             i {
               cursor: pointer;
               margin: 0 1rem;
@@ -435,33 +435,33 @@ function playMusic(id: string) {
               font-size: 1.6rem;
             }
           }
-
+          
           .song-control {
             flex: 6;
             line-height: 4rem;
             display: flex;
             justify-content: space-around;
-
+            
             i {
               display: none;
               color: var(--text-color);
               font-size: 1.8rem;
             }
-
+            
             i:hover {
               color: var(--text-active-color);
             }
           }
         }
-
+        
         .song-clo-2 {
           flex: 3;
         }
-
+        
         .song-clo-3 {
           flex: 4;
         }
-
+        
         .song-clo-2, .song-clo-3 {
           span {
             font-size: 1.4rem;
@@ -470,16 +470,16 @@ function playMusic(id: string) {
           }
         }
       }
-
+      
       .item-list:hover {
         .song-clo-1 .song-control i {
           display: block;
         }
-
+        
         background: var(--bg--rgba);
       }
     }
   }
-
+  
 }
 </style>

@@ -67,11 +67,26 @@ export function getCaptchaApi(data: LoginData): Promise<ResponseResult<VerifyCod
 /**
  * 根据token获取用户信息
  */
-export function getUserInfo(): Promise<ResponseResult<SysUserVO>> {
+export function getUserInfoApi(): Promise<ResponseResult<SysUserVO>> {
     return request({
         url: "/card/auth/getSysUserInfo",
         method: "get",
         data: new Date().getTime(),
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+    });
+}
+
+/**
+ * 根据token获取用户信息
+ */
+export function updateUserInfoApi(data: SysUserVO): Promise<ResponseResult<string>> {
+    const requestJsonData = JSON.stringify(data)
+    return request({
+        url: "/card/auth/updateSysUserInfo",
+        method: "post",
+        data: requestJsonData,
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },

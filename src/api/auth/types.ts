@@ -42,17 +42,18 @@ export interface VerifyCodeResult {
     verifyCode: string;
 }
 
-/*
-* 用户信息响应
-*  */
 /**
  * SysUserVO，用户信息视图对象
  */
 export interface SysUserVO {
     /**
+     * 是否登录
+     */
+    isLogin?: boolean;
+    /**
      * 头像路径
      */
-    avatar: string;
+    avatar?: string;
     /**
      * 删除标志（0代表存在 2代表删除）
      */
@@ -60,15 +61,19 @@ export interface SysUserVO {
     /**
      * 部门ID
      */
-    deptId?: string;
+    deptId?: string | null;
     /**
      * 用户邮箱
      */
-    email: string;
+    email?: string;
     /**
      * 手机号码
      */
     phoneNumber?: string;
+    /**
+     * 个性签名
+     */
+    personalSign?: string;
     /**
      * 备注
      */
@@ -88,9 +93,27 @@ export interface SysUserVO {
     /**
      * 用户昵称
      */
-    userName: string;
+    userName?: string;
     /**
      * 用户类型（00系统用户 01普通用户）
      */
     userType?: string;
+}
+
+/**
+ * UpdateUserData，请求用户更新数据
+ */
+export interface UpdateUserData {
+    /**
+     * 用户邮箱
+     */
+    email: string;
+    /**
+     * 个性签名
+     */
+    personalSign?: string;
+    /**
+     * 用户昵称
+     */
+    userName: string;
 }

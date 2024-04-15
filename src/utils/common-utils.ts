@@ -652,3 +652,43 @@ export const colorToRGB = (val: string, opa: string) => {
     rgbStr = 'rgb' + (isOpa ? 'a' : '') + '(' + rgbStr + (isOpa ? ',' + opa : '') + ')';
     return rgbStr;
 }
+
+/**
+ * 判断所传值是否为空
+ * 使用示例：
+ * isEmpty(null)); // true
+ * isEmpty(undefined)); // true
+ * isEmpty('')); // true
+ * isEmpty([])); // true
+ * isEmpty({})); // true
+ * isEmpty('Hello')); // false
+ * isEmpty([1, 2, 3])); // false
+ * isEmpty({ key: 'value' })); // false
+ * @param value
+ */
+export function isEmpty(value: any): boolean {
+    // 检查值是否为空
+    return (
+        value === null ||
+        value === undefined ||
+        value === '' ||
+        (Array.isArray(value) && value.length === 0) ||
+        (typeof value === 'object' && Object.keys(value).length === 0)
+    );
+}
+
+/**
+ * 判断所传值是否为空,空则返回旧值，否则返回所传值
+ * @param newVal 新值
+ * @param oldVal 旧值
+ */
+export function isEmptyReturnOldData(newVal: any, oldVal: any): any {
+    // 检查值是否为空
+    return (newVal === null ||
+        newVal === undefined ||
+        newVal === '' ||
+        (Array.isArray(newVal) && newVal.length === 0) ||
+        (typeof newVal === 'object' && Object.keys(newVal).length === 0)
+    ) ? oldVal : newVal;
+}
+

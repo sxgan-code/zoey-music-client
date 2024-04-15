@@ -106,9 +106,14 @@ function clickVolume() {
              v-tooltip="{text:'下一曲'}"></i>
         </span>
         <span>
-          <i class="icon huaweiicon icon-ic_public_sound_filled i-max"
-             v-tooltip="{text:'音量大小'}"
-             @click="clickVolume()"></i>
+          <i v-if="playStore.songPlayingInfo.volume>0" class="icon myiconfont my-volume-medium i-max"
+             v-tooltip="{text:'音量大小'+playStore.songPlayingInfo.volume*100+'%'}"
+             @click="clickVolume()">
+            <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+          </i>
+          <i v-if="playStore.songPlayingInfo.volume==0" class="icon myiconfont my-volume-mute2">
+            <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+          </i>
         </span>
       </div>
     </div>
@@ -132,7 +137,7 @@ function clickVolume() {
   width: 80vw;
   height: 1rem;
   position: relative;
-
+  
   .bg-tip {
     position: absolute;
     top: 0.375rem;
@@ -142,7 +147,7 @@ function clickVolume() {
     height: 0.25rem;
     background: var(--bg--rgba-1);
   }
-
+  
   .cache-bar {
     position: absolute;
     top: 0.375rem;
@@ -152,7 +157,7 @@ function clickVolume() {
     height: 0.25rem;
     background: var(--bg--rgba-3);
   }
-
+  
   .realtime-progress-bar {
     position: absolute;
     top: 0.375rem;
@@ -162,7 +167,7 @@ function clickVolume() {
     height: 0.25rem;
     background: var(--text-active-color);
   }
-
+  
   .current-position-point {
     position: absolute;
     z-index: 3;
@@ -187,27 +192,27 @@ function clickVolume() {
   height: 100%;
   display: flex;
   flex-direction: row;
-
+  
   .song-info {
     flex: 2;
     height: 6rem;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     .info-box {
       width: 30rem;
       height: 4rem;
       display: flex;
       align-items: center;
-
+      
       .info-left {
         display: flex;
         align-items: center;
         width: 4rem;
         height: 4rem;
         overflow: hidden;
-
+        
         .posit-index {
           display: none;
           position: absolute;
@@ -217,21 +222,21 @@ function clickVolume() {
           color: var(--text-color);
           font-size: 4rem;
         }
-
+        
         img {
           width: 4rem;
           height: 4rem;
           border-radius: 0.5rem;
         }
-
+        
         //img:hover .posit-index{
         //    bottom: 1rem;
         //    cursor: pointer;
         //    display: block;
         //}
       }
-
-
+      
+      
       .info-right {
         //border: 1px solid lawngreen;
         height: 4rem;
@@ -240,40 +245,40 @@ function clickVolume() {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-
+        
         .song-name {
           width: 14rem;
           overflow: hidden;
-
+          
           span {
             display: block;
             font-size: 1.2rem;
             color: var(--text-color);
           }
         }
-
+        
         i {
           margin: 0 0.7rem;
         }
-
+        
         .song-like {
           font-size: 1.8rem;
           color: var(--text-color-rgba);
-
+          
           .is-like {
             color: var(--text-color-light-red);
           }
         }
-
+        
         .song-like i:hover {
           cursor: pointer;
         }
-
+        
         i:nth-child(n+2) {
           //margin: 0 0.5rem;
           color: var(--bg--active--rgba)
         }
-
+        
         i:nth-child(n+2):hover {
           cursor: pointer;
           color: var(--text-active-color)
@@ -281,41 +286,41 @@ function clickVolume() {
       }
     }
   }
-
+  
   .song-play-control {
     flex: 2;
-
+    
     .control-box {
       width: 20rem;
       height: 5rem;
       display: flex;
       flex-direction: row;
       justify-content: center;
-
+      
       span i {
         line-height: 5rem;
         font-size: 3rem;
         margin: 0 1rem;
         color: var(--text-color);
       }
-
+      
       span i:hover {
         cursor: pointer;
         color: var(--text-active-color)
       }
-
+      
       span .i-max {
         //display: block;
         font-size: 2rem;
       }
-
+      
       span .i-max-isPlay {
         display: block;
         font-size: 3rem;
         padding-right: 1rem;
         color: var(--text-active-color)
       }
-
+      
       .tip-volume {
         position: absolute;
         bottom: 0;
@@ -326,7 +331,7 @@ function clickVolume() {
       }
     }
   }
-
+  
   .song-time {
     flex: 1;
     height: 5rem;
@@ -334,19 +339,20 @@ function clickVolume() {
     flex-direction: row;
     align-items: center;
     justify-content: end;
-
+    
     .play-time {
       font-size: 1.4rem;
       color: var(--text-color-rgba);
     }
-
+    
     .play-list {
       margin: 0 2rem 0 0.5rem;
+      
       i {
         color: var(--text-color);
         font-size: 2.8rem;
       }
-
+      
     }
   }
 }
