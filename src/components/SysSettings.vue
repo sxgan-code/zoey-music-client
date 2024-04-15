@@ -32,24 +32,35 @@ const userInfo = ref<SysUserVO>({
   userName: userStore.getUserInfo.userName,
   personalSign: userStore.getUserInfo.personalSign,
 })
+const userInfoOld: SysUserVO = {
+  email: userStore.getUserInfo.email,
+  userName: userStore.getUserInfo.userName,
+  personalSign: userStore.getUserInfo.personalSign,
+}
 const updateUserInfo = () => {
   let userName = userInfo.value.userName
   if (isEmpty(userName)) {
     msg.warning('用户名不能为空', PositionTypeEnum.TOP)
-    return
+    return;
   } else if (userName != undefined && userName.length > 10) {
     msg.warning('用户名不得超过10个字符', PositionTypeEnum.TOP)
-    return
+    return;
+  } else if (userInfoOld.userName == userInfo.value.userName
+      && userInfoOld.personalSign == userInfo.value.personalSign) {
+    return;
   }
   updateUserInfoApi(userInfo.value).then(res => {
     if (res.status === 200) {
-      msg.success(res.message, PositionTypeEnum.TOP, 2, () => {
+      userInfoOld.userName = userInfo.value.userName
+      userInfoOld.personalSign = userInfo.value.personalSign
+      msg.success(res.message, PositionTypeEnum.TOP, 1, () => {
         userStore.setUserInfo(userInfo.value, true)
       })
-      console.log(userStore.getUserInfo)
+    } else {
+      msg.error(res.message, PositionTypeEnum.TOP)
     }
   }).catch(err => {
-  
+    msg.error('服务器端异常，请稍后再试', PositionTypeEnum.TOP)
   })
 }
 </script>

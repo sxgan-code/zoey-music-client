@@ -4,7 +4,7 @@
 
 <template>
   <div  class="bg-mask">
-    <img src="@/assets/images/20240002.jpg" alt="">
+    <img src="@/assets/images/20240005.jpg" alt="">
   </div>
 </template>
 

@@ -692,3 +692,18 @@ export function isEmptyReturnOldData(newVal: any, oldVal: any): any {
     ) ? oldVal : newVal;
 }
 
+/**
+ * 判断两个对象是否一致
+ * @param o1
+ * @param o2
+ */
+export const objectIsEqual = (o1: any, o2: any): boolean => {
+    for (const key of Object.keys(o1)) { //遍历对象的key
+        // 找到公共的key
+        if (o1[key] !== o2[key]) {
+            return false;
+        }
+
+    }
+    return true;
+}
