@@ -22,7 +22,7 @@ const overAudio = () => {
  **/
 const playStore = usePlayStore()
 const audioRef = ref()
-watch(() => playStore.songPlayingInfo.isPlay, (newValue, oldValue) => {
+watch(() => playStore.getSongPlayingInfo.isPlay, (newValue, oldValue) => {
   if (newValue) {
     audioRef.value.play()
   } else {
@@ -31,20 +31,21 @@ watch(() => playStore.songPlayingInfo.isPlay, (newValue, oldValue) => {
   }
 })
 onMounted(() => {
-  audioRef.value.volume = playStore.songPlayingInfo.volume
+  audioRef.value.volume = playStore.getSongPlayingInfo.volume
 })
-const url = import.meta.env.VITE_BASE_URL + '/static/' + playStore.songInfo.songUrl
+const url = import.meta.env.VITE_BASE_URL + '/static' + playStore.getSongInfo.songUrl
+
 </script>
 
 <template>
   <div class="play-root-box">
     <audio class="audio" ref="audioRef"
-           :src="url"
            @error="msg.error('服务器错误，请稍后重试')"
            @ended="overAudio"
            @pause="onPause"
-           @play="onPlay"
-    ></audio>
+           @play="onPlay">
+      <source :src="url" type="audio/mpeg">
+    </audio>
   </div>
 </template>
 
