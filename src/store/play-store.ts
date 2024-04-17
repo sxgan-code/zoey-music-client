@@ -26,12 +26,12 @@ export const usePlayStore = defineStore('play', {
                 singer: '薛之谦',
                 album: '天外来物',
                 song_time: '4:25',
-                songUrl: '',
+                songUrl: '/resources/songs/林俊杰-关键词.mp3',
                 isLike: '1',
                 songListId: 'LIST-188F3265-75A9-0308-1082-BE570358BA2A'
             },
             songPlayingInfo: {
-                isPlay: true, // 播放状态
+                isPlay: false, // 播放状态
                 currentTime: '00:00', // 当前播放时间
                 current: 0, // 当前播放时间
                 durationTime: '00:00',// 当前歌曲的总时长

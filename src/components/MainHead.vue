@@ -89,6 +89,11 @@ const exitCurrentAccount = () => {
     msg.success('账号退出成功')
   }
 }
+// 打开用户信息页面
+const openPage = (path: string) => {
+  userStore.judgeLogin()
+  router.push('/main/' + path)
+}
 /**
  * @Description:用户信息浮动框
  * @Author: sxgan
@@ -154,7 +159,7 @@ onUnmounted(() => {
           <div @click="msg.warning('开发中。。。',PositionTypeEnum.TOP)">我的歌单</div>
           <div @click="msg.warning('开发中。。。',PositionTypeEnum.TOP)">我的关注</div>
           <div @click="msg.warning('开发中。。。',PositionTypeEnum.TOP)">我的粉丝</div>
-          <div @click="router.push('/main/user-info')">个人账号</div>
+          <div @click="openPage('user-info')">个人账号</div>
           <div @click="exitCurrentAccount()">退出账号</div>
         </div>
         <span class="icon-box-btn icon-btn-skins">

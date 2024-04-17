@@ -396,7 +396,7 @@ function playMusic(id: string) {
     }
     
     .song-list {
-      height: calc(100vh - 44rem);
+      height: calc(100vh - 46rem);
       width: 100%;
       display: flex;
       flex-direction: column;

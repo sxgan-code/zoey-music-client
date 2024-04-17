@@ -118,7 +118,7 @@ async function createChildWindow(win: BrowserWindow, param: any) {
     if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
         justChildWin.loadURL(url + '#' + param.url)
         // Open devTool if the app is not packaged
-        justChildWin.webContents.openDevTools({mode: 'detach'})
+        // justChildWin.webContents.openDevTools({mode: 'detach'})
     } else {
         justChildWin.loadFile(indexHtml, {hash: param.url})
         justChildWin.webContents.on('devtools-opened', () => {
@@ -209,4 +209,3 @@ ipcMain.handle('open-win', (_, arg) => {
         childWindow.loadFile(indexHtml, {hash: arg.url})
     }
 })
-

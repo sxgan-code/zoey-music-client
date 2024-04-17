@@ -31,6 +31,8 @@ export const useUserStore = defineStore('user', {
                 userType: '',
             } as SysUserVO,
         }
+
+
     },
     actions: {
         /*自增函数*/
@@ -56,6 +58,17 @@ export const useUserStore = defineStore('user', {
             this.userInfo.userId = isEmptyReturnOldData(data.userId, this.userInfo.userId)
             this.userInfo.userName = isEmptyReturnOldData(data.userName, this.userInfo.userName)
             this.userInfo.userType = isEmptyReturnOldData(data.userType, this.userInfo.userType)
+        },
+        /* 判断是否登录，否则打开登录窗口 */
+        judgeLogin() {
+            if (!this.userInfo.isLogin) {
+                let data = {
+                    width: 600,
+                    height: 520,
+                    url: '/login'
+                }
+                window.ipcRenderer.invoke('renderer-open-win', data);
+            }
         }
     },
     getters: {
