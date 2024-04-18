@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {usePlayStore} from '@/store/play-store.ts'
-import songlistMockData from "@/assets/mock/songlist-mock-data.ts";
 import msg, {PositionTypeEnum} from "@/components/message";
 import router from "@/router";
 import {useUserStore} from "@/store/user-store.ts";
+import {getUserMusicListApi} from "@/api/list";
+import {MusicListType} from "@/api/list/type.ts";
 
 const userStore = useUserStore()
 
 const playStore = usePlayStore()
-
-const creates = ref(songlistMockData.creates)
-const collects = ref(songlistMockData.collects)
 
 function openPage(songlistId: string = '1') {
   // msg.warning('开发中。。。', PositionTypeEnum.TOP)
@@ -20,6 +18,32 @@ function openPage(songlistId: string = '1') {
   console.log(pathStr)
   router.push(pathStr)
 }
+
+/**
+ * @Description: 查询当前用户的歌单
+ * @Author: sxgan
+ * @Date: 2024/4/18 17:40
+ **/
+const creates = ref<MusicListType[]>()
+const collects = ref<MusicListType[]>()
+
+function getSongListByUserId() {
+
+}
+
+watch(() => userStore.userInfo.isLogin, (newVal) => {
+  if (newVal) {
+    getUserMusicListApi().then(res => {
+      creates.value = res.data.creates
+      collects.value = res.data.collects
+      console.log(creates)
+      console.log(collects)
+    }).catch(err => {
+      msg.error()
+    })
+  }
+})
+
 </script>
 
 <template>
@@ -64,24 +88,24 @@ function openPage(songlistId: string = '1') {
   <div v-if="userStore.userInfo.isLogin" class="menu-block">
     <div class="my-music-title">创建的歌单</div>
     <div class="my-music-list">
-      <div :class="playStore.songInfo.songListId==item.songlistId?'love-collect selectNode':'love-collect'"
+      <div :class="playStore.songInfo.songListId==item.listId?'love-collect selectNode':'love-collect'"
            v-for="(item,index) in creates"
-           @click="openPage(item.songlistId)">
-        <span>{{ item.songlistName.length > 6 ? item.songlistName.substring(0, 7) + '...' : item.songlistName }}</span>
+           @click="openPage(item.listId)">
+        <span>{{ item.listName.length > 6 ? item.listName.substring(0, 7) + '...' : item.listName }}</span>
         <div
-            :class="playStore.songInfo.songListId==item.songlistId&&playStore.songPlayingInfo.isPlay?'play-img':''"></div>
+            :class="playStore.songInfo.songListId==item.listId&&playStore.songPlayingInfo.isPlay?'play-img':''"></div>
       </div>
     </div>
   </div>
   <div v-if="userStore.userInfo.isLogin" class="menu-block">
     <div class="my-music-title">收藏的歌单</div>
     <div class="my-music-list">
-      <div :class="playStore.songInfo.songListId==item.songlistId?'love-collect selectNode':'love-collect'"
+      <div :class="playStore.songInfo.songListId==item.listId?'love-collect selectNode':'love-collect'"
            v-for="item in collects"
-           @click="openPage(item.songlistId)">
-        <span>{{ item.songlistName.length > 6 ? item.songlistName.substring(0, 7) + '...' : item.songlistName }}</span>
+           @click="openPage(item.listId)">
+        <span>{{ item.listName.length > 6 ? item.listName.substring(0, 7) + '...' : item.listName }}</span>
         <div
-            :class="playStore.songInfo.songListId==item.songlistId&&playStore.songPlayingInfo.isPlay?'play-img':''"></div>
+            :class="playStore.songInfo.songListId==item.listId&&playStore.songPlayingInfo.isPlay?'play-img':''"></div>
       </div>
     </div>
   </div>

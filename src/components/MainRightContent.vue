@@ -53,7 +53,7 @@ function playMusic(id: string) {
     <div class="song-list-info">
       <div class="info-title">
         <div>
-          <span>{{ playStore.songList.songlistName }}  TEST- {{ listId.substring(29, listId.length) }}</span>
+          <span>{{ playStore.songList.listName }}  TEST- {{ listId.substring(29, listId.length) }}</span>
         </div>
         <div>
           <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe7e9;</i>编辑</span>
@@ -69,11 +69,11 @@ function playMusic(id: string) {
           </span>
         </div>
         <div>
-          <span v-for="item in playStore.songList.songlistStyle">{{ item }}</span>
+          <span v-for="item in playStore.songList.listStyle">{{ item }}</span>
         </div>
       </div>
       <div class="info-introduction">
-        <span>{{ playStore.songList.songlistInfo }}</span>
+        <span>{{ playStore.songList.listInfo }}</span>
       </div>
       <div class="info-btn">
         <div @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe922;</i>播放全部</div>
@@ -86,7 +86,7 @@ function playMusic(id: string) {
   <div class="content-list">
     <div class="list-top">
       <div>
-        <span :class="index==1?'sel-title-span':''" @click="changeStyle(1)">歌曲{{ playStore.songList.count }}</span>
+        <span :class="index==1?'sel-title-span':''" @click="changeStyle(1)">歌曲{{ playStore.songList.listSize }}</span>
         <span :class="index==2?'sel-title-span':''" @click="changeStyle(2)">最近收藏</span>
         <span :class="index==3?'sel-title-span':''" @click="changeStyle(3)">评论</span>
       </div>

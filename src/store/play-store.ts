@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia'
+import {MusicListType} from "@/api/list/type.ts";
 
 // useStore 可以是 useUser、useCart 之类的任何东西
 // 第一个参数是应用程序中 store 的唯一 id
@@ -8,16 +9,16 @@ export const usePlayStore = defineStore('play', {
     state: () => {
         return {
             songList: {
-                songlistId: "LIST-0D44A50E-97F5-4CC0-55C2-6F16A69A546F",
-                songlistName: "只此一生",
-                songlistInfo: "多年后，再回想年少时的迷茫和执着，或许原因都不记得了。青春就是让你张扬地笑，也给你莫名的痛。",
-                songlistStyle: ["#治愈", "#情歌", "#流行"],
-                songlistPic: "/Resource/image/songListImg/109951163443093546.jpg",
-                userId: "USER-432C2877-9106-4C3D-951E-7EBC0AC0234C",
-                block: "create@@",
-                songs: null,
-                count: 21
-            },
+                listId: 0,
+                listName: '',
+                listType: 1,
+                listInfo: '',
+                listStyle: '',
+                listPic: '',
+                userId: 0,
+                createTime: '',
+                updateTime: '',
+            } as MusicListType,
             songInfo: {
                 songId: '0005',
                 // name: '我好想在哪儿见过你-纯享版',

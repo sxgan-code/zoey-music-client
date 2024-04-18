@@ -60,7 +60,7 @@ const message = {
             callback()
         }, time * 1000);
     },
-    error: (msg = '错误', position: PositionTypeEnum = PositionTypeEnum.RIGHT_BOTTOM,
+    error: (msg = '服务器端异常，请稍后再试', position: PositionTypeEnum = PositionTypeEnum.TOP,
             time = 2, callback = () => {
             return
         }) => {

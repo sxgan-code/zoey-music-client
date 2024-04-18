@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {onMounted, ref, watch} from 'vue'
 import {usePlayStore} from "@/store/play-store.ts";
-import msg from '@/components/message'
+import msg, {PositionTypeEnum} from '@/components/message'
+import {useUserStore} from "@/store/user-store.ts";
 
 const onPlay = () => {
   console.log('开始播放声音');
@@ -21,13 +22,16 @@ const overAudio = () => {
  * @Date: 2024/4/17 17:14
  **/
 const playStore = usePlayStore()
+const userStore = useUserStore()
 const audioRef = ref()
 watch(() => playStore.getSongPlayingInfo.isPlay, (newValue, oldValue) => {
-  if (newValue) {
+  if (!userStore.userInfo.isLogin) {
+    msg.warning('请先登录', PositionTypeEnum.TOP)
+    playStore.getSongPlayingInfo.isPlay = false
+  } else if (newValue) {
     audioRef.value.play()
   } else {
     audioRef.value.pause()
-    
   }
 })
 onMounted(() => {
@@ -44,7 +48,7 @@ const url = import.meta.env.VITE_BASE_URL + '/static' + playStore.getSongInfo.so
            @ended="overAudio"
            @pause="onPause"
            @play="onPlay">
-      <source :src="url" type="audio/mpeg">
+      <source :src="url">
     </audio>
   </div>
 </template>
