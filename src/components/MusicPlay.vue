@@ -32,16 +32,25 @@ onMounted(() => {
 })
 const onPlay = () => {
   console.log('开始播放声音');
-  
 }
 // 当音频暂停
 const onPause = () => {
   console.log('暂停播放声音');
-  
 }
 //播放完毕执行
 const overAudio = () => {
   console.log('播放声音完毕');
+  // 自动下一曲
+  for (var i = 0; i <= playStore.songPlayingInfo.songs!.length; i++) {
+    if (playStore.songPlayingInfo.songs![i].songId === playStore.songInfo.songId) {
+      if (i === playStore.songPlayingInfo.songs!.length - 1) {
+        playStore.setSongInfo(playStore.songPlayingInfo.songs![0])
+      } else {
+        playStore.setSongInfo(playStore.songPlayingInfo.songs![i + 1])
+      }
+      return
+    }
+  }
 }
 const loadedData = () => {
   console.log('音频加载完毕')
@@ -61,17 +70,14 @@ const loadedData = () => {
   playStore.songPlayingInfo.durationTime = min + ':' + sec;
 }
 const timeUpdate = () => {
-  console.log('音频播放时间变化')
   let timeDisplay;
   //用秒数来显示当前播放进度
   timeDisplay = Math.floor(audioRef.value.currentTime);//获取实时时间
-  // console.log(timeDisplay)
   var songRealSchedule = audioRef.value.currentTime / audioRef.value.duration;
   playStore.songPlayingInfo.currentScale = songRealSchedule;
   // 歌曲实时缓存比
   var timeRanges = audioRef.value.buffered;
   if (timeRanges.length > 0) {
-    console.log(timeRanges)
     var bufferTime = timeRanges.end(timeRanges.length - 1) / audioRef.value.duration;
     playStore.songPlayingInfo.cacheTimeScale = bufferTime;
   }
@@ -105,7 +111,7 @@ const timeUpdate = () => {
            @loadeddata="loadedData()"
            @timeupdate="timeUpdate()"
            :key="playStore.songInfo.songId">
-      <source :src="playStore.staticBaseUrl+playStore.getSongInfo.songUrl">
+      <source :src="playStore.staticBaseUrl + playStore.getSongInfo.songUrl">
     </audio>
   </div>
 </template>

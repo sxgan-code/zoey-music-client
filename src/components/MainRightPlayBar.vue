@@ -7,10 +7,6 @@ const playStore = usePlayStore();
 const isLike = ref(true)
 
 
-
-
-
-
 const getClassSongName = () => {
   let textLength: number = playStore.songInfo.songName.length + playStore.songInfo.musicSinger.singerName.length
   if (textLength >= 12) {
@@ -24,11 +20,10 @@ function clickVolume() {
 }
 
 /**
- * @Description: 歌曲操作相关
+ * @Description: 播放暂停控制
  * @Author: sxgan
  * @Date: 2024/4/19 14:39
  **/
-/* 播放控制 */
 function changePlay() {
   if (playStore.songPlayingInfo.isPlay) {
     playStore.songPlayingInfo.isPlay = false
@@ -36,25 +31,38 @@ function changePlay() {
     playStore.songPlayingInfo.isPlay = true
   }
 }
+
 /*进度条*/
 let allBarDom = ref<HTMLElement>()
 let cacheBarDom = ref<HTMLElement>()
 let progressBarDom = ref<HTMLElement>()
 let pointDom = ref<HTMLElement>()
 
-/*点击进度条*/
+/**
+ * @Description: 点击进度条
+ * @Author: sxgan
+ * @Date: 2024/4/19 21:03
+ **/
 function clickBar(e: any) {
   progressBarDom.value!.style.width = e.offsetX + 'px'
   pointDom.value!.style.left = (e.offsetX - 4) + 'px'
   playStore.songPlayingInfo.clickCurrent = e.offsetX / allBarDom.value!.offsetWidth
 }
 
-// 禁止点击圆点
+/**
+ * @Description: 禁止点击圆点
+ * @Author: sxgan
+ * @Date: 2024/4/19 21:03
+ **/
 function stopClickBar(e: any) {
   e.stopPropagation()
 }
 
-// 真实进度变化
+/**
+ * @Description: 监听进度变化
+ * @Author: sxgan
+ * @Date: 2024/4/19 21:03
+ **/
 watch(() => playStore.songPlayingInfo.currentScale, (newValue, oldValue) => {
   progressBarDom.value!.style.width = newValue * allBarDom.value!.offsetWidth + 'px'
   pointDom.value!.style.left = newValue * allBarDom.value!.offsetWidth - 1 + 'px'
@@ -63,14 +71,51 @@ watch(() => playStore.songPlayingInfo.cacheTimeScale, (newValue, oldValue) => {
   cacheBarDom.value!.style.width = Math.floor(newValue * 100) + '%';
 })
 
-/*上一曲*/
+/**
+ * @Description: 上一曲
+ * @Author: sxgan
+ * @Date: 2024/4/19 20:46
+ **/
 function previousAudio() {
-  playStore.songPlayingInfo.overCount = playStore.songPlayingInfo.overCount < 1 ? 10 : playStore.songPlayingInfo.overCount - 1
+  for (var i = 0; i <= playStore.songPlayingInfo.songs!.length; i++) {
+    if (playStore.songPlayingInfo.songs![i].songId === playStore.songInfo.songId) {
+      if (i === 0) {
+        playStore.setSongInfo(playStore.songPlayingInfo.songs![playStore.songPlayingInfo.songs!.length - 1])
+      } else {
+        playStore.setSongInfo(playStore.songPlayingInfo.songs![i - 1])
+      }
+      playStore.songPlayingInfo.isPlay = true
+      return
+    }
+  }
 }
 
-/*下一曲*/
+/**
+ * @Description: 下一曲
+ * @Author: sxgan
+ * @Date: 2024/4/19 20:46
+ **/
 function nextAudio() {
-  playStore.songPlayingInfo.overCount = playStore.songPlayingInfo.overCount > 10 ? 0 : playStore.songPlayingInfo.overCount + 1
+  for (var i = 0; i <= playStore.songPlayingInfo.songs!.length; i++) {
+    if (playStore.songPlayingInfo.songs![i].songId === playStore.songInfo.songId) {
+      if (i === playStore.songPlayingInfo.songs!.length - 1) {
+        playStore.setSongInfo(playStore.songPlayingInfo.songs![0])
+      } else {
+        playStore.setSongInfo(playStore.songPlayingInfo.songs![i + 1])
+      }
+      playStore.songPlayingInfo.isPlay = true
+      return
+    }
+  }
+}
+
+/**
+ * @Description: 点击音量条
+ * @Author: sxgan
+ * @Date: 2024/4/19 22:03
+ **/
+function clickVolumeBar(e: any) {
+
 }
 </script>
 
@@ -115,6 +160,7 @@ function nextAudio() {
         <span>
           <i :class="playStore.songPlayingInfo.isPlay?'icon huaweiicon icon-ic_public_pause_norm':'icon huaweiicon icon-ic_public_play_norm'"
              @click="changePlay()"
+             :key="playStore.songPlayingInfo.isPlay?1:0"
              v-tooltip="{text:playStore.songPlayingInfo.isPlay?'暂停':'播放'}"></i>
         </span>
         <span>
@@ -132,6 +178,19 @@ function nextAudio() {
             <span class="path1"></span><span class="path2"></span><span class="path3"></span>
           </i>
         </span>
+        <div class="volume">
+          <div class="volume-box">
+            <div class="volume-bar-box" ref="myVolProgressBar" @click="clickVolumeBar">
+              <div class="volume-strip" ref="volBarStrip">
+                <div class="volume-dots" ref="volBarDots"></div>
+              </div>
+            </div>
+            <div class="volume-number-box">
+              {{ playStore.songPlayingInfo.volume * 100 + '%' }}
+            </div>
+          </div>
+        
+        </div>
       </div>
     </div>
     <div class="song-time">
@@ -338,13 +397,59 @@ function nextAudio() {
         color: var(--text-active-color)
       }
       
-      .tip-volume {
+      .volume {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 5rem;
-        height: 30rem;
-        background: lightcoral;
+        display: none;
+        
+        .volume-box {
+          background: var(--text-deep-rgba-2);;
+          position: relative;
+          bottom: 13rem;
+          left: 9.4rem;
+          z-index: 9;
+          height: 12rem;
+          width: 3rem;
+          padding-top: 1rem;
+          border-radius: 0.7rem;
+          
+          .volume-bar-box {
+            height: 9rem;
+            width: 0.4rem;
+            border-radius: 0.2rem;
+            background: var(--text-deep-rgba-2);
+            margin: 0 1.3rem;
+          }
+          
+          .volume-strip {
+            border-radius: 0.2rem;
+            position: absolute;
+            bottom: 3rem;
+            width: 0.4rem;
+            height: 3rem;
+            background: var(--text-active-color);
+          }
+          
+          .volume-dots {
+            position: absolute;
+            left: -0.2rem;
+            bottom: 2.6rem;
+            z-index: 10;
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 0.4rem;
+            background: var(--text-active-color);
+          }
+          
+          .volume-number-box {
+            position: absolute;
+            bottom: 1rem;
+            text-align: center;
+            width: 3rem;
+            height: 1rem;
+            color: var(--text-color);
+          }
+        }
+        
       }
     }
   }

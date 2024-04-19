@@ -66,7 +66,8 @@ export const usePlayStore = defineStore('play', {
                 cacheTimeScale: 0, // 当前缓存时间比例
                 loopStyle: 'list', // 当前播放格式 one:单曲循环，list:列表循环，random：随机循环
                 volume: 0.1, // 音量
-                overCount: 0 // 每次播放完毕都会加一，上线为10会重置
+                overCount: 0, // 每次播放完毕都会加一，上线为10会重置
+                songs: [] as MusicSongType[] | undefined, // 当前播放歌曲所在歌单的所有歌曲
             }
         }
     },
@@ -113,7 +114,7 @@ export const usePlayStore = defineStore('play', {
             this.songInfo.musicAlbum.releaseDate = isEmptyReturnOldData(data.musicAlbum.releaseDate, this.songInfo.musicAlbum.releaseDate)
             this.songInfo.musicAlbum.singerId = isEmptyReturnOldData(data.musicAlbum.singerId, this.songInfo.musicAlbum.singerId)
             this.songInfo.musicAlbum.updateTime = isEmptyReturnOldData(data.musicAlbum.updateTime, this.songInfo.musicAlbum.updateTime)
-        }
+        },
     },
     getters: {
         // 返回歌单

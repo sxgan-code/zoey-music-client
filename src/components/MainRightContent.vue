@@ -63,9 +63,11 @@ function playMusic(id: number) {
         playStore.songPlayingInfo.isPlay = true
         playStore.songPlayingInfo.currentScale = 0
         playStore.songPlayingInfo.currentScale = 0
+        
       }
     })
   }
+  playStore.songPlayingInfo.songs = songs.value
 }
 
 // 监听上一曲下一曲
