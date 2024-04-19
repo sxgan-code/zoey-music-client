@@ -5,6 +5,7 @@ import {useUserStore} from "@/store/user-store.ts";
 import msg, {PositionTypeEnum} from "@/components/message";
 import {getUserInfoApi} from "@/api/auth";
 import router from "@/router";
+import {usePlayStore} from "@/store/play-store.ts";
 
 // 窗口控制方法
 const {sendWinController} = useIPC()
@@ -78,12 +79,14 @@ onMounted(() => {
   })
 })
 // 退出当前账号
+const playStore = usePlayStore()
 const exitCurrentAccount = () => {
   if (!userStore.userInfo.isLogin) {
     msg.warning('账号未登录', PositionTypeEnum.TOP)
     return
   } else {
     userStore.userInfo.isLogin = false
+    playStore.songPlayingInfo.isPlay = false
     localStorage.removeItem('token')
     router.push('/main/recommend')
     msg.success('账号退出成功')

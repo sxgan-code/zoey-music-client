@@ -67,6 +67,9 @@ function playMusic(id: number) {
     })
   }
 }
+
+// 监听上一曲下一曲
+
 </script>
 
 <template>

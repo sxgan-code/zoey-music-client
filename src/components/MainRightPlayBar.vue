@@ -8,23 +8,8 @@ const isLike = ref(true)
 
 
 
-function previousAudio() {
-
-}
 
 
-/* 播放控制 */
-function changePlay() {
-  if (playStore.songPlayingInfo.isPlay) {
-    playStore.songPlayingInfo.isPlay = false
-  } else {
-    playStore.songPlayingInfo.isPlay = true
-  }
-}
-
-function nextAudio() {
-
-}
 
 const getClassSongName = () => {
   let textLength: number = playStore.songInfo.songName.length + playStore.songInfo.musicSinger.singerName.length
@@ -39,10 +24,18 @@ function clickVolume() {
 }
 
 /**
- * @Description: 监听歌曲变化
+ * @Description: 歌曲操作相关
  * @Author: sxgan
  * @Date: 2024/4/19 14:39
  **/
+/* 播放控制 */
+function changePlay() {
+  if (playStore.songPlayingInfo.isPlay) {
+    playStore.songPlayingInfo.isPlay = false
+  } else {
+    playStore.songPlayingInfo.isPlay = true
+  }
+}
 /*进度条*/
 let allBarDom = ref<HTMLElement>()
 let cacheBarDom = ref<HTMLElement>()
@@ -60,6 +53,7 @@ function clickBar(e: any) {
 function stopClickBar(e: any) {
   e.stopPropagation()
 }
+
 // 真实进度变化
 watch(() => playStore.songPlayingInfo.currentScale, (newValue, oldValue) => {
   progressBarDom.value!.style.width = newValue * allBarDom.value!.offsetWidth + 'px'
@@ -69,6 +63,15 @@ watch(() => playStore.songPlayingInfo.cacheTimeScale, (newValue, oldValue) => {
   cacheBarDom.value!.style.width = Math.floor(newValue * 100) + '%';
 })
 
+/*上一曲*/
+function previousAudio() {
+  playStore.songPlayingInfo.overCount = playStore.songPlayingInfo.overCount < 1 ? 10 : playStore.songPlayingInfo.overCount - 1
+}
+
+/*下一曲*/
+function nextAudio() {
+  playStore.songPlayingInfo.overCount = playStore.songPlayingInfo.overCount > 10 ? 0 : playStore.songPlayingInfo.overCount + 1
+}
 </script>
 
 <template>

@@ -4,6 +4,32 @@ import {usePlayStore} from "@/store/play-store.ts";
 import msg, {PositionTypeEnum} from '@/components/message'
 import {useUserStore} from "@/store/user-store.ts";
 
+
+/**
+ * @Description: 音频监听
+ * @Author: sxgan
+ * @Date: 2024/4/17 17:14
+ **/
+const playStore = usePlayStore()
+const userStore = useUserStore()
+const audioRef = ref()
+watch(() => playStore.getSongPlayingInfo.isPlay, (newValue, oldValue) => {
+  if (!userStore.userInfo.isLogin) {
+    msg.warning('请先登录', PositionTypeEnum.TOP)
+    playStore.getSongPlayingInfo.isPlay = false
+  } else if (newValue) {
+    audioRef.value.play()
+  } else {
+    audioRef.value.pause()
+  }
+})
+// 点击进度条
+watch(() => playStore.getSongPlayingInfo.clickCurrent, (newValue, oldValue) => {
+  console.log('当前点击的new值' + newValue)
+  audioRef.value.currentTime = audioRef.value.duration * newValue;
+})
+onMounted(() => {
+})
 const onPlay = () => {
   console.log('开始播放声音');
   
@@ -44,8 +70,12 @@ const timeUpdate = () => {
   playStore.songPlayingInfo.currentScale = songRealSchedule;
   // 歌曲实时缓存比
   var timeRanges = audioRef.value.buffered;
-  var bufferTime = timeRanges.end(timeRanges.length - 1) / audioRef.value.duration;
-  playStore.songPlayingInfo.cacheTimeScale = bufferTime;
+  if (timeRanges.length > 0) {
+    console.log(timeRanges)
+    var bufferTime = timeRanges.end(timeRanges.length - 1) / audioRef.value.duration;
+    playStore.songPlayingInfo.cacheTimeScale = bufferTime;
+  }
+  
   
   //处理时间
   //分钟
@@ -63,31 +93,6 @@ const timeUpdate = () => {
   //将实时时间存储全局状态中
   playStore.songPlayingInfo.currentTime = minutes + ":" + seconds;
 }
-/**
- * @Description: 音频监听
- * @Author: sxgan
- * @Date: 2024/4/17 17:14
- **/
-const playStore = usePlayStore()
-const userStore = useUserStore()
-const audioRef = ref()
-watch(() => playStore.getSongPlayingInfo.isPlay, (newValue, oldValue) => {
-  if (!userStore.userInfo.isLogin) {
-    msg.warning('请先登录', PositionTypeEnum.TOP)
-    playStore.getSongPlayingInfo.isPlay = false
-  } else if (newValue) {
-    audioRef.value.play()
-  } else {
-    audioRef.value.pause()
-  }
-})
-// 点击进度条
-watch(() => playStore.getSongPlayingInfo.clickCurrent, (newValue, oldValue) => {
-  console.log('当前点击的new值' + newValue)
-  audioRef.value.currentTime = audioRef.value.duration * newValue;
-})
-onMounted(() => {
-})
 </script>
 
 <template>

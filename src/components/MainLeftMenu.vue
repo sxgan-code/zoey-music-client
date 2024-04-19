@@ -94,7 +94,7 @@ function openPage(songlistId: number = 1) {
   <div v-if="userStore.userInfo.isLogin" class="menu-block">
     <div class="my-music-title">创建的歌单</div>
     <div class="my-music-list">
-      <div :class="playStore.songInfo.listId==item.listId?'love-collect selectNode':'love-collect'"
+      <div :class="playStore.songList.listId==item.listId?'love-collect selectNode':'love-collect'"
            v-for="(item,index) in creates"
            @click="openPage(item.listId)">
         <span>{{ item.listName.length > 6 ? item.listName.substring(0, 7) + '...' : item.listName }}</span>
@@ -106,7 +106,7 @@ function openPage(songlistId: number = 1) {
   <div v-if="userStore.userInfo.isLogin" class="menu-block">
     <div class="my-music-title">收藏的歌单</div>
     <div class="my-music-list">
-      <div :class="playStore.songInfo.listId===item.listId?'love-collect selectNode':'love-collect'"
+      <div :class="playStore.songList.listId===item.listId?'love-collect selectNode':'love-collect'"
            v-for="item in collects"
            @click="openPage(item.listId)">
         <span>{{ item.listName.length > 6 ? item.listName.substring(0, 7) + '...' : item.listName }}</span>
@@ -182,12 +182,12 @@ function openPage(songlistId: number = 1) {
     }
     
     div:hover {
-      background: var(--bg--active-rgba);
+      background: var(--bg-light-rgba-2);
     }
     
     .selectNode {
       color: var(--text-color);
-      background: var(--bg--active-rgba);
+      background: var(--bg-light-rgba-1);
     }
   }
 }
