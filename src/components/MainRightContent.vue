@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {usePlayStore} from '@/store/play-store.ts'
 import {useUserStore} from '@/store/user-store.ts'
-import songsData from '@/assets/mock/songs-mock-data.ts'
 import msg, {PositionTypeEnum} from "@/components/message";
 import {useRoute} from "vue-router";
+import {getSongsApi} from "@/api/list";
+import {MusicSongType} from "@/api/list/type.ts";
 
-const songs = ref(songsData)
 const playStore = usePlayStore()
 const userStore = useUserStore()
 const index = ref(1)
@@ -21,16 +21,16 @@ function changeStyle(val: number) {
 }
 
 /*更改歌曲喜欢状态*/
-function isLikeSong(songId: string) {
-  var flag = ''
-  songs.value.forEach(item => {
+function isLikeSong(songId: number) {
+  var flag = 0
+  songs.value?.forEach((item: MusicSongType) => {
     if (item.songId == songId) {
-      if (item.isLike == '0') {
-        item.isLike = '1'
-        flag = '1'
+      if (item.isLike == 0) {
+        item.isLike = 1
+        flag = 1
       } else {
-        item.isLike = '0'
-        flag = '0'
+        item.isLike = 0
+        flag = 0
       }
       if (item.songId == playStore.songInfo.songId) {
         playStore.songInfo.isLike = flag
@@ -39,8 +39,23 @@ function isLikeSong(songId: string) {
   })
 }
 
+/**
+ * @Description: 根据歌单id查询歌曲列表
+ * @Author: sxgan
+ * @Date: 2024/4/18 22:57
+ **/
+const songs = ref<MusicSongType[]>()
+onMounted(() => {
+  getSongsApi(playStore.getSongList).then(res => {
+    console.log(res.data);
+    songs.value = res.data
+    
+    
+  })
+})
+
 /*点击控件播放音乐*/
-function playMusic(id: string) {
+function playMusic(id: number) {
   console.log('播放歌曲' + id)
 }
 </script>
@@ -53,7 +68,7 @@ function playMusic(id: string) {
     <div class="song-list-info">
       <div class="info-title">
         <div>
-          <span>{{ playStore.songList.listName }}  TEST- {{ listId.substring(29, listId.length) }}</span>
+          <span>{{ playStore.songList.listName }}</span>
         </div>
         <div>
           <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe7e9;</i>编辑</span>
@@ -69,7 +84,7 @@ function playMusic(id: string) {
           </span>
         </div>
         <div>
-          <span v-for="item in playStore.songList.listStyle">{{ item }}</span>
+          <span v-for="item in playStore.songList.listStyle?.split(',')">{{ item }}</span>
         </div>
       </div>
       <div class="info-introduction">
@@ -106,7 +121,7 @@ function playMusic(id: string) {
           <div class="song-clo-1">
             <div class="song-name">
               <i :id="'item-'+index" @click="isLikeSong(item.songId)"
-                 :class="item.isLike=='1'?
+                 :class="item.isLike==1?
                  'icon huaweiicon icon-ic_public_favor_filled':'icon huaweiicon icon-ic_public_favor'"></i>
               <span>{{ item.songName.length > 12 ? item.songName.substring(0, 12) + '...' : item.songName }}</span>
             </div>
@@ -120,12 +135,12 @@ function playMusic(id: string) {
             </div>
           </div>
           <div class="song-clo-2"><span>{{
-              item.singer.singerName.length > 8 ?
-                  item.singer.singerName.substring(0, 8) + '...' : item.singer.singerName
+              item.musicSinger.singerName.length > 8 ?
+                  item.musicSinger.singerName.substring(0, 8) + '...' : item.musicSinger.singerName
             }}</span></div>
           <div class="song-clo-3">
             <span>{{
-                item.album.albumName.length > 12 ? item.album.albumName.substring(0, 12) + '...' : item.album.albumName
+                item.musicAlbum.albumName.length > 12 ? item.musicAlbum.albumName.substring(0, 12) + '...' : item.musicAlbum.albumName
               }}</span>
           </div>
         </div>
@@ -141,6 +156,7 @@ function playMusic(id: string) {
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-family: "HarmonyOS Sans", sans-serif;
   
   .song-list-pic {
     width: 20rem;
@@ -255,6 +271,8 @@ function playMusic(id: string) {
       display: flex;
       flex-direction: row;
       align-items: center;
+      line-height: 2rem;
+      margin: 1rem 0;
       
       span {
         font-family: 'HarmonyOS Sans', sans-serif;
@@ -268,13 +286,13 @@ function playMusic(id: string) {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-around;
       
       div {
         font-size: 1.4rem;
+        margin-right: 6rem;
         color: var(--text-color);;
-        line-height: 3.6rem;
-        width: 12rem;
+        line-height: 3.2rem;
+        width: 10rem;
         text-align: center;
         border-radius: 1.8rem;
         background: var(--text-deep-rgba-1);
@@ -292,7 +310,7 @@ function playMusic(id: string) {
 }
 
 .content-list {
-  height: calc(100vh - 36rem);
+  height: calc(100vh - 38rem);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -362,15 +380,16 @@ function playMusic(id: string) {
   }
   
   .list-content {
-    height: calc(100vh - 36rem);
+    height: calc(100vh - 34rem);
     width: 100%;
     display: flex;
     flex-direction: column;
     
     .list-title {
-      height: 4rem;
+      height: 2rem;
       width: 90%;
-      margin: 0 auto;
+      margin: 0.5rem auto;
+      padding-left: 2rem;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -396,7 +415,7 @@ function playMusic(id: string) {
     }
     
     .song-list {
-      height: calc(100vh - 46rem);
+      height: calc(100vh - 44rem);
       width: 100%;
       display: flex;
       flex-direction: column;

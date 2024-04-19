@@ -11,13 +11,6 @@ const userStore = useUserStore()
 
 const playStore = usePlayStore()
 
-function openPage(songlistId: string = '1') {
-  // msg.warning('开发中。。。', PositionTypeEnum.TOP)
-  // songListId.value = songlistId
-  let pathStr: string = '/main/list/' + songlistId;
-  console.log(pathStr)
-  router.push(pathStr)
-}
 
 /**
  * @Description: 查询当前用户的歌单
@@ -27,23 +20,37 @@ function openPage(songlistId: string = '1') {
 const creates = ref<MusicListType[]>()
 const collects = ref<MusicListType[]>()
 
-function getSongListByUserId() {
-
-}
-
 watch(() => userStore.userInfo.isLogin, (newVal) => {
   if (newVal) {
     getUserMusicListApi().then(res => {
       creates.value = res.data.creates
       collects.value = res.data.collects
-      console.log(creates)
-      console.log(collects)
     }).catch(err => {
       msg.error()
     })
   }
 })
 
+/**
+ * @Description: 打开页面
+ * @Author: sxgan
+ * @Date: 2024/4/18 22:08
+ **/
+function openPage(songlistId: number = 1) {
+  let pathStr: string = '/main/list/' + songlistId;
+  // 合并集合
+  var list: MusicListType[] = []
+  if (creates.value !== undefined && collects.value !== undefined) {
+    list = creates.value?.concat(collects.value);
+  }
+  console.log(list)
+  list.forEach(item => {
+    if (item.listId === songlistId) {
+      playStore.setSongList(item)
+    }
+  })
+  router.push(pathStr)
+}
 </script>
 
 <template>

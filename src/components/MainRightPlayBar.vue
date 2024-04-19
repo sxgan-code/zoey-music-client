@@ -45,7 +45,7 @@ function nextAudio() {
 }
 
 const getClassSongName = () => {
-  let textLength: number = playStore.songInfo.name.length + playStore.songInfo.singer.length
+  let textLength: number = playStore.songInfo.songName.length + playStore.songInfo.musicSinger.singerName.length
   if (textLength >= 12) {
     return 'song-name scroll-x'
   }
@@ -77,7 +77,7 @@ function clickVolume() {
         </div>
         <div class="info-right">
           <div :class="getClassSongName()">
-            <span>{{ playStore.songInfo.name }} - {{ playStore.songInfo.singer }}</span>
+            <span>{{ playStore.songInfo.songName }} - {{ playStore.songInfo.musicSinger.singerName }}</span>
           </div>
           <div class="song-like">
             <i :class="isLike?'icon huaweiicon icon-ic_public_favor_filled':'icon huaweiicon icon-ic_public_favor'"

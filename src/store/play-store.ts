@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
-import {MusicListType} from "@/api/list/type.ts";
+import {MusicListType, MusicSongType} from "@/api/list/type.ts";
+import {isEmptyReturnOldData} from "@/utils/common-utils.ts";
 
 // useStore 可以是 useUser、useCart 之类的任何东西
 // 第一个参数是应用程序中 store 的唯一 id
@@ -20,17 +21,39 @@ export const usePlayStore = defineStore('play', {
                 updateTime: '',
             } as MusicListType,
             songInfo: {
-                songId: '0005',
-                // name: '我好想在哪儿见过你-纯享版',
-                name: '天外来物-纯享版',
-                pic: 'http://localhost:9090/music/api/pic/Resource/image/songImg/下一站，茶山刘.png',
-                singer: '薛之谦',
-                album: '天外来物',
-                song_time: '4:25',
-                songUrl: '/songs/林俊杰-关键词.mp3',
-                isLike: '1',
-                songListId: 'LIST-188F3265-75A9-0308-1082-BE570358BA2A'
-            },
+                songId: 0,
+                songName: '',
+                isLike: 0,
+                songUrl: '',
+                songPic: '',
+                lyricUrl: '',
+                songStyle: '',
+                releaseDate: '',
+                albumId: 0,
+                singerId: 0,
+                delFlag: 0,
+                createTime: '',
+                updateTime: '',
+                musicSinger: {
+                    address: '',
+                    createTime: '',
+                    delFlag: 0,
+                    singerId: 0,
+                    singerName: '',
+                    singerPic: '',
+                    updateTime: '',
+                },
+                musicAlbum: {
+                    albumId: 0,
+                    albumName: '',
+                    albumPic: '',
+                    createTime: '',
+                    delFlag: 0,
+                    releaseDate: '',
+                    singerId: 0,
+                    updateTime: '',
+                }
+            } as MusicSongType,
             songPlayingInfo: {
                 isPlay: false, // 播放状态
                 currentTime: '00:00', // 当前播放时间
@@ -45,7 +68,35 @@ export const usePlayStore = defineStore('play', {
             }
         }
     },
-    actions: {},
+    actions: {
+        setSongList(data: MusicListType) {
+            this.songList.listId = isEmptyReturnOldData(data.listId, this.songList.listId)
+            this.songList.listName = isEmptyReturnOldData(data.listName, this.songList.listName)
+            this.songList.listType = isEmptyReturnOldData(data.listType, this.songList.listType)
+            this.songList.listInfo = isEmptyReturnOldData(data.listInfo, this.songList.listInfo)
+            this.songList.listStyle = isEmptyReturnOldData(data.listStyle, this.songList.listStyle)
+            this.songList.listPic = isEmptyReturnOldData(data.listPic, this.songList.listPic)
+            this.songList.userId = isEmptyReturnOldData(data.userId, this.songList.userId)
+            this.songList.createTime = isEmptyReturnOldData(data.createTime, this.songList.createTime)
+            this.songList.updateTime = isEmptyReturnOldData(data.updateTime, this.songList.updateTime)
+        },
+        /* 设置歌曲 */
+        setSongInfo(data: MusicSongType) {
+            this.songInfo.songId = isEmptyReturnOldData(data.songId, this.songInfo.songId)
+            this.songInfo.songName = isEmptyReturnOldData(data.songName, this.songInfo.songName)
+            this.songInfo.isLike = isEmptyReturnOldData(data.isLike, this.songInfo.isLike)
+            this.songInfo.songUrl = isEmptyReturnOldData(data.songUrl, this.songInfo.songUrl)
+            this.songInfo.songPic = isEmptyReturnOldData(data.songPic, this.songInfo.songPic)
+            this.songInfo.lyricUrl = isEmptyReturnOldData(data.lyricUrl, this.songInfo.lyricUrl)
+            this.songInfo.songStyle = isEmptyReturnOldData(data.songStyle, this.songInfo.songStyle)
+            this.songInfo.releaseDate = isEmptyReturnOldData(data.releaseDate, this.songInfo.releaseDate)
+            this.songInfo.albumId = isEmptyReturnOldData(data.albumId, this.songInfo.albumId)
+            this.songInfo.singerId = isEmptyReturnOldData(data.singerId, this.songInfo.singerId)
+            this.songInfo.delFlag = isEmptyReturnOldData(data.delFlag, this.songInfo.delFlag)
+            this.songInfo.createTime = isEmptyReturnOldData(data.createTime, this.songInfo.createTime)
+            this.songInfo.updateTime = isEmptyReturnOldData(data.updateTime, this.songInfo.updateTime)
+        }
+    },
     getters: {
         // 返回歌单
         getSongList: (state) => state.songList,
