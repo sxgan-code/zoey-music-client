@@ -88,20 +88,19 @@ watch(() => playStore.getSongPlayingInfo.clickCurrent, (newValue, oldValue) => {
 })
 onMounted(() => {
 })
-const baseSongUrl = import.meta.env.VITE_BASE_URL + '/static'
 </script>
 
 <template>
   <div class="play-root-box">
     <audio class="audio" ref="audioRef"
-           @error="msg.error('服务器错误，请稍后重试')"
+           @error="msg.error('歌曲加载失败，请稍后重试')"
            @ended="overAudio"
            @pause="onPause"
            @play="onPlay"
            @loadeddata="loadedData()"
            @timeupdate="timeUpdate()"
            :key="playStore.songInfo.songId">
-      <source :src="baseSongUrl+playStore.getSongInfo.songUrl">
+      <source :src="playStore.staticBaseUrl+playStore.getSongInfo.songUrl">
     </audio>
   </div>
 </template>

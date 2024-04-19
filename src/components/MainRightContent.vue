@@ -48,8 +48,6 @@ const songs = ref<MusicSongType[]>()
 onMounted(() => {
   getSongsApi(playStore.getSongList).then(res => {
     songs.value = res.data
-    
-    
   })
 })
 
@@ -62,19 +60,19 @@ function playMusic(id: number) {
       if (item.songId === id) {
         item.listId = listId.value
         playStore.setSongInfo(item)
-        playStore.songInfo
         playStore.songPlayingInfo.isPlay = true
+        playStore.songPlayingInfo.currentScale = 0
+        playStore.songPlayingInfo.currentScale = 0
       }
     })
   }
-  
 }
 </script>
 
 <template>
   <div class='content-top'>
     <div class="song-list-pic">
-      <img src="@/assets/images/2024040001.jfif" alt="">
+      <img :src="playStore.staticBaseUrl+playStore.songList.listPic" alt="">
     </div>
     <div class="song-list-info">
       <div class="info-title">

@@ -9,6 +9,7 @@ export const usePlayStore = defineStore('play', {
     // 推荐使用 完整类型推断的箭头函数
     state: () => {
         return {
+            staticBaseUrl: import.meta.env.VITE_BASE_URL + '/static',
             songList: {
                 listId: 0,
                 listName: '',
@@ -23,7 +24,7 @@ export const usePlayStore = defineStore('play', {
             songInfo: {
                 songId: 0,
                 listId: 0,
-                songName: '遗憾最终',
+                songName: '推荐音乐--> 遗憾最终',
                 isLike: 1,
                 songUrl: '/songs/遗憾最终.mp3',
                 songPic: '/image/default/logo.png',

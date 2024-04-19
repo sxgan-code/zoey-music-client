@@ -6,9 +6,7 @@ import msg, {PositionTypeEnum} from "@/components/message";
 const playStore = usePlayStore();
 const isLike = ref(true)
 
-function stopClickBar(e: any) {
-  e.stopPropagation()
-}
+
 
 function previousAudio() {
 
@@ -53,14 +51,15 @@ let pointDom = ref<HTMLElement>()
 
 /*点击进度条*/
 function clickBar(e: any) {
-  console.log(e.target)
-  console.log(e.offsetX)
   progressBarDom.value!.style.width = e.offsetX + 'px'
   pointDom.value!.style.left = (e.offsetX - 4) + 'px'
   playStore.songPlayingInfo.clickCurrent = e.offsetX / allBarDom.value!.offsetWidth
-  // console.log('当前点击' + playStore.songPlayingInfo.clickCurrent)
 }
 
+// 禁止点击圆点
+function stopClickBar(e: any) {
+  e.stopPropagation()
+}
 // 真实进度变化
 watch(() => playStore.songPlayingInfo.currentScale, (newValue, oldValue) => {
   progressBarDom.value!.style.width = newValue * allBarDom.value!.offsetWidth + 'px'
@@ -68,9 +67,8 @@ watch(() => playStore.songPlayingInfo.currentScale, (newValue, oldValue) => {
 })
 watch(() => playStore.songPlayingInfo.cacheTimeScale, (newValue, oldValue) => {
   cacheBarDom.value!.style.width = Math.floor(newValue * 100) + '%';
-  console.log(cacheBarDom.value!.style.width)
 })
-const baseSongUrl = import.meta.env.VITE_BASE_URL + '/static'
+
 </script>
 
 <template>
@@ -89,7 +87,7 @@ const baseSongUrl = import.meta.env.VITE_BASE_URL + '/static'
       <div class="info-box">
         <div class="info-left">
           <!--<i class="iconfont posit-index">&#xeba6;</i>-->
-          <img :src="baseSongUrl+playStore.songInfo.songPic" v-tooltip="{text:'展开歌曲详情页'}" alt="">
+          <img :src="playStore.staticBaseUrl+playStore.songInfo.songPic" v-tooltip="{text:'展开歌曲详情页'}" alt="">
         </div>
         <div class="info-right">
           <div :class="getClassSongName()">
