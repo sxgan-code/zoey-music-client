@@ -58,13 +58,13 @@ export const usePlayStore = defineStore('play', {
             songPlayingInfo: {
                 isPlay: false, // 播放状态
                 currentTime: '00:00', // 当前播放时间
-                current: 0, // 当前播放时间
+                currentScale: 0, // 当前播放时间比例
                 durationTime: '00:00',// 当前歌曲的总时长
                 duration: 0,// 当前歌曲的总时长
                 clickCurrent: 0, // 点击的进度
-                cacheTime: 0, // 当前缓存时间
+                cacheTimeScale: 0, // 当前缓存时间比例
                 loopStyle: 'list', // 当前播放格式 one:单曲循环，list:列表循环，random：随机循环
-                volume: 0.3, // 音量
+                volume: 0.1, // 音量
                 overCount: 0 // 每次播放完毕都会加一，上线为10会重置
             }
         }

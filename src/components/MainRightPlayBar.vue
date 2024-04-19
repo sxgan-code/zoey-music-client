@@ -1,35 +1,19 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 import {usePlayStore} from "@/store/play-store.ts";
 import msg, {PositionTypeEnum} from "@/components/message";
 
 const playStore = usePlayStore();
 const isLike = ref(true)
 
-function stopClickBar(event: Event) {
-
+function stopClickBar(e: any) {
+  e.stopPropagation()
 }
 
 function previousAudio() {
 
 }
 
-/*进度条*/
-let allBarDom = ref<HTMLElement>()
-let cacheBarDom = ref<HTMLElement>()
-let progressBarDom = ref<HTMLElement>()
-let pointDom = ref<HTMLElement>()
-
-/*点击进度条*/
-function clickBar(e: any) {
-  // console.log(e.target)
-  // console.log(e.offsetX)
-  progressBarDom.value!.style.width = e.offsetX + 'px'
-  pointDom.value!.style.marginLeft = (e.offsetX - 4) + 'px'
-  playStore.songPlayingInfo.clickCurrent = e.offsetX / allBarDom.value!.offsetWidth * playStore.songPlayingInfo.duration
-  console.log(playStore.songPlayingInfo.clickCurrent)
-  // progressBarDom.value!.style.width = allBarDom.value!.offsetWidth +'px'
-}
 
 /* 播放控制 */
 function changePlay() {
@@ -56,6 +40,36 @@ function clickVolume() {
 
 }
 
+/**
+ * @Description: 监听歌曲变化
+ * @Author: sxgan
+ * @Date: 2024/4/19 14:39
+ **/
+/*进度条*/
+let allBarDom = ref<HTMLElement>()
+let cacheBarDom = ref<HTMLElement>()
+let progressBarDom = ref<HTMLElement>()
+let pointDom = ref<HTMLElement>()
+
+/*点击进度条*/
+function clickBar(e: any) {
+  console.log(e.target)
+  console.log(e.offsetX)
+  progressBarDom.value!.style.width = e.offsetX + 'px'
+  pointDom.value!.style.left = (e.offsetX - 4) + 'px'
+  playStore.songPlayingInfo.clickCurrent = e.offsetX / allBarDom.value!.offsetWidth
+  // console.log('当前点击' + playStore.songPlayingInfo.clickCurrent)
+}
+
+// 真实进度变化
+watch(() => playStore.songPlayingInfo.currentScale, (newValue, oldValue) => {
+  progressBarDom.value!.style.width = newValue * allBarDom.value!.offsetWidth + 'px'
+  pointDom.value!.style.left = newValue * allBarDom.value!.offsetWidth - 1 + 'px'
+})
+watch(() => playStore.songPlayingInfo.cacheTimeScale, (newValue, oldValue) => {
+  cacheBarDom.value!.style.width = Math.floor(newValue * 100) + '%';
+  console.log(cacheBarDom.value!.style.width)
+})
 const baseSongUrl = import.meta.env.VITE_BASE_URL + '/static'
 </script>
 
@@ -136,7 +150,7 @@ const baseSongUrl = import.meta.env.VITE_BASE_URL + '/static'
 <style scoped lang="scss">
 /*进度条*/
 .progress-bar {
-  width: 80vw;
+  width: 100%;
   height: 1rem;
   position: relative;
   
@@ -157,7 +171,7 @@ const baseSongUrl = import.meta.env.VITE_BASE_URL + '/static'
     display: block;
     width: 0;
     height: 0.25rem;
-    background: var(--bg--rgba-3);
+    background: var(--bg-light-rgba-2);
   }
   
   .realtime-progress-bar {

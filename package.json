@@ -1,6 +1,6 @@
 {
   "name": "zoey-music-client",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "main": "dist-electron/main/index.js",
   "description": "zoey music client",
   "author": "sxgan <sxgan@foxmail.com>",

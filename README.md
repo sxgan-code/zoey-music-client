@@ -2,7 +2,7 @@
 <p align="center">
 	<img width="200px" height="200px" alt="logo" src="https://gitee.com/sxgan/zoey-open-images/raw/master/common/png/logo-music-wangyiyun-red.png">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Zoey Music Client v1.0.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Zoey Music Client v1.1.0</h1>
 <h4 align="center">基于Electron28+vite5+TypeScript5+vue3+pinia等技术实现的音乐客户端</h4>
 <p align="center">
 	<a href="https://gitee.com/sxgan/zoey-music-boot"><img src="https://img.shields.io/badge/Zoey Music-v1.0.0-brightgreen.svg"></a>
