@@ -7,7 +7,6 @@ export default function useIPC() {
 
     /* 向主进程发送窗口控制消息，共有四种类型：min | max | unmax | close */
     const sendWinController = (controllerStr: string) => {
-        console.log(localStorage.getItem('token'))
         let sendController = controllerStr
         if (controllerStr === 'max-unmax' && userStore.maxOrUnMaxStart) {
             sendController = 'max'

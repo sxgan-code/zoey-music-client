@@ -47,7 +47,6 @@ function isLikeSong(songId: number) {
 const songs = ref<MusicSongType[]>()
 onMounted(() => {
   getSongsApi(playStore.getSongList).then(res => {
-    console.log(res.data);
     songs.value = res.data
     
     
@@ -56,7 +55,19 @@ onMounted(() => {
 
 /*点击控件播放音乐*/
 function playMusic(id: number) {
-  console.log('播放歌曲' + id)
+  if (playStore.songInfo.songId === id) {
+    playStore.songPlayingInfo.isPlay = !playStore.songPlayingInfo.isPlay
+  } else {
+    songs.value?.forEach(item => {
+      if (item.songId === id) {
+        item.listId = listId.value
+        playStore.setSongInfo(item)
+        playStore.songInfo
+        playStore.songPlayingInfo.isPlay = true
+      }
+    })
+  }
+  
 }
 </script>
 

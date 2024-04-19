@@ -22,10 +22,11 @@ export const usePlayStore = defineStore('play', {
             } as MusicListType,
             songInfo: {
                 songId: 0,
-                songName: '',
-                isLike: 0,
-                songUrl: '',
-                songPic: '',
+                listId: 0,
+                songName: '遗憾最终',
+                isLike: 1,
+                songUrl: '/songs/遗憾最终.mp3',
+                songPic: '/image/default/logo.png',
                 lyricUrl: '',
                 songStyle: '',
                 releaseDate: '',
@@ -39,7 +40,7 @@ export const usePlayStore = defineStore('play', {
                     createTime: '',
                     delFlag: 0,
                     singerId: 0,
-                    singerName: '',
+                    singerName: '何仟仟',
                     singerPic: '',
                     updateTime: '',
                 },
@@ -63,7 +64,7 @@ export const usePlayStore = defineStore('play', {
                 clickCurrent: 0, // 点击的进度
                 cacheTime: 0, // 当前缓存时间
                 loopStyle: 'list', // 当前播放格式 one:单曲循环，list:列表循环，random：随机循环
-                volume: 0.1, // 音量
+                volume: 0.3, // 音量
                 overCount: 0 // 每次播放完毕都会加一，上线为10会重置
             }
         }
@@ -83,6 +84,7 @@ export const usePlayStore = defineStore('play', {
         /* 设置歌曲 */
         setSongInfo(data: MusicSongType) {
             this.songInfo.songId = isEmptyReturnOldData(data.songId, this.songInfo.songId)
+            this.songInfo.listId = isEmptyReturnOldData(data.listId, this.songInfo.listId)
             this.songInfo.songName = isEmptyReturnOldData(data.songName, this.songInfo.songName)
             this.songInfo.isLike = isEmptyReturnOldData(data.isLike, this.songInfo.isLike)
             this.songInfo.songUrl = isEmptyReturnOldData(data.songUrl, this.songInfo.songUrl)
@@ -95,6 +97,21 @@ export const usePlayStore = defineStore('play', {
             this.songInfo.delFlag = isEmptyReturnOldData(data.delFlag, this.songInfo.delFlag)
             this.songInfo.createTime = isEmptyReturnOldData(data.createTime, this.songInfo.createTime)
             this.songInfo.updateTime = isEmptyReturnOldData(data.updateTime, this.songInfo.updateTime)
+            this.songInfo.musicSinger.address = isEmptyReturnOldData(data.musicSinger.address, this.songInfo.musicSinger.address)
+            this.songInfo.musicSinger.createTime = isEmptyReturnOldData(data.musicSinger.createTime, this.songInfo.musicSinger.createTime)
+            this.songInfo.musicSinger.delFlag = isEmptyReturnOldData(data.musicSinger.delFlag, this.songInfo.musicSinger.delFlag)
+            this.songInfo.musicSinger.singerId = isEmptyReturnOldData(data.musicSinger.singerId, this.songInfo.musicSinger.singerId)
+            this.songInfo.musicSinger.singerName = isEmptyReturnOldData(data.musicSinger.singerName, this.songInfo.musicSinger.singerName)
+            this.songInfo.musicSinger.singerPic = isEmptyReturnOldData(data.musicSinger.singerPic, this.songInfo.musicSinger.singerPic)
+            this.songInfo.musicSinger.updateTime = isEmptyReturnOldData(data.musicSinger.updateTime, this.songInfo.musicSinger.updateTime)
+            this.songInfo.musicAlbum.albumId = isEmptyReturnOldData(data.musicAlbum.albumId, this.songInfo.musicAlbum.albumId)
+            this.songInfo.musicAlbum.albumName = isEmptyReturnOldData(data.musicAlbum.albumName, this.songInfo.musicAlbum.albumName)
+            this.songInfo.musicAlbum.albumPic = isEmptyReturnOldData(data.musicAlbum.albumPic, this.songInfo.musicAlbum.albumPic)
+            this.songInfo.musicAlbum.createTime = isEmptyReturnOldData(data.musicAlbum.createTime, this.songInfo.musicAlbum.createTime)
+            this.songInfo.musicAlbum.delFlag = isEmptyReturnOldData(data.musicAlbum.delFlag, this.songInfo.musicAlbum.delFlag)
+            this.songInfo.musicAlbum.releaseDate = isEmptyReturnOldData(data.musicAlbum.releaseDate, this.songInfo.musicAlbum.releaseDate)
+            this.songInfo.musicAlbum.singerId = isEmptyReturnOldData(data.musicAlbum.singerId, this.songInfo.musicAlbum.singerId)
+            this.songInfo.musicAlbum.updateTime = isEmptyReturnOldData(data.musicAlbum.updateTime, this.songInfo.musicAlbum.updateTime)
         }
     },
     getters: {

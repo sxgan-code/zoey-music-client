@@ -16,6 +16,13 @@ const onPause = () => {
 const overAudio = () => {
   console.log('播放声音完毕');
 }
+const loadedData = () => {
+  console.log('音频加载完毕')
+  audioRef.value.volume = playStore.getSongPlayingInfo.volume
+  if (playStore.getSongPlayingInfo.isPlay) {
+    audioRef.value.play()
+  }
+}
 /**
  * @Description: 音频监听
  * @Author: sxgan
@@ -35,10 +42,8 @@ watch(() => playStore.getSongPlayingInfo.isPlay, (newValue, oldValue) => {
   }
 })
 onMounted(() => {
-  audioRef.value.volume = playStore.getSongPlayingInfo.volume
 })
-const url = import.meta.env.VITE_BASE_URL + '/static' + playStore.getSongInfo.songUrl
-
+const baseSongUrl = import.meta.env.VITE_BASE_URL + '/static'
 </script>
 
 <template>
@@ -47,12 +52,19 @@ const url = import.meta.env.VITE_BASE_URL + '/static' + playStore.getSongInfo.so
            @error="msg.error('服务器错误，请稍后重试')"
            @ended="overAudio"
            @pause="onPause"
-           @play="onPlay">
-      <source :src="url">
+           @play="onPlay"
+           @loadeddata="loadedData()"
+           :key="playStore.songInfo.songId">
+      <source :src="baseSongUrl+playStore.getSongInfo.songUrl">
     </audio>
   </div>
 </template>
 
 <style scoped lang="scss">
-
+.audio {
+  position: fixed;
+  top: 5rem;
+  left: 5rem;
+  z-index: 9999;
+}
 </style>

@@ -21,7 +21,7 @@ service.interceptors.request.use(
         if (token != null && token != '') {
             config.headers.Authorization = token;
         }
-        console.log(import.meta.env.VITE_BASE_URL)
+        // console.log(import.meta.env.VITE_BASE_URL)
         return config;
     },
     (error: any) => {

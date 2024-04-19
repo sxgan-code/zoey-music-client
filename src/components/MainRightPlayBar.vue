@@ -22,8 +22,8 @@ let pointDom = ref<HTMLElement>()
 
 /*点击进度条*/
 function clickBar(e: any) {
-  console.log(e.target)
-  console.log(e.offsetX)
+  // console.log(e.target)
+  // console.log(e.offsetX)
   progressBarDom.value!.style.width = e.offsetX + 'px'
   pointDom.value!.style.marginLeft = (e.offsetX - 4) + 'px'
   playStore.songPlayingInfo.clickCurrent = e.offsetX / allBarDom.value!.offsetWidth * playStore.songPlayingInfo.duration
@@ -55,6 +55,8 @@ const getClassSongName = () => {
 function clickVolume() {
 
 }
+
+const baseSongUrl = import.meta.env.VITE_BASE_URL + '/static'
 </script>
 
 <template>
@@ -73,7 +75,7 @@ function clickVolume() {
       <div class="info-box">
         <div class="info-left">
           <!--<i class="iconfont posit-index">&#xeba6;</i>-->
-          <img src="@/assets/images/avatar.png" v-tooltip="{text:'展开歌曲详情页'}" alt="">
+          <img :src="baseSongUrl+playStore.songInfo.songPic" v-tooltip="{text:'展开歌曲详情页'}" alt="">
         </div>
         <div class="info-right">
           <div :class="getClassSongName()">

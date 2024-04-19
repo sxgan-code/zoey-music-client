@@ -10,7 +10,6 @@ import {ResponseResult} from "@/api/common-types.ts";
  */
 export function signinApi(data: LoginData): Promise<ResponseResult<LoginResult>> {
     const requestJsonData = JSON.stringify(data)
-    // console.log('json signinApi data ==' + requestJsonData)
     const formData = new FormData();
     formData.append("username", data.email);
     formData.append("password", data.password);
@@ -33,7 +32,6 @@ export function signinApi(data: LoginData): Promise<ResponseResult<LoginResult>>
  */
 export function signupApi(data: LoginData): Promise<ResponseResult<LoginResult>> {
     const requestJsonData = JSON.stringify(data)
-    // console.log('json signupApi data ==' + requestJsonData)
     const formData = new FormData();
     formData.append("username", data.email);
     formData.append("password", data.password);
@@ -53,7 +51,6 @@ export function signupApi(data: LoginData): Promise<ResponseResult<LoginResult>>
  */
 export function getCaptchaApi(data: LoginData): Promise<ResponseResult<VerifyCodeResult>> {
     const requestJsonData = JSON.stringify(data)
-    // console.log("auth.ts getCaptchaApi requestData:" + requestJsonData)
     return request({
         url: "/card/auth/mailVerifyCode",
         method: "post",

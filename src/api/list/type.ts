@@ -61,7 +61,10 @@ export interface MusicSongType {
      */
 
     songId: number
-
+    /**
+     * 歌曲所属歌单
+     */
+    listId: number
     /**
      * 歌曲名称
      */

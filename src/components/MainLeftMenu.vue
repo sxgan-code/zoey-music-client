@@ -43,7 +43,6 @@ function openPage(songlistId: number = 1) {
   if (creates.value !== undefined && collects.value !== undefined) {
     list = creates.value?.concat(collects.value);
   }
-  console.log(list)
   list.forEach(item => {
     if (item.listId === songlistId) {
       playStore.setSongList(item)
@@ -95,24 +94,24 @@ function openPage(songlistId: number = 1) {
   <div v-if="userStore.userInfo.isLogin" class="menu-block">
     <div class="my-music-title">创建的歌单</div>
     <div class="my-music-list">
-      <div :class="playStore.songInfo.songListId==item.listId?'love-collect selectNode':'love-collect'"
+      <div :class="playStore.songInfo.listId==item.listId?'love-collect selectNode':'love-collect'"
            v-for="(item,index) in creates"
            @click="openPage(item.listId)">
         <span>{{ item.listName.length > 6 ? item.listName.substring(0, 7) + '...' : item.listName }}</span>
         <div
-            :class="playStore.songInfo.songListId==item.listId&&playStore.songPlayingInfo.isPlay?'play-img':''"></div>
+            :class="playStore.songInfo.listId==item.listId&&playStore.songPlayingInfo.isPlay?'play-img':''"></div>
       </div>
     </div>
   </div>
   <div v-if="userStore.userInfo.isLogin" class="menu-block">
     <div class="my-music-title">收藏的歌单</div>
     <div class="my-music-list">
-      <div :class="playStore.songInfo.songListId==item.listId?'love-collect selectNode':'love-collect'"
+      <div :class="playStore.songInfo.listId===item.listId?'love-collect selectNode':'love-collect'"
            v-for="item in collects"
            @click="openPage(item.listId)">
         <span>{{ item.listName.length > 6 ? item.listName.substring(0, 7) + '...' : item.listName }}</span>
         <div
-            :class="playStore.songInfo.songListId==item.listId&&playStore.songPlayingInfo.isPlay?'play-img':''"></div>
+            :class="playStore.songInfo.listId==item.listId&&playStore.songPlayingInfo.isPlay?'play-img':''"></div>
       </div>
     </div>
   </div>
