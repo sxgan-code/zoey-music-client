@@ -40,6 +40,8 @@ const onPause = () => {
 //播放完毕执行
 const overAudio = () => {
   console.log('播放声音完毕');
+  playStore.songPlayingInfo.isPlay = false
+  playStore.initSongPlayingInfo()
   // 自动下一曲
   for (var i = 0; i <= playStore.songPlayingInfo.songs!.length; i++) {
     if (playStore.songPlayingInfo.songs![i].songId === playStore.songInfo.songId) {
@@ -48,6 +50,7 @@ const overAudio = () => {
       } else {
         playStore.setSongInfo(playStore.songPlayingInfo.songs![i + 1])
       }
+      playStore.songPlayingInfo.isPlay = true
       return
     }
   }

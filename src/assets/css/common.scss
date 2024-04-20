@@ -2,7 +2,6 @@
 @import "@/assets/fonts/fonts.scss";
 @import "@/assets/css/animation/index.scss";
 
-
 :root {
   /*文字颜色*/
   --text-color: rgb(255, 255, 255);
@@ -125,7 +124,6 @@
 html, body {
   overflow-y: hidden;
   overflow-x: hidden;
-  font-size: 10px;
   font-family: 'HarmonyOS Sans', sans-serif;
 }
 

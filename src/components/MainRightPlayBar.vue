@@ -77,6 +77,7 @@ watch(() => playStore.songPlayingInfo.cacheTimeScale, (newValue, oldValue) => {
  * @Date: 2024/4/19 20:46
  **/
 function previousAudio() {
+  playStore.initSongPlayingInfo()
   for (var i = 0; i <= playStore.songPlayingInfo.songs!.length; i++) {
     if (playStore.songPlayingInfo.songs![i].songId === playStore.songInfo.songId) {
       if (i === 0) {
@@ -96,6 +97,7 @@ function previousAudio() {
  * @Date: 2024/4/19 20:46
  **/
 function nextAudio() {
+  playStore.initSongPlayingInfo()
   for (var i = 0; i <= playStore.songPlayingInfo.songs!.length; i++) {
     if (playStore.songPlayingInfo.songs![i].songId === playStore.songInfo.songId) {
       if (i === playStore.songPlayingInfo.songs!.length - 1) {

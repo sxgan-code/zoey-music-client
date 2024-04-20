@@ -115,6 +115,14 @@ export const usePlayStore = defineStore('play', {
             this.songInfo.musicAlbum.singerId = isEmptyReturnOldData(data.musicAlbum.singerId, this.songInfo.musicAlbum.singerId)
             this.songInfo.musicAlbum.updateTime = isEmptyReturnOldData(data.musicAlbum.updateTime, this.songInfo.musicAlbum.updateTime)
         },
+        /* 初始化 */
+        initSongPlayingInfo() {
+            this.songPlayingInfo.currentTime = '00:00'
+            this.songPlayingInfo.currentScale = 0
+            this.songPlayingInfo.durationTime = '00:00'
+            this.songPlayingInfo.duration = 0
+            this.songPlayingInfo.cacheTimeScale = 0
+        }
     },
     getters: {
         // 返回歌单
