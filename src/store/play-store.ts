@@ -131,6 +131,6 @@ export const usePlayStore = defineStore('play', {
         getSongInfo: (state) => state.songInfo,
         // 返回当前播放状态等信息
         getSongPlayingInfo: (state) => state.songPlayingInfo,
-    }
-
+    },
+    persist: true,
 })

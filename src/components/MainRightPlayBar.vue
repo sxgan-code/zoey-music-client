@@ -135,8 +135,9 @@ const openVolumeBox = () => {
 // 点击事件，用于隐藏div
 function hideBox(event: any) {
   // 检查事件是否来自hide-volume-box元素,且不是点击的元素
-  if (event.target.className.indexOf('hide-volume-box') == -1
-      && event.target.className.indexOf('my-volume-medium') == -1) {
+  if (event.target.className.indexOf('hide-volume-box') === -1
+      && event.target.className.indexOf('my-volume-medium') === -1
+      && volumeBoxRef.value != null) {
     volumeBoxRef.value!.style.display = 'none';
   }
 }

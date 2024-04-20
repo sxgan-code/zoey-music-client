@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "sass": "^1.71.0",
     "vue-router": "^4.2.5"
   }
