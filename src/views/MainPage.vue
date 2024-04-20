@@ -66,7 +66,7 @@ const route = useRoute()
     .right-box {
       width: calc(100vw - 20rem);
       height: 100%;
-      background: rgba(#000, 0.27);
+      background: rgba(#000, 0.08);
       
       .right-box-content {
         width: calc(100vw - 20rem);

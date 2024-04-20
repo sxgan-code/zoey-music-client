@@ -30,9 +30,9 @@ const openChildWin = (path: string) => {
  **/
 const changeSkins = () => {
   router.push('/main/skins')
-  document.documentElement.style.setProperty('--text-color', 'rgb(246, 190, 200)');
-  document.documentElement.style.setProperty('--text-color-rgba', 'rgba(246, 190, 200,0.7)');
-  document.documentElement.style.setProperty('--text-active-color', 'rgb(232, 211, 252)');
+  // document.documentElement.style.setProperty('--text-color', 'rgb(246, 190, 200)');
+  // document.documentElement.style.setProperty('--text-color-rgba', 'rgba(246, 190, 200,0.7)');
+  // document.documentElement.style.setProperty('--text-active-color', 'rgb(232, 211, 252)');
 }
 
 /**

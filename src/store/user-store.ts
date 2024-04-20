@@ -14,6 +14,8 @@ export const useUserStore = defineStore('user', {
             maxOrUnMaxStart: true,
             /*自增函数*/
             counter: 0,
+            isChange: false,
+            bgImg: '/image/skins/20240003.jpg',
             /* 用户信息 */
             userInfo: {
                 isLogin: false,
@@ -76,6 +78,11 @@ export const useUserStore = defineStore('user', {
         getIsMask: (state) => state.isMask,
         // getUserInfo
         getUserInfo: (state) => state.userInfo,
-    }
-
+    },
+    // persist: {
+    //     enabled: true,
+    //     strategies: [
+    //         {storage: localStorage, paths: ['bgImg']},
+    //     ],
+    // },
 })

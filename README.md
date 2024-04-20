@@ -16,6 +16,8 @@
 
 ## 演示图
 
+![review_01.gif](public%2Fdiagram%2Freview_01.gif)
+
 ## 项目启动说明
 ### 安装依赖
 

@@ -16,6 +16,8 @@ All resources are from public resources on the Internet and are for learning onl
 
 ## Illustration
 
+![review_01.gif](public%2Fdiagram%2Freview_01.gif)
+
 ## PROJECT INITIATION
 
 ### install dependencies
