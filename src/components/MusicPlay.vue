@@ -25,8 +25,14 @@ watch(() => playStore.getSongPlayingInfo.isPlay, (newValue, oldValue) => {
 })
 // 点击进度条
 watch(() => playStore.getSongPlayingInfo.clickCurrent, (newValue, oldValue) => {
-  console.log('当前点击的new值' + newValue)
   audioRef.value.currentTime = audioRef.value.duration * newValue;
+})
+watch(() => playStore.getSongPlayingInfo.volume, (newValue, oldValue) => {
+  console.log('当前点击的new值' + newValue / 100)
+  if (audioRef.value.volume !== undefined) {
+    audioRef.value!.volume = newValue / 100
+  }
+  
 })
 onMounted(() => {
 })
@@ -57,7 +63,7 @@ const overAudio = () => {
 }
 const loadedData = () => {
   console.log('音频加载完毕')
-  audioRef.value.volume = playStore.getSongPlayingInfo.volume
+  audioRef.value.volume = playStore.getSongPlayingInfo.volume / 100
   if (playStore.getSongPlayingInfo.isPlay) {
     audioRef.value.play()
   }

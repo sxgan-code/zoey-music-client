@@ -65,7 +65,7 @@ export const usePlayStore = defineStore('play', {
                 clickCurrent: 0, // 点击的进度
                 cacheTimeScale: 0, // 当前缓存时间比例
                 loopStyle: 'list', // 当前播放格式 one:单曲循环，list:列表循环，random：随机循环
-                volume: 0.1, // 音量
+                volume: 10, // 音量
                 overCount: 0, // 每次播放完毕都会加一，上线为10会重置
                 songs: [] as MusicSongType[] | undefined, // 当前播放歌曲所在歌单的所有歌曲
             }

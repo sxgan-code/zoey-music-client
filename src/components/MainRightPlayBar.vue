@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, watch} from 'vue'
+import {onMounted, ref, watch} from 'vue'
 import {usePlayStore} from "@/store/play-store.ts";
 import msg, {PositionTypeEnum} from "@/components/message";
 
@@ -13,10 +13,6 @@ const getClassSongName = () => {
     return 'song-name scroll-x'
   }
   return 'song-name'
-}
-
-function clickVolume() {
-
 }
 
 /**
@@ -116,9 +112,44 @@ function nextAudio() {
  * @Author: sxgan
  * @Date: 2024/4/19 22:03
  **/
-function clickVolumeBar(e: any) {
+const myVolProgressBar = ref<HTMLElement>()
+const volBarStrip = ref<HTMLElement>()
+const volBarDots = ref<HTMLElement>()
 
+function clickVolumeBar(e: any) {
+  if (e.target.id == 'vol-dots') {
+    return
+  } else {
+    var clickHeight = e.target.clientHeight - e.offsetY
+    volBarStrip.value!.style.height = clickHeight + 'px'
+    volBarDots.value!.style.marginBottom = clickHeight - 4 + 'px'
+    playStore.songPlayingInfo.volume = Math.floor((clickHeight / myVolProgressBar.value!.offsetHeight) * 100)
+  }
 }
+
+const volumeBoxRef = ref<HTMLElement>()
+const openVolumeBox = () => {
+  volumeBoxRef.value!.style.display = 'block'
+}
+
+// 点击事件，用于隐藏div
+function hideBox(event: any) {
+  // 检查事件是否来自hide-volume-box元素,且不是点击的元素
+  if (event.target.className.indexOf('hide-volume-box') == -1
+      && event.target.className.indexOf('my-volume-medium') == -1) {
+    volumeBoxRef.value!.style.display = 'none';
+  }
+}
+
+// 绑定到window，确保即使点击框内也能监听外部点击
+document.body.addEventListener('click', hideBox);
+
+onMounted(() => {
+  // 初始化音量条
+  var initHeight = 90 * (playStore.songPlayingInfo.volume / 100)
+  volBarStrip.value!.style.height = initHeight + 'px'
+  volBarDots.value!.style.marginBottom = initHeight - 4 + 'px'
+})
 </script>
 
 <template>
@@ -172,28 +203,32 @@ function clickVolumeBar(e: any) {
         </span>
         <span>
           <i v-if="playStore.songPlayingInfo.volume>0" class="icon myiconfont my-volume-medium i-max"
-             v-tooltip="{text:'音量大小'+playStore.songPlayingInfo.volume*100+'%'}"
-             @click="clickVolume()">
+             v-tooltip="{text:'音量大小'+playStore.songPlayingInfo.volume+'%'}"
+             @click="openVolumeBox()">
             <span class="path1"></span><span class="path2"></span><span class="path3"></span>
           </i>
-          <i v-if="playStore.songPlayingInfo.volume==0" class="icon myiconfont my-volume-mute2">
+          <i v-if="playStore.songPlayingInfo.volume==0"
+             class="icon myiconfont my-volume-mute2"
+             v-tooltip="{text:'音量大小'+playStore.songPlayingInfo.volume+'%'}"
+             @click="openVolumeBox()">
             <span class="path1"></span><span class="path2"></span><span class="path3"></span>
           </i>
         </span>
-        <div class="volume">
-          <div class="volume-box">
-            <div class="volume-bar-box" ref="myVolProgressBar" @click="clickVolumeBar">
-              <div class="volume-strip" ref="volBarStrip">
-                <div class="volume-dots" ref="volBarDots"></div>
+        <div class="volume hide-volume-box" id="id-volume-box" ref="volumeBoxRef">
+          <div class="volume-box hide-volume-box">
+            <div class="volume-bar-box hide-volume-box" ref="myVolProgressBar" @click="clickVolumeBar($event)">
+              <div class="volume-strip hide-volume-box" ref="volBarStrip">
+                <div id="vol-dots " class="volume-dots hide-volume-box" ref="volBarDots"></div>
               </div>
             </div>
-            <div class="volume-number-box">
-              {{ playStore.songPlayingInfo.volume * 100 + '%' }}
+            <div class="volume-number-box hide-volume-box">
+              {{ playStore.songPlayingInfo.volume + '%' }}
             </div>
           </div>
         
         </div>
       </div>
+    
     </div>
     <div class="song-time">
       <div class="play-time">{{ playStore.songPlayingInfo.currentTime }} / {{
@@ -306,12 +341,6 @@ function clickVolumeBar(e: any) {
           height: 4rem;
           border-radius: 0.5rem;
         }
-        
-        //img:hover .posit-index{
-        //    bottom: 1rem;
-        //    cursor: pointer;
-        //    display: block;
-        //}
       }
       
       
@@ -376,6 +405,8 @@ function clickVolumeBar(e: any) {
       justify-content: center;
       
       span i {
+        position: relative;
+        z-index: 2;
         line-height: 5rem;
         font-size: 3rem;
         margin: 0 1rem;
@@ -404,17 +435,17 @@ function clickVolumeBar(e: any) {
         display: none;
         
         .volume-box {
-          background: var(--text-deep-rgba-2);;
+          background: var(--text-deep-rgba-2);
           position: relative;
-          bottom: 13rem;
+          bottom: 14rem;
           left: 9.4rem;
-          z-index: 9;
           height: 12rem;
           width: 3rem;
           padding-top: 1rem;
           border-radius: 0.7rem;
           
           .volume-bar-box {
+            position: absolute;
             height: 9rem;
             width: 0.4rem;
             border-radius: 0.2rem;
@@ -423,9 +454,9 @@ function clickVolumeBar(e: any) {
           }
           
           .volume-strip {
-            border-radius: 0.2rem;
             position: absolute;
-            bottom: 3rem;
+            bottom: 0;
+            border-radius: 0.2rem;
             width: 0.4rem;
             height: 3rem;
             background: var(--text-active-color);
@@ -434,10 +465,10 @@ function clickVolumeBar(e: any) {
           .volume-dots {
             position: absolute;
             left: -0.2rem;
-            bottom: 2.6rem;
-            z-index: 10;
+            bottom: 0;
             width: 0.8rem;
             height: 0.8rem;
+            margin-bottom: 2.6rem;
             border-radius: 0.4rem;
             background: var(--text-active-color);
           }
