@@ -2,6 +2,7 @@
 import {onMounted, ref, watch} from 'vue'
 import {usePlayStore} from "@/store/play-store.ts";
 import msg, {PositionTypeEnum} from "@/components/message";
+import {updateSongYelpApi} from "@/api/list";
 
 const playStore = usePlayStore();
 const isLike = ref(true)
@@ -151,6 +152,20 @@ onMounted(() => {
   volBarStrip.value!.style.height = initHeight + 'px'
   volBarDots.value!.style.marginBottom = initHeight - 4 + 'px'
 })
+
+/**
+ * @Description: 点击喜欢按钮
+ * @Author: sxgan
+ * @Date: 2024/4/20 19:09
+ **/
+function clickLikeBtn() {
+  playStore.songInfo.isLike = playStore.songInfo.isLike === 0 ? 1 : 0
+  updateSongYelpApi({
+    isLike: playStore.songInfo.isLike,
+    songId: playStore.songInfo.songId,
+    yelpContent: ''
+  })
+}
 </script>
 
 <template>
@@ -176,8 +191,9 @@ onMounted(() => {
             <span>{{ playStore.songInfo.songName }} - {{ playStore.songInfo.musicSinger.singerName }}</span>
           </div>
           <div class="song-like">
-            <i :class="isLike?'icon huaweiicon icon-ic_public_favor_filled':'icon huaweiicon icon-ic_public_favor'"
-               v-tooltip="{text:isLike?'取消喜欢':'我喜欢'}"/>
+            <i :class="playStore.songInfo.isLike?'icon huaweiicon icon-ic_public_favor_filled':'icon huaweiicon icon-ic_public_favor'"
+               @click="clickLikeBtn()"
+               v-tooltip="{text:playStore.songInfo.isLike?'取消喜欢':'我喜欢'}"/>
             <i class="icon huaweiicon icon-ic_public_download" v-tooltip="{text:'下载'}"></i>
             <i class="icon huaweiicon icon-ic_public_comments" v-tooltip="{text:'评论'}"></i>
           </div>

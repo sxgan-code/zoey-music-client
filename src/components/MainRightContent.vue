@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {usePlayStore} from '@/store/play-store.ts'
 import {useUserStore} from '@/store/user-store.ts'
 import msg, {PositionTypeEnum} from "@/components/message";
 import {useRoute} from "vue-router";
-import {getSongsApi} from "@/api/list";
+import {getSongsApi, updateSongYelpApi} from "@/api/list";
 import {MusicSongType} from "@/api/list/type.ts";
 
 const playStore = usePlayStore()
@@ -23,20 +23,24 @@ function changeStyle(val: number) {
 /*更改歌曲喜欢状态*/
 function isLikeSong(songId: number) {
   var flag = 0
-  songs.value?.forEach((item: MusicSongType) => {
-    if (item.songId == songId) {
-      if (item.isLike == 0) {
-        item.isLike = 1
-        flag = 1
-      } else {
-        item.isLike = 0
-        flag = 0
-      }
-      if (item.songId == playStore.songInfo.songId) {
-        playStore.songInfo.isLike = flag
-      }
+  var songIndex = -1;
+  songs.value?.forEach((item: MusicSongType, index) => {
+    if (item.songId === songId) {
+      songIndex = index
     }
   })
+  var song = songs.value![songIndex]
+  songs.value![songIndex].isLike = songs.value![songIndex].isLike == 0 ? 1 : 0
+  updateSongYelpApi({
+    isLike: song!.isLike,
+    songId: song!.songId,
+    yelpContent: ''
+  });
+  if (songs.value![songIndex].songId === playStore.songInfo.songId) {
+    playStore.songInfo.isLike = songs.value![songIndex].isLike
+  }
+  console.log(songIndex)
+  
 }
 
 /**
@@ -70,8 +74,15 @@ function playMusic(id: number) {
   playStore.songPlayingInfo.songs = songs.value
 }
 
-// 监听上一曲下一曲
-
+// 监听喜欢事件
+watch(() => playStore.songInfo.isLike, (newValue, oldValue) => {
+  songs.value?.forEach(item => {
+    if (item.songId === playStore.songInfo.songId) {
+      item.isLike = newValue
+    }
+    return
+  })
+})
 </script>
 
 <template>
