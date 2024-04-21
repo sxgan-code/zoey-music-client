@@ -1,9 +1,22 @@
 <script setup lang="ts">
 import {useUserStore} from "@/store/user-store.ts";
 import {usePlayStore} from "@/store/play-store.ts";
+import {onMounted, ref} from "vue";
 
 const userStore = useUserStore();
 const playStore = usePlayStore();
+
+const img = ref()
+onMounted(() => {
+  var path = localStorage.getItem('bgImg');
+  console.log(path)
+  if (path === null) {
+    userStore.bgImg = '/image/skins/20240003.jpg'
+  } else {
+    userStore.isChange = true
+    userStore.bgImg = path
+  }
+})
 </script>
 
 <template>

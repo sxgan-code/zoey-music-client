@@ -7,11 +7,12 @@ const playStore = usePlayStore();
 const userStore = useUserStore();
 
 function changeBgImg(index: number) {
-  console.log(index)
-  console.log('/image/skins/2024000' + index + '.jpg')
+  localStorage.setItem('bgImg', '/image/skins/2024000' + (index) + '.jpg')
   userStore.bgImg = '/image/skins/2024000' + (index) + '.jpg'
   userStore.isChange = true
 }
+
+
 </script>
 
 <template>
@@ -20,7 +21,7 @@ function changeBgImg(index: number) {
     <h1>背景图片(点击切换)</h1>
     <div class="img-box">
       <div v-for="i in 6">
-        <img @click="changeBgImg(i)"
+        <img ref="img" @click="changeBgImg(i)"
              :src="playStore.staticBaseUrl +'/image/skins/2024000'+(i)+'.jpg'"
              alt="">
       </div>
@@ -34,6 +35,7 @@ h1 {
   margin: 3rem;
   color: var(--text-color);
 }
+
 .skins-root-box {
   color: var(--text-color);
   height: calc(100vh - 16rem);
