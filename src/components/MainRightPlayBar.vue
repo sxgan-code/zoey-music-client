@@ -118,14 +118,10 @@ const volBarStrip = ref<HTMLElement>()
 const volBarDots = ref<HTMLElement>()
 
 function clickVolumeBar(e: any) {
-  if (e.target.id == 'vol-dots') {
-    return
-  } else {
-    var clickHeight = e.target.clientHeight - e.offsetY
-    volBarStrip.value!.style.height = clickHeight + 'px'
-    volBarDots.value!.style.marginBottom = clickHeight - 4 + 'px'
-    playStore.songPlayingInfo.volume = Math.floor((clickHeight / myVolProgressBar.value!.offsetHeight) * 100)
-  }
+  var clickHeight = e.target.clientHeight - e.offsetY
+  volBarStrip.value!.style.height = clickHeight + 'px'
+  volBarDots.value!.style.marginBottom = clickHeight - 4 + 'px'
+  playStore.songPlayingInfo.volume = Math.floor((clickHeight / myVolProgressBar.value!.offsetHeight) * 100)
 }
 
 const volumeBoxRef = ref<HTMLElement>()
@@ -235,7 +231,8 @@ function clickLikeBtn() {
           <div class="volume-box hide-volume-box">
             <div class="volume-bar-box hide-volume-box" ref="myVolProgressBar" @click="clickVolumeBar($event)">
               <div class="volume-strip hide-volume-box" ref="volBarStrip">
-                <div id="vol-dots " class="volume-dots hide-volume-box" ref="volBarDots"></div>
+                <div id="vol-dots" @click="stopClickBar($event)" class="volume-dots hide-volume-box"
+                     ref="volBarDots"></div>
               </div>
             </div>
             <div class="volume-number-box hide-volume-box">
