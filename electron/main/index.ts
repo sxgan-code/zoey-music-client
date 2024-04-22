@@ -1,4 +1,5 @@
 import {app, BrowserWindow, ipcMain, MessageChannelMain, shell} from 'electron'
+import windowStateKeeper from 'electron-window-state'
 import {release} from 'node:os'
 import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
@@ -49,13 +50,21 @@ const indexHtml = join(process.env.DIST, 'index.html')
 // 建立通道
 const {port1, port2} = new MessageChannelMain()
 
+
 async function createWindow() {
+    //初始化窗口大小
+    let winState = windowStateKeeper({
+        defaultWidth: 1200, defaultHeight: 800,
+
+    })
     win = new BrowserWindow({
         title: 'Main window',
-        width: 1200,
-        height: 800,
+        width: winState.width,
+        height: winState.height,
         minWidth: 1200,
         minHeight: 800,
+        x: winState.x,
+        y: winState.y,
         frame: false,
         transparent: true, // 窗口是否支持透明，如果想做高级效果最好为true,此项必须设置frame为false，且关闭DevTools，这两项会影响效果
         icon: join(process.env.VITE_PUBLIC, 'logo/logo-music-wangyiyun-red.ico'),
@@ -81,7 +90,8 @@ async function createWindow() {
             win?.webContents.closeDevTools();
         });
     }
-
+    // 保存窗口状态
+    winState.manage(win)
     // Test actively push message to the Electron-Renderer
     win.webContents.on('did-finish-load', () => {
         win?.webContents.send('main-process-message', new Date().toLocaleString())
