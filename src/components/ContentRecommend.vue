@@ -39,7 +39,7 @@ function scrollPage() {
 
 <template>
   <div class="recommend-root-box">
-    <h1 class="recommend-title">Hi {{ userStore.userInfo.userName }} 今日为你推荐</h1>
+    <h1 class="recommend-title">Hi {{ userStore.userInfo.isLogin ? userStore.userInfo.userName : '' }} 今日为你推荐</h1>
     <div class="recommend-head-box">
       <div class="previous-box control-box" @click="scrollPage()">
         <i class="icon iconfont">&#xe913</i>

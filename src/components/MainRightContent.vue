@@ -52,6 +52,8 @@ const songs = ref<MusicSongType[]>()
 onMounted(() => {
   getSongsApi(playStore.getSongList).then(res => {
     songs.value = res.data
+    songs.value = songs.value?.reverse()
+    playStore.songList.listSize = songs.value?.length
   })
 })
 
@@ -113,7 +115,9 @@ watch(() => playStore.songInfo.isLike, (newValue, oldValue) => {
         </div>
       </div>
       <div class="info-introduction">
-        <span>{{ playStore.songList.listInfo }}</span>
+        <span>{{
+            playStore.songList.listInfo!.length > 100 ? playStore.songList.listInfo?.substring(0, 100) + "..." : playStore.songList.listInfo
+          }}</span>
       </div>
       <div class="info-btn">
         <div @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe922;</i>播放全部</div>
@@ -296,13 +300,13 @@ watch(() => playStore.songInfo.isLike, (newValue, oldValue) => {
       display: flex;
       flex-direction: row;
       align-items: center;
-      line-height: 2rem;
       margin: 1rem 0;
       
       span {
         font-family: 'HarmonyOS Sans', sans-serif;
         font-size: 1.4rem;
         color: var(--text-color);
+        height: 3rem;
       }
     }
     
