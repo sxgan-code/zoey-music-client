@@ -47,34 +47,27 @@ function scrollPage() {
       <div class="head-content-box ">
         <div class="scroll-content-box scroll-box" ref="scrollContentBoxRef">
           <div class="content-item first-box">
-            <div class="left-text-box">
-              <h1>晚上好</h1>
-              <span>尝试来点音乐提提神吧~</span>
+            <div class="top-content">
+              <div class="left-text-box">
+                <h1>晚上好</h1>
+                <span>尝试来点音乐提提神吧~</span>
+              </div>
+              <div class="right-img">
+                <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0002.jpg'" alt="">
+              </div>
             </div>
-            <div class="right-img">
-              <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0002.jpg'" alt="">
-            </div>
-            <div class="bottom-text-box">
+            <div class="bottom-content">
               <p>遗憾最终 - 何仟仟<br> 猜你喜欢</p>
             </div>
           </div>
-          <div class="content-item">
-            <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0003.jpg'" alt="">
-          </div>
-          <div class="content-item">
-            <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0004.jpg'" alt="">
-          </div>
-          <div class="content-item">
-            <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0005.jpg'" alt="">
-          </div>
-          <div class="content-item">
-            <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0006.jpg'" alt="">
-          </div>
-          <div class="content-item">
-            <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0007.jpg'" alt="">
-          </div>
-          <div class="content-item">
-            <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0008.jpg'" alt="">
+          <div class="content-item" v-for="(item, index) in 5" :key="index">
+            <div class="item-top-content">
+              <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-00'+(item+10)+'.jpg'" alt="">
+            </div>
+            <div class="item-bottom-content">
+              <p>每个人的生活都是一本书...</p>
+              <p>每日推荐</p>
+            </div>
           </div>
         </div>
       
@@ -83,6 +76,18 @@ function scrollPage() {
         <i class="icon iconfont">&#xe914</i>
       </div>
     </div>
+    <h1 class="recommend-title">你的私荐歌单</h1>
+    <div class="private-list-box">
+      <div class="private-list" v-for="(item, index) in 8" :key="index">
+        <div class="list-item-top">
+          <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-00'+(item+15)+'.jpg'" alt="">
+        </div>
+        <div class="list-item-bottom">
+          <p>每个人的生活都是一本书，透过字里行间琐碎的情节</p>
+        </div>
+      </div>
+    </div>
+  
   </div>
 
 </template>
@@ -92,6 +97,8 @@ function scrollPage() {
   color: var(--text-color);
   padding: 2rem 0;
   font-family: "HarmonyOS Sans", sans-serif;
+  height: calc(100vh - 20rem);
+  overflow: auto;
   
   .recommend-title {
     margin: 0 5rem;
@@ -121,7 +128,7 @@ function scrollPage() {
     }
     
     .next-box {
-      right: 0rem;
+      right: 0;
     }
     
     .head-content-box {
@@ -139,16 +146,37 @@ function scrollPage() {
         -ms-overflow-style: none; /* IE 10+ */
         scrollbar-width: none; /* Firefox */
         .content-item {
-          height: 20rem;
+          height: 28rem;
           width: 20rem;
-          margin: 2rem 2.05rem 0;
-          flex-shrink: 0;
+          margin: 2rem 2rem 0;
           
-          img {
-            height: 20rem;
+          .item-top-content {
             width: 20rem;
-            border-radius: 0.8rem;
+            height: 20rem;
+            
+            img {
+              height: 20rem;
+              width: 20rem;
+              border-radius: 0.8rem;
+            }
           }
+          
+          .item-bottom-content {
+            width: 20rem;
+            height: 8rem;
+            
+            p {
+              white-space: nowrap;
+              line-height: 3rem;
+              color: var(--text-color-rgba);
+              font-family: "HarmonyOS Sans", sans-serif;
+              font-size: 1.6rem;
+              width: 20rem;
+              overflow: hidden;
+            }
+          }
+          
+          
         }
         
         .first-box {
@@ -156,56 +184,65 @@ function scrollPage() {
           flex-wrap: wrap;
           width: 40rem;
           height: 28rem;
-          border-radius: 0.8rem;
-          background-color: #A9C9FF;
-          background-image: -webkit-linear-gradient(45deg, #A9C9FF 0%, #FFBBEC 33%, #f5b4b6 66%, #ffffff 100%);
-          background-image: -moz-linear-gradient(45deg, #A9C9FF 0%, #FFBBEC 33%, #f5b4b6 66%, #ffffff 100%);
-          background-image: -o-linear-gradient(45deg, #A9C9FF 0%, #FFBBEC 33%, #f5b4b6 66%, #ffffff 100%);
-          background-image: linear-gradient(45deg, #A9C9FF 0%, #FFBBEC 33%, #f5b4b6 66%, #ffffff 100%);
           opacity: 0.9;
           
-          .left-text-box {
-            width: 12rem;
-            height: 8rem;
-            padding: 3rem;
-            color: var(--text-deep-rgba-7);
+          .top-content {
+            display: flex;
+            flex-wrap: wrap;
+            width: 40rem;
+            height: 20rem;
+            border-radius: 0.8rem;
+            background-color: #A9C9FF;
+            background-image: -webkit-linear-gradient(45deg, #A9C9FF 0%, #FFBBEC 33%, #f5b4b6 66%, #ffffff 100%);
+            background-image: -moz-linear-gradient(45deg, #A9C9FF 0%, #FFBBEC 33%, #f5b4b6 66%, #ffffff 100%);
+            background-image: -o-linear-gradient(45deg, #A9C9FF 0%, #FFBBEC 33%, #f5b4b6 66%, #ffffff 100%);
+            background-image: linear-gradient(45deg, #A9C9FF 0%, #FFBBEC 33%, #f5b4b6 66%, #ffffff 100%);
+            opacity: 0.9;
             
-            h1 {
-              font-size: 3rem;
+            .left-text-box {
+              width: 12rem;
+              height: 8rem;
+              padding: 3rem;
+              color: var(--text-deep-rgba-7);
+              
+              h1 {
+                font-size: 3rem;
+              }
+              
+              span {
+                font-size: 1.8rem;
+              }
             }
             
-            span {
-              font-size: 1.8rem;
-            }
-          }
-          
-          .right-img {
-            width: 16rem;
-            height: 16rem;
-            margin: 2rem;
-            
-            img {
-              box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.6);
+            .right-img {
               width: 16rem;
               height: 16rem;
-              border-radius: 0.8rem;
+              margin: 2rem;
+              
+              img {
+                box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.6);
+                width: 16rem;
+                height: 16rem;
+                border-radius: 0.8rem;
+              }
             }
           }
           
-          .bottom-text-box {
+          
+          .bottom-content {
             height: 8rem;
             width: 40rem;
+            padding: 0 1rem;
             
             p {
               line-height: 3rem;
-              font-size: 1.2rem;
+              font-size: 1.6rem;
               color: var(--text-color-rgba);
             }
           }
         }
         
-        
-        .content-item:hover {
+        .item-top-content:hover, .top-content:hover {
           transition: 0.8s;
           transform: translateY(-1.5rem);
         }
@@ -213,6 +250,48 @@ function scrollPage() {
       
       .scroll-content-box::-webkit-scrollbar {
         display: none; /* 针对Webkit浏览器隐藏滚动条 */
+      }
+    }
+  }
+  
+  .private-list-box {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    
+    .private-list:nth-child(4n-3) {
+      margin-left: 5rem;
+    }
+    
+    .private-list {
+      margin: 2rem 0 0 3rem;
+      
+      .list-item-top {
+        width: 20rem;
+        height: 20rem;
+        
+        img {
+          border-radius: 1rem;
+          width: 20rem;
+          height: 20rem;
+        }
+      }
+      
+      .list-item-top:hover {
+        transition: 0.8s;
+        transform: translateY(-1.5rem);
+      }
+      
+      .list-item-bottom {
+        width: 20rem;
+        height: 8rem;
+        
+        p {
+          font-family: "HarmonyOS Sans", sans-serif;
+          font-size: 1.2rem;
+          line-height: 2.5rem;
+          color: var(--text-color-rgba);
+        }
       }
     }
   }
