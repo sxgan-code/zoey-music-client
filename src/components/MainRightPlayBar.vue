@@ -215,12 +215,13 @@ function clickLikeBtn() {
              v-tooltip="{text:'下一曲'}"></i>
         </span>
         <span>
-          <i v-if="playStore.songPlayingInfo.volume>0" class="icon myiconfont my-volume-medium i-max"
+          <i v-if="playStore.songPlayingInfo.volume>0" :key="playStore.songPlayingInfo.volume"
+             class="icon myiconfont my-volume-medium i-max"
              v-tooltip="{text:'音量大小'+playStore.songPlayingInfo.volume+'%'}"
              @click="openVolumeBox()">
             <span class="path1"></span><span class="path2"></span><span class="path3"></span>
           </i>
-          <i v-if="playStore.songPlayingInfo.volume==0"
+          <i v-if="playStore.songPlayingInfo.volume==0" :key="playStore.songPlayingInfo.volume"
              class="icon myiconfont my-volume-mute2"
              v-tooltip="{text:'音量大小'+playStore.songPlayingInfo.volume+'%'}"
              @click="openVolumeBox()">
