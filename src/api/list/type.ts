@@ -34,6 +34,11 @@ export interface MusicListType {
      * 歌单图片地址
      */
     listPic?: string
+
+    /**
+     * 歌单播放数量
+     */
+    playCount: number
     /**
      * 歌单歌曲数量
      */

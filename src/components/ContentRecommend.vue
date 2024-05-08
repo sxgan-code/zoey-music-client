@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
 import {useUserStore} from "@/store/user-store.ts";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {usePlayStore} from "@/store/play-store.ts";
+import {getTodayRecommendApi} from "@/api/online";
+import {RecommendType} from "@/api/online/type.ts";
 
 const userStore = useUserStore()
 
@@ -35,6 +37,26 @@ function scrollPage() {
   }
   
 }
+
+const getTimeScopeStr = () => {
+  var hours = new Date().getHours();
+  if (hours >= 6 && hours < 12) {
+    return '早上好'
+  } else if (hours >= 12 && hours < 18) {
+    return '下午好'
+  } else {
+    return '晚上好'
+  }
+}
+
+const recommend = ref<RecommendType>()
+onMounted(() => {
+  getTodayRecommendApi().then(res => {
+    
+    recommend.value = res.data
+    console.log("res", recommend.value)
+  })
+})
 </script>
 
 <template>
@@ -49,7 +71,7 @@ function scrollPage() {
           <div class="content-item first-box">
             <div class="top-content">
               <div class="left-text-box">
-                <h1>晚上好</h1>
+                <h1>{{ getTimeScopeStr() }}</h1>
                 <span>尝试来点音乐提提神吧~</span>
               </div>
               <div class="right-img">
@@ -60,13 +82,13 @@ function scrollPage() {
               <p>遗憾最终 - 何仟仟<br> 猜你喜欢</p>
             </div>
           </div>
-          <div class="content-item" v-for="(item, index) in 5" :key="index">
+          <div class="content-item" v-for="(item, index) in recommend?.musicListVOS" :key="index">
             <div class="item-top-content">
-              <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-00'+(item+10)+'.jpg'" alt="">
+              <img :src="playStore.staticBaseUrl + item.listPic" alt="">
             </div>
             <div class="item-bottom-content">
-              <p>每个人的生活都是一本书...</p>
-              <p>每日推荐</p>
+              <p>{{ item.listInfo?.substring(0, 11) }}...</p>
+              <p>播放量{{ Math.floor(item.playCount / 10000) }}万</p>
             </div>
           </div>
         </div>
