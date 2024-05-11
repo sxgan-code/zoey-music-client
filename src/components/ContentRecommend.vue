@@ -1,10 +1,12 @@
 <script setup lang="ts">
 
 import {useUserStore} from "@/store/user-store.ts";
-import {onMounted, ref} from "vue";
+import {onBeforeMount, ref} from "vue";
 import {usePlayStore} from "@/store/play-store.ts";
-import {getTodayRecommendApi} from "@/api/online";
+import {getPrivateRecommendListApi, getTodayRecommendApi} from "@/api/online";
 import {RecommendType} from "@/api/online/type.ts";
+import {MusicListType, MusicSongType} from "@/api/list/type.ts";
+import router from "@/router";
 
 const userStore = useUserStore()
 
@@ -49,14 +51,31 @@ const getTimeScopeStr = () => {
   }
 }
 
+function openListPage(item: MusicListType) {
+  playStore.setSongList(item)
+  router.push('/main/list/' + item.listId?.toString())
+}
+
+function playRecommendSong(item: MusicSongType) {
+  playStore.setSongInfo(item)
+  playStore.songPlayingInfo.isPlay = true
+}
+
 const recommend = ref<RecommendType>()
-onMounted(() => {
+const privateList = ref<MusicListType[]>()
+onBeforeMount(() => {
   getTodayRecommendApi().then(res => {
-    
     recommend.value = res.data
     console.log("res", recommend.value)
   })
+  
+  getPrivateRecommendListApi().then(res => {
+    privateList.value = res.data
+    console.log("privateList", privateList.value)
+  })
 })
+
+
 </script>
 
 <template>
@@ -69,21 +88,22 @@ onMounted(() => {
       <div class="head-content-box ">
         <div class="scroll-content-box scroll-box" ref="scrollContentBoxRef">
           <div class="content-item first-box">
-            <div class="top-content">
+            <div class="top-content" @click="playRecommendSong(recommend?.musicSongVO)">
               <div class="left-text-box">
                 <h1>{{ getTimeScopeStr() }}</h1>
                 <span>尝试来点音乐提提神吧~</span>
               </div>
               <div class="right-img">
-                <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-0002.jpg'" alt="">
+                <img :src="playStore.staticBaseUrl + recommend?.musicSongVO.songPic" alt="">
               </div>
             </div>
             <div class="bottom-content">
-              <p>遗憾最终 - 何仟仟<br> 猜你喜欢</p>
+              <p>{{ recommend?.musicSongVO.songName }} - {{ recommend?.musicSongVO.musicSinger.singerName }}<br> 猜你喜欢
+              </p>
             </div>
           </div>
           <div class="content-item" v-for="(item, index) in recommend?.musicListVOS" :key="index">
-            <div class="item-top-content">
+            <div class="item-top-content" @click="openListPage(item)">
               <img :src="playStore.staticBaseUrl + item.listPic" alt="">
             </div>
             <div class="item-bottom-content">
@@ -100,12 +120,12 @@ onMounted(() => {
     </div>
     <h1 class="recommend-title">你的私荐歌单</h1>
     <div class="private-list-box">
-      <div class="private-list" v-for="(item, index) in 8" :key="index">
-        <div class="list-item-top">
-          <img :src="playStore.staticBaseUrl + '/image/list/song-list-zip-00'+(item+15)+'.jpg'" alt="">
+      <div class="private-list" v-for="(item, index) in privateList" :key="index">
+        <div class="list-item-top" @click="openListPage(item)">
+          <img :src="playStore.staticBaseUrl + item.listPic" alt="">
         </div>
         <div class="list-item-bottom">
-          <p>每个人的生活都是一本书，透过字里行间琐碎的情节</p>
+          <p>{{ item.listInfo.length > 30 ? item.listInfo?.substring(0, 30) + '...' : item.listInfo }}</p>
         </div>
       </div>
     </div>

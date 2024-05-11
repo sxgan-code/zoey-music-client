@@ -23,7 +23,7 @@ export interface MusicListType {
     /**
      * 歌单简介
      */
-    listInfo?: string
+    listInfo: string
 
     /**
      * 歌单风格
