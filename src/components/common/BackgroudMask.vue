@@ -17,6 +17,7 @@ onMounted(() => {
     userStore.bgImg = path
   }
 })
+
 </script>
 
 <template>
@@ -24,6 +25,7 @@ onMounted(() => {
     <img v-if="!userStore.isChange" src="@/assets/images/20240002.jpg" alt="">
     <img v-if="userStore.isChange"
          :key="userStore.bgImg"
+         @error="userStore.isChange = false"
          :src="playStore.staticBaseUrl + userStore.bgImg" alt="">
   </div>
 </template>
