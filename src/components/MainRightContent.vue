@@ -24,7 +24,7 @@ function changeStyle(val: number) {
 <template>
   <div class='content-top'>
     <div class="song-list-pic">
-      <img :src="playStore.staticBaseUrl+playStore.songList.listPic" alt="">
+      <img :src="playStore.staticBaseUrl+playStore.songList.listPic+'?time='+new Date().getTime()" alt="">
     </div>
     <div class="song-list-info">
       <div class="info-title">

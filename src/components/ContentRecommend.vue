@@ -88,13 +88,14 @@ onBeforeMount(() => {
       <div class="head-content-box ">
         <div class="scroll-content-box scroll-box" ref="scrollContentBoxRef">
           <div class="content-item first-box">
-            <div class="top-content" @click="playRecommendSong(recommend?.musicSongVO)">
+            <div class="top-content" @click="playRecommendSong(recommend!.musicSongVO)">
               <div class="left-text-box">
                 <h1>{{ getTimeScopeStr() }}</h1>
                 <span>尝试来点音乐提提神吧~</span>
               </div>
               <div class="right-img">
-                <img :src="playStore.staticBaseUrl + recommend?.musicSongVO.songPic" alt="">
+                <img :src="playStore.staticBaseUrl + recommend?.musicSongVO.songPic+'?time='+new Date().getTime()"
+                     alt="">
               </div>
             </div>
             <div class="bottom-content">
@@ -104,7 +105,7 @@ onBeforeMount(() => {
           </div>
           <div class="content-item" v-for="(item, index) in recommend?.musicListVOS" :key="index">
             <div class="item-top-content" @click="openListPage(item)">
-              <img :src="playStore.staticBaseUrl + item.listPic" alt="">
+              <img :src="playStore.staticBaseUrl + item.listPic+'?time='+new Date().getTime()" alt="">
             </div>
             <div class="item-bottom-content">
               <p>{{ item.listInfo?.substring(0, 11) }}...</p>
@@ -122,7 +123,7 @@ onBeforeMount(() => {
     <div class="private-list-box">
       <div class="private-list" v-for="(item, index) in privateList" :key="index">
         <div class="list-item-top" @click="openListPage(item)">
-          <img :src="playStore.staticBaseUrl + item.listPic" alt="">
+          <img :src="playStore.staticBaseUrl + item.listPic+'?time='+new Date().getTime()" alt="">
         </div>
         <div class="list-item-bottom">
           <p>{{ item.listInfo.length > 30 ? item.listInfo?.substring(0, 30) + '...' : item.listInfo }}</p>

@@ -180,7 +180,8 @@ function clickLikeBtn() {
       <div class="info-box">
         <div class="info-left">
           <!--<i class="iconfont posit-index">&#xeba6;</i>-->
-          <img :src="playStore.staticBaseUrl+playStore.songInfo.songPic" v-tooltip="{text:'展开歌曲详情页'}" alt="">
+          <img :src="playStore.staticBaseUrl+playStore.songInfo.songPic+'?time='+new Date().getTime()"
+               v-tooltip="{text:'展开歌曲详情页'}" alt="">
         </div>
         <div class="info-right">
           <div :class="getClassSongName()">
