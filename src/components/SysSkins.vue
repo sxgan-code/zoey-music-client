@@ -22,7 +22,7 @@ function changeBgImg(index: number) {
     <div class="img-box">
       <div v-for="i in 6">
         <img ref="img" @click="changeBgImg(i)"
-             :src="playStore.staticBaseUrl +'/image/skins/2024000'+(i)+'.jpg'+'?time='+new Date().getTime()"
+             :src="playStore.staticBaseUrl +'/image/skins/2024000'+(i)+'.jpg'"
              alt="">
       </div>
     </div>

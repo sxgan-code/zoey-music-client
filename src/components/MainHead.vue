@@ -50,7 +50,6 @@ const autoLogin = () => {
         userStore.setUserInfo(res.data, true)
         msg.success('登录成功')
       } else {
-        router.push('/main/recommend')
         msg.warning('账户登录已过期，请重新登录。。。', PositionTypeEnum.TOP, 2, () => {
           openChildWin('/login')
         })
@@ -74,6 +73,7 @@ onMounted(() => {
       if (res.status === 200) {
         userStore.setUserInfo(res.data, true)
         msg.success('登录成功')
+        window.location.reload();
       }
     })
   })
@@ -88,7 +88,6 @@ const exitCurrentAccount = () => {
     userStore.userInfo.isLogin = false
     playStore.songPlayingInfo.isPlay = false
     localStorage.removeItem('token')
-    router.push('/main/recommend')
     msg.success('账号退出成功')
   }
 }

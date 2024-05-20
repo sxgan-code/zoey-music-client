@@ -26,7 +26,7 @@ onMounted(() => {
     <img v-if="userStore.isChange"
          :key="userStore.bgImg"
          @error="userStore.isChange = false"
-         :src="playStore.staticBaseUrl + userStore.bgImg+'?time='+new Date().getTime()" alt="">
+         :src="playStore.staticBaseUrl + userStore.bgImg" alt="">
   </div>
 </template>
 

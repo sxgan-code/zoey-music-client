@@ -8,23 +8,19 @@ import SongListBox from "@/components/common/SongListBox.vue";
 
 const playStore = usePlayStore()
 const userStore = useUserStore()
-const index = ref(1)
+
 const route = useRoute();
 let listId = ref();
 listId.value = route.params.listId
 
-/*点击更改列表标题文字样式*/
-function changeStyle(val: number) {
-  msg.warning('开发中。。。', PositionTypeEnum.TOP)
-  index.value = val;
-}
+
 
 </script>
 
 <template>
   <div class='content-top'>
     <div class="song-list-pic">
-      <img :src="playStore.staticBaseUrl+playStore.songList.listPic+'?time='+new Date().getTime()" alt="">
+      <img :src="playStore.staticBaseUrl+playStore.songList.listPic" alt="">
     </div>
     <div class="song-list-info">
       <div class="info-title">
@@ -69,7 +65,7 @@ function changeStyle(val: number) {
 
 <style scoped lang="scss">
 .content-top {
-  height: 25rem;
+  height: 22rem;
   width: 80vw;
   display: flex;
   flex-direction: row;

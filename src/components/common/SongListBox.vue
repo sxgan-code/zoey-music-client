@@ -4,14 +4,8 @@ import {usePlayStore} from '@/store/play-store.ts'
 import {useRoute} from "vue-router";
 import {getSongsApi, updateSongYelpApi} from "@/api/list";
 import {MusicSongType} from "@/api/list/type.ts";
+import msg, {PositionTypeEnum} from "@/components/message";
 
-const props = defineProps({
-  flag: {
-    type: String,
-    default: '1',
-    required: true
-  }
-})
 const playStore = usePlayStore()
 
 const route = useRoute();
@@ -82,13 +76,35 @@ onMounted(() => {
   getSongsApi(playStore.getSongList).then(res => {
     songs.value = res.data
     songs.value = songs.value?.reverse()
+    console.log("song", songs.value)
     playStore.songList.listSize = songs.value?.length
   })
 })
+
+/*点击更改列表标题文字样式*/
+const index = ref(1)
+
+function changeStyle(val: number) {
+  if (val !== 1) {
+    msg.warning('开发中。。。', PositionTypeEnum.TOP)
+  }
+  index.value = val;
+}
 </script>
 
 <template>
   <div class="list-content">
+    <div class="list-top">
+      <div>
+        <span :class="index==1?'sel-title-span':''" @click="changeStyle(1)">歌曲{{ playStore.songList.listSize }}</span>
+        <span :class="index==2?'sel-title-span':''" @click="changeStyle(2)">最近收藏</span>
+        <span :class="index==3?'sel-title-span':''" @click="changeStyle(3)">评论</span>
+      </div>
+      <div>
+        <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe8bb;</i>搜索</span>
+        <span @click="msg.warning('开发中。。。', PositionTypeEnum.TOP)"><i class="iconfont">&#xe69e;</i>排序</span>
+      </div>
+    </div>
     <div class="list-title">
       <div><span>歌曲</span></div>
       <div><span>歌手</span></div>
@@ -113,8 +129,8 @@ onMounted(() => {
           </div>
         </div>
         <div class="song-clo-2"><span>{{
-            item.musicSinger.singerName.length > 8 ?
-                item.musicSinger.singerName.substring(0, 8) + '...' : item.musicSinger.singerName
+            item.musicSinger.singerName.length > 15 ?
+                item.musicSinger.singerName.substring(0, 15) + '...' : item.musicSinger.singerName
           }}</span></div>
         <div class="song-clo-3">
             <span>{{
@@ -127,11 +143,76 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+
 .list-content {
   height: 100%;
   width: 99%;
   display: flex;
   flex-direction: column;
+  
+  .list-top {
+    height: 3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    
+    div:first-child {
+      flex: 8;
+      display: flex;
+      
+      span {
+        display: inline-block;
+        width: 8rem;
+        color: var(--text-color);
+        text-align: center;
+        font-size: 1.4rem;
+        line-height: 3rem;
+        margin: 0 1.5rem;
+        
+      }
+      
+      span:hover {
+        color: var(--text-active-color);
+      }
+      
+      .sel-title-span {
+        color: var(--text-active-color);
+      }
+      
+      .sel-title-span::after {
+        display: block;
+        content: '';
+        width: 2.5rem;
+        margin: 0 auto;
+        border-bottom: 3px solid var(--text-active-color);
+      }
+    }
+    
+    div:last-child {
+      margin-top: 0.5rem;
+      flex: 2;
+      
+      span {
+        i {
+          font-size: 1.2rem;
+          margin-right: 0.5rem;
+        }
+        
+        display: inline-block;
+        width: 5rem;
+        color: var(--text-color);
+        text-align: center;
+        font-size: 1.2rem;
+        line-height: 2.5rem;
+        border-radius: 0.3rem;
+        margin: 0 1rem;
+      }
+      
+      span:hover {
+        background: var(--text-deep-rgba-1);
+      }
+    }
+  }
   
   .list-title {
     height: 2rem;
