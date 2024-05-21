@@ -10,6 +10,7 @@ export const usePlayStore = defineStore('play', {
     state: () => {
         return {
             staticBaseUrl: import.meta.env.VITE_BASE_URL + '/static',
+            baseUrl: import.meta.env.VITE_BASE_URL,
             songList: {
                 listId: 0,
                 listName: '',

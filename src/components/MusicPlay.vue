@@ -120,7 +120,7 @@ const timeUpdate = () => {
            @loadeddata="loadedData()"
            @timeupdate="timeUpdate()"
            :key="playStore.songInfo.songId">
-      <source :src="playStore.staticBaseUrl + playStore.getSongInfo.songUrl">
+      <source :src="playStore.baseUrl +'/play/music/'+playStore.songInfo.songUrl?.substring(17)" type="audio/mpeg">
     </audio>
   </div>
 </template>
